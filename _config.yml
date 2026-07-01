@@ -22,7 +22,7 @@ search_full_content   : true
 # ---------------------------------------------------------------
 author:
   name    : "minari"
-  avatar  : "/assets/images/avatar.svg"
+  avatar  : "/assets/images/avatar.jpg"
   bio      : "강의 들으며 정리하는 중 🐣"
   location : "Seoul"
   links:
