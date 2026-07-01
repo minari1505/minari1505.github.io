@@ -18,16 +18,20 @@ $code-background-color : #fdeef4;
 $masthead-link-color        : #6b6b6b;
 $masthead-link-color-hover  : #e57399;
 
-$global-font-family: "LeeSeoyun", "Apple SD Gothic Neo", "Noto Sans KR",
-  "Malgun Gothic", sans-serif;
+// 폰트 역할 분리: 제목=이서윤체 / 본문=Pretendard / 코드=D2Coding
+$header-font-family: "LeeSeoyun", "Pretendard Variable", Pretendard, sans-serif;
+$global-font-family: "Pretendard Variable", Pretendard, -apple-system,
+  "Apple SD Gothic Neo", sans-serif;
+$monospace: "D2Coding", "D2 coding", "Courier New", monospace;
 
 // 기본 스킨 위에 위 변수들을 덮어씀
 @import "minimal-mistakes/skins/default";
 @import "minimal-mistakes";
 
 // ─────────────────────────────────────────────
-// ✍️ 이서윤체 (눈누 무료 폰트, jsDelivr CDN)
+// ✍️ 웹폰트 로드 (모두 무료, jsDelivr CDN)
 // ─────────────────────────────────────────────
+// 이서윤체 — 제목용 손글씨 (눈누)
 @font-face {
   font-family: "LeeSeoyun";
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff") format("woff");
@@ -35,10 +39,29 @@ $global-font-family: "LeeSeoyun", "Apple SD Gothic Neo", "Noto Sans KR",
   font-style: normal;
   font-display: swap;
 }
+// D2Coding — 코드 블록용 고정폭 (fonts-archive)
+@font-face {
+  font-family: "D2Coding";
+  src: url("https://cdn.jsdelivr.net/gh/fonts-archive/D2Coding/D2Coding-Regular.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/fonts-archive/D2Coding/D2Coding-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
-// 손글씨체라 본문은 아주 살짝 키워서 읽기 편하게
-.page__content {
-  font-size: 1.05em;
+// 제목은 이서윤체가 확실히 적용되도록 (본문 Pretendard와 구분)
+.page__title,
+.archive__item-title,
+.sidebar .author__name,
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font-family;
+}
+
+// 코드(인라인 + 블록)는 D2Coding
+code, kbd, pre, samp,
+.highlight code,
+div.highlight pre {
+  font-family: $monospace;
 }
 
 // ─────────────────────────────────────────────
