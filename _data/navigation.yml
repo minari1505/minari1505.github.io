@@ -2,7 +2,7 @@
 main:
   - title: "🏠 홈"
     url: /
-  - title: "📚 강의 정리"
+  - title: "📚 정리 노트"
     url: /categories/
   - title: "🏷️ 태그"
     url: /tags/

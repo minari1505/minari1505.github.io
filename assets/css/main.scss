@@ -5,18 +5,18 @@
 @charset "utf-8";
 
 // ─────────────────────────────────────────────
-// 🌸 파스텔 색상 팔레트 (여기 색만 바꾸면 분위기가 바뀌어요)
+// 파스텔 색상 팔레트 (여기 색만 바꾸면 분위기가 바뀌어요)
 // ─────────────────────────────────────────────
-$primary-color   : #f48fb1;   // 포인트: 소프트 핑크
-$link-color      : #e57399;   // 링크: 살짝 진한 핑크
-$link-color-hover: #d75f89;
-$background-color : #fff9fb;   // 배경: 아주 옅은 핑크빛 화이트
+$primary-color   : #ffdd7a;   // 포인트: 파스텔 노랑
+$link-color      : #c99400;   // 링크: 읽기 좋은 골드
+$link-color-hover: #9f7600;
+$background-color : #ffffff;   // 배경: 흰색
 $text-color       : #4a4a4a;   // 본문: 부드러운 진회색
-$muted-text-color : #9a9a9a;
-$border-color     : #f3e0e8;
-$code-background-color : #fdeef4;
+$muted-text-color : #8a8a8a;
+$border-color     : #f1e4b8;
+$code-background-color : #fff8df;
 $masthead-link-color        : #6b6b6b;
-$masthead-link-color-hover  : #e57399;
+$masthead-link-color-hover  : #c99400;
 
 // 폰트 역할 분리: 제목=이서윤체 / 본문=Pretendard / 코드=D2Coding
 $header-font-family: "LeeSeoyun", "Pretendard Variable", Pretendard, sans-serif;
@@ -27,6 +27,15 @@ $monospace: "D2Coding", "D2 coding", "Courier New", monospace;
 // 기본 스킨 위에 위 변수들을 덮어씀
 @import "minimal-mistakes/skins/default";
 @import "minimal-mistakes";
+
+html {
+  font-size: 15px;
+}
+
+body {
+  background: $background-color;
+  font-size: 0.95rem;
+}
 
 // ─────────────────────────────────────────────
 // ✍️ 웹폰트 로드 (모두 무료, jsDelivr CDN)
@@ -74,14 +83,14 @@ div.highlight pre {
 }
 
 // ─────────────────────────────────────────────
-// 🎀 아기자기한 디테일 (둥근 모서리 + 부드러운 그림자)
+// 아기자기한 디테일 (둥근 모서리 + 부드러운 그림자)
 // ─────────────────────────────────────────────
 
-// 프로필 아바타: 동그랗고 핑크 테두리
+// 프로필 아바타: 동그랗고 노란 테두리
 .author__avatar img {
   border-radius: 50%;
   border: 3px solid $primary-color;
-  box-shadow: 0 3px 10px rgba(244, 143, 177, 0.25);
+  box-shadow: 0 3px 10px rgba(255, 221, 122, 0.4);
 }
 
 // 사이트 제목 살짝 통통하게
@@ -96,11 +105,11 @@ div.highlight pre {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .archive__item:hover {
-  box-shadow: 0 6px 18px rgba(244, 143, 177, 0.18);
+  box-shadow: 0 6px 18px rgba(255, 221, 122, 0.22);
   transform: translateY(-2px);
 }
 
-// 상단 메뉴 밑줄을 부드러운 핑크로
+// 상단 메뉴 밑줄을 부드러운 노랑으로
 .masthead {
   border-bottom: 1px solid $border-color;
 }
@@ -111,14 +120,99 @@ div.highlight pre {
   border-radius: 999px;
 }
 
-// 인용구를 핑크 포인트로
+// 인용구를 노란 포인트로
 blockquote {
   border-left: 4px solid $primary-color;
-  background: #fdeef4;
+  background: #fff8df;
   border-radius: 0 10px 10px 0;
 }
 
 // 링크 hover 시 살짝 통통
 a:hover {
   text-decoration: none;
+}
+
+.page__title {
+  font-size: 1.65rem;
+  line-height: 1.35;
+}
+
+.archive__subtitle {
+  font-size: 1.15rem;
+}
+
+.masthead .site-title {
+  font-size: 1rem;
+}
+
+.masthead .site-subtitle {
+  font-size: 0.68rem;
+}
+
+.greedy-nav a {
+  font-size: 0.95rem;
+}
+
+.sidebar {
+  font-size: 0.88rem;
+}
+
+.home-intro {
+  max-width: 720px;
+  margin-bottom: 2rem;
+}
+
+.home-intro__eyebrow {
+  margin: 0 0 0.6rem;
+  color: $link-color;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.home-intro__title {
+  margin: 0 0 1rem;
+  font-family: $header-font-family;
+  font-size: 1.85rem;
+  line-height: 1.35;
+}
+
+.home-intro__description {
+  margin: 0;
+  color: $text-color;
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.home-focus {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 1.6rem 0 2.2rem;
+}
+
+.home-focus__item {
+  border-top: 2px solid $primary-color;
+  padding-top: 0.8rem;
+}
+
+.home-focus__item h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.1rem;
+}
+
+.home-focus__item p {
+  margin: 0;
+  color: $muted-text-color;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+
+  .home-focus {
+    grid-template-columns: 1fr;
+  }
 }

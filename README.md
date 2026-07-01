@@ -1,11 +1,11 @@
-# 강의 정리 블로그
+# 정리 노트 블로그
 
-강의 내용을 귀엽고 깔끔하게 정리하는 GitHub Pages 블로그.
-[Minimal Mistakes](https://github.com/mmistakes/minimal-mistakes) 테마 + 파스텔 핑크 커스텀 스타일.
+논문 정리와 강의 필기를 깔끔하게 기록하는 GitHub Pages 블로그.
+[Minimal Mistakes](https://github.com/mmistakes/minimal-mistakes) 테마 + 파스텔 노랑 커스텀 스타일.
 
 👉 **사이트: https://minari1505.github.io**
 
-## ✏️ 새 강의 정리 글 쓰는 법
+## ✏️ 새 정리 글 쓰는 법
 
 `_posts/` 폴더에 `YYYY-MM-DD-제목.md` 형식으로 파일을 만들면 끝이에요.
 
@@ -30,7 +30,7 @@ tags:
 - 배운 점
 ```
 
-- `categories`에 적은 이름이 **📚 강의 정리** 메뉴에 묶여요.
+- `categories`에 적은 이름이 **📚 정리 노트** 메뉴에 묶여요.
 - `tags`에 적은 키워드가 **🏷️ 태그** 메뉴에 모여요.
 - 파일을 저장하고 GitHub에 push하면 1~2분 뒤 자동으로 사이트에 반영돼요.
 
