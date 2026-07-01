@@ -18,12 +18,28 @@ $code-background-color : #fdeef4;
 $masthead-link-color        : #6b6b6b;
 $masthead-link-color-hover  : #e57399;
 
-$global-font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR",
+$global-font-family: "LeeSeoyun", "Apple SD Gothic Neo", "Noto Sans KR",
   "Malgun Gothic", sans-serif;
 
 // 기본 스킨 위에 위 변수들을 덮어씀
 @import "minimal-mistakes/skins/default";
 @import "minimal-mistakes";
+
+// ─────────────────────────────────────────────
+// ✍️ 이서윤체 (눈누 무료 폰트, jsDelivr CDN)
+// ─────────────────────────────────────────────
+@font-face {
+  font-family: "LeeSeoyun";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+// 손글씨체라 본문은 아주 살짝 키워서 읽기 편하게
+.page__content {
+  font-size: 1.05em;
+}
 
 // ─────────────────────────────────────────────
 // 🎀 아기자기한 디테일 (둥근 모서리 + 부드러운 그림자)
