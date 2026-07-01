@@ -142,11 +142,12 @@ a:hover {
 }
 
 .masthead .site-title {
-  font-size: 1rem;
+  font-size: 1.22rem;
+  line-height: 1.1;
 }
 
 .masthead .site-subtitle {
-  font-size: 0.68rem;
+  display: none;
 }
 
 .greedy-nav a {
