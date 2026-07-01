@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#fff5fa"/>
+      <stop offset="100%" stop-color="#fde0ec"/>
+    </radialGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <!-- 몸통 -->
+  <ellipse cx="100" cy="118" rx="52" ry="48" fill="#ffe08a"/>
+  <!-- 머리 -->
+  <circle cx="100" cy="78" r="40" fill="#ffe89b"/>
+  <!-- 볼터치 -->
+  <circle cx="72" cy="88" r="9" fill="#ffb3c9" opacity="0.7"/>
+  <circle cx="128" cy="88" r="9" fill="#ffb3c9" opacity="0.7"/>
+  <!-- 눈 -->
+  <circle cx="86" cy="74" r="5.5" fill="#4a4a4a"/>
+  <circle cx="114" cy="74" r="5.5" fill="#4a4a4a"/>
+  <circle cx="88" cy="72" r="1.8" fill="#fff"/>
+  <circle cx="116" cy="72" r="1.8" fill="#fff"/>
+  <!-- 부리 -->
+  <polygon points="100,82 92,90 108,90" fill="#f7a44b"/>
+  <!-- 머리 깃털 -->
+  <path d="M100 38 q4 -12 8 0" stroke="#ffd166" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M92 40 q-3 -10 -8 -2" stroke="#ffd166" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M108 40 q3 -10 8 -2" stroke="#ffd166" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

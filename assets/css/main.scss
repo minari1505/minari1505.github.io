@@ -1,0 +1,76 @@
+---
+# 앞의 빈 front matter 두 줄은 Jekyll이 이 파일을 처리하게 하는 표시예요 (지우지 마세요)
+---
+
+@charset "utf-8";
+
+// ─────────────────────────────────────────────
+// 🌸 파스텔 색상 팔레트 (여기 색만 바꾸면 분위기가 바뀌어요)
+// ─────────────────────────────────────────────
+$primary-color   : #f48fb1;   // 포인트: 소프트 핑크
+$link-color      : #e57399;   // 링크: 살짝 진한 핑크
+$link-color-hover: #d75f89;
+$background-color : #fff9fb;   // 배경: 아주 옅은 핑크빛 화이트
+$text-color       : #4a4a4a;   // 본문: 부드러운 진회색
+$muted-text-color : #9a9a9a;
+$border-color     : #f3e0e8;
+$code-background-color : #fdeef4;
+$masthead-link-color        : #6b6b6b;
+$masthead-link-color-hover  : #e57399;
+
+$global-font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR",
+  "Malgun Gothic", sans-serif;
+
+// 기본 스킨 위에 위 변수들을 덮어씀
+@import "minimal-mistakes/skins/default";
+@import "minimal-mistakes";
+
+// ─────────────────────────────────────────────
+// 🎀 아기자기한 디테일 (둥근 모서리 + 부드러운 그림자)
+// ─────────────────────────────────────────────
+
+// 프로필 아바타: 동그랗고 핑크 테두리
+.author__avatar img {
+  border-radius: 50%;
+  border: 3px solid $primary-color;
+  box-shadow: 0 3px 10px rgba(244, 143, 177, 0.25);
+}
+
+// 사이트 제목 살짝 통통하게
+.site-title {
+  font-weight: 700;
+}
+
+// 카드형 글 목록: 둥근 모서리 + 은은한 그림자
+.archive__item {
+  padding: 0.4em 0.6em;
+  border-radius: 14px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.archive__item:hover {
+  box-shadow: 0 6px 18px rgba(244, 143, 177, 0.18);
+  transform: translateY(-2px);
+}
+
+// 상단 메뉴 밑줄을 부드러운 핑크로
+.masthead {
+  border-bottom: 1px solid $border-color;
+}
+
+// 버튼/태그 알약 모양
+.btn,
+.page__taxonomy-item {
+  border-radius: 999px;
+}
+
+// 인용구를 핑크 포인트로
+blockquote {
+  border-left: 4px solid $primary-color;
+  background: #fdeef4;
+  border-radius: 0 10px 10px 0;
+}
+
+// 링크 hover 시 살짝 통통
+a:hover {
+  text-decoration: none;
+}
