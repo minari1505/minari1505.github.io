@@ -5,7 +5,7 @@ minimal_mistakes_skin : "default"   # 스킨 (색감은 assets/css/main.scss에�
 remote_theme          : "mmistakes/minimal-mistakes"
 
 locale                : "ko-KR"
-title                 : "🌸 강의 정리"
+title                 : "강의 정리"
 title_separator       : "·"
 subtitle              : "차곡차곡 정리하는 강의 노트"
 name                  : "minari"

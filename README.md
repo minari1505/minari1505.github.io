@@ -1,4 +1,4 @@
-# 🌸 강의 정리 블로그
+# 강의 정리 블로그
 
 강의 내용을 귀엽고 깔끔하게 정리하는 GitHub Pages 블로그.
 [Minimal Mistakes](https://github.com/mmistakes/minimal-mistakes) 테마 + 파스텔 핑크 커스텀 스타일.
@@ -22,7 +22,7 @@ tags:
   - 키워드2
 ---
 
-여기에 강의 내용을 정리하면 돼요! 🌸
+여기에 강의 내용을 정리하면 돼요!
 
 ## 소제목
 

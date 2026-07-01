@@ -57,6 +57,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $header-font-family;
 }
 
+// 상단 헤더(제목·부제·메뉴)도 이서윤체
+.masthead .site-title,
+.masthead .site-subtitle,
+.greedy-nav a,
+.greedy-nav .visible-links a,
+.greedy-nav .hidden-links a {
+  font-family: $header-font-family;
+}
+
 // 코드(인라인 + 블록)는 D2Coding
 code, kbd, pre, samp,
 .highlight code,
