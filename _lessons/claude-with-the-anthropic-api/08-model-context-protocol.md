@@ -107,13 +107,166 @@ MCP는 크게 두 계층으로 나눠 생각하면 이해하기 쉽습니다.
 
 핵심은 transport가 달라도 위의 data layer 메시지 구조는 같은 방식으로 유지된다는 점입니다.
 
+## MCP 클라이언트가 하는 일
+
+MCP client는 내 애플리케이션과 MCP server 사이의 통신 다리입니다. 외부 도구나 서비스를 쓰고 싶을 때, client가 MCP server와 메시지를 주고받고 프로토콜 세부 사항을 감춰줍니다.
+
+MCP의 장점 중 하나는 **transport agnostic**이라는 점입니다. 클라이언트와 서버가 꼭 한 방식으로만 통신해야 하는 것이 아닙니다. 가장 흔한 개발 환경에서는 같은 머신에서 client와 server가 실행되고, `stdio`로 통신합니다. 하지만 HTTP, WebSocket, SSE 계열 등 네트워크 transport로도 연결할 수 있습니다.
+
+MCP client/server 사이에서 자주 오가는 메시지는 다음과 같습니다.
+
+- `ListToolsRequest` / `ListToolsResult`: 서버가 제공하는 도구 목록을 조회
+- `CallToolRequest` / `CallToolResult`: 특정 도구를 인자와 함께 실행하고 결과를 받음
+
+예를 들어 사용자가 "내 GitHub repository가 뭐가 있어?"라고 물었다고 해봅시다.
+
+1. 내 앱은 Claude에게 질문을 보내기 전에 MCP server가 제공하는 tool 목록이 필요함
+2. MCP client가 MCP server에 `ListToolsRequest`를 보냄
+3. MCP server가 `ListToolsResult`로 사용 가능한 tool 목록을 반환
+4. 내 앱이 사용자 질문 + tool 목록을 Claude에게 전달
+5. Claude가 필요한 tool을 골라 `tool_use`를 반환
+6. 내 앱이 MCP client에게 해당 tool 실행을 요청
+7. MCP client가 MCP server에 `CallToolRequest`를 보냄
+8. MCP server가 실제 GitHub API를 호출하고 `CallToolResult`를 반환
+9. 내 앱이 tool result를 Claude에게 다시 보내고, Claude가 최종 답변 생성
+
+단계는 많지만 책임은 분명합니다. MCP client는 서버 통신과 프로토콜 처리를 맡고, 내 앱은 사용자 경험과 Claude 대화 흐름에 집중할 수 있습니다.
+
+## 실습 프로젝트: CLI 문서 챗봇
+
+강의에서는 MCP client와 MCP server가 어떻게 함께 동작하는지 이해하기 위해 **CLI 기반 문서 챗봇**을 만듭니다.
+
+구성요소는 두 가지입니다.
+
+- **MCP client**: 사용자 입력을 받고 Claude와 MCP server 사이의 흐름을 조정
+- **Custom MCP server**: 문서 읽기/수정 같은 작업을 tool로 제공
+
+서버는 두 가지 도구를 제공합니다.
+
+- 문서 내용 읽기
+- 문서 내용 업데이트하기
+
+실습에서는 단순화를 위해 문서를 DB에 저장하지 않고 메모리 안의 dictionary에 보관합니다. 실제 프로젝트에서는 보통 MCP client와 server를 모두 직접 만들지는 않습니다. 내 서비스를 다른 AI 앱에서 쓰게 하려면 MCP server를 만들고, 기존 MCP server들을 내 앱에 붙이고 싶다면 MCP client를 만듭니다. 강의에서는 통신 구조를 이해하기 위해 양쪽을 모두 구현합니다.
+
+프로젝트 파일에는 보통 다음이 포함됩니다.
+
+- `main.py`: CLI 앱 진입점
+- `mcp_client.py`: MCP client 구현
+- `mcp_server.py`: MCP server 구현
+
+실행 전에는 `.env`에 Anthropic API key를 넣고, README에 따라 의존성을 설치합니다. 실행은 다음처럼 합니다.
+
+```bash
+# uv 사용 권장
+uv run main.py
+
+# 일반 Python 사용
+python main.py
+```
+
+앱이 뜨면 간단히 `"what's 1+1?"`처럼 물어서 Claude 응답이 정상적으로 오는지 확인합니다. 그다음 MCP tool 연결을 단계적으로 붙입니다.
+
 ## 도구 정의 (Defining tools with MCP)
 
 MCP 서버에서 도구를 정의하면, 연결된 어떤 클라이언트든 그 도구를 발견하고 쓸 수 있어요. 앞 레슨의 tool use와 개념은 같지만 — 이름·설명·입력 스키마 — **서버가 표준 방식으로 노출**한다는 점이 달라요.
 
+Python MCP SDK를 쓰면 긴 JSON schema를 직접 작성하지 않아도 됩니다. decorator와 type hint를 바탕으로 SDK가 Claude에게 필요한 schema를 만들어줍니다.
+
+간단한 MCP server는 다음처럼 시작할 수 있습니다.
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("DocumentMCP", log_level="ERROR")
+```
+
+실습에서는 문서를 메모리 dictionary에 저장합니다.
+
+```python
+docs = {
+    "deposition.md": "This deposition covers the testimony of Angela Smith, P.E.",
+    "report.pdf": "The report details the state of a 20m condenser tower.",
+    "financials.docx": "These financials outline the project's budget and expenditure",
+    "plan.md": "The plan outlines the steps for the project's implementation.",
+}
+```
+
+### 문서 읽기 도구
+
+```python
+@mcp.tool(
+    name="read_doc_contents",
+    description="Read the contents of a document and return it as a string.",
+)
+def read_document(
+    doc_id: str = Field(description="Id of the document to read"),
+):
+    if doc_id not in docs:
+        raise ValueError(f"Doc with id {doc_id} not found")
+
+    return docs[doc_id]
+```
+
+`@mcp.tool` decorator가 tool 정의를 MCP 형식으로 노출하고, `Field` description은 Claude가 인자의 의미를 이해하는 데 도움을 줍니다.
+
+### 문서 수정 도구
+
+```python
+@mcp.tool(
+    name="edit_document",
+    description="Edit a document by replacing a string in the documents content with a new string.",
+)
+def edit_document(
+    doc_id: str = Field(description="Id of the document that will be edited"),
+    old_str: str = Field(description="The text to replace. Must match exactly, including whitespace."),
+    new_str: str = Field(description="The new text to insert in place of the old text."),
+):
+    if doc_id not in docs:
+        raise ValueError(f"Doc with id {doc_id} not found")
+
+    docs[doc_id] = docs[doc_id].replace(old_str, new_str)
+```
+
+이 도구는 문서 ID, 정확히 일치해야 하는 기존 문자열, 새 문자열을 받아 Python의 `replace()`로 수정합니다. 존재하지 않는 문서 ID가 들어오면 `ValueError`를 던져 Claude가 문제를 이해하고 다시 시도하거나 사용자에게 설명할 수 있게 합니다.
+
+SDK 방식의 장점은 명확합니다.
+
+- Python type hint 기반 schema 자동 생성
+- Pydantic `Field`를 통한 인자 설명/검증
+- 수동 JSON schema 작성보다 적은 boilerplate
+- 일반 Python 함수처럼 읽히고 테스트하기 쉬움
+
 ## 서버 인스펙터 (Server inspector)
 
 MCP 서버를 개발할 때 **인스펙터** 도구로 서버가 노출한 도구·자원·프롬프트를 직접 확인하고 테스트할 수 있어요. 클라이언트를 붙이기 전에 서버가 잘 동작하는지 점검해요.
+
+Python MCP SDK에는 브라우저 기반 inspector가 포함되어 있습니다. 전체 앱을 붙이기 전에 MCP server의 tool, resource, prompt를 독립적으로 테스트할 수 있습니다.
+
+프로젝트의 Python 환경을 활성화한 뒤 다음 명령을 실행합니다.
+
+```bash
+mcp dev mcp_server.py
+```
+
+그러면 보통 6277번 포트에서 개발 서버가 뜨고, 브라우저에서 열 수 있는 로컬 URL이 출력됩니다. Inspector UI는 계속 발전 중이라 화면은 강의 스크린샷과 다를 수 있지만 핵심 흐름은 비슷합니다.
+
+기본 사용 흐름은 다음과 같습니다.
+
+1. 왼쪽에서 `Connect` 클릭
+2. `Tools` 섹션으로 이동
+3. `List Tools`로 서버가 노출한 도구 확인
+4. 테스트할 tool 선택
+5. 필요한 parameter 입력
+6. `Run Tool`로 실행하고 결과 확인
+
+예를 들어 `read_doc_contents` 도구를 테스트하려면 `deposition.md` 같은 문서 ID를 넣고 실행합니다. 결과로 문서 내용이 반환되는지 확인합니다. 이후 `edit_document`로 문자열을 바꾸고, 다시 `read_doc_contents`를 실행해 변경이 반영됐는지 확인할 수 있습니다.
+
+Inspector는 개발 루프를 짧게 만듭니다.
+
+- MCP server 코드를 수정
+- Inspector에서 개별 tool만 빠르게 테스트
+- 전체 Claude 앱 연결 없이 결과 확인
+- 문제를 server 단에서 분리해 디버깅
 
 ## 클라이언트 구현 (Implementing a client)
 
