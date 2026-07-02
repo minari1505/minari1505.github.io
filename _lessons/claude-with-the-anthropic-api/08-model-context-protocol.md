@@ -276,10 +276,206 @@ Inspector는 개발 루프를 짧게 만듭니다.
 2. Claude에게 그것들을 도구로 넘겨 사용하게 하고
 3. Claude가 도구를 호출하면 서버에 실행을 위임하고 결과를 되돌려요
 
+실습 코드에서는 MCP Python SDK의 **Client Session**을 직접 쓰기보다, 이를 감싸는 커스텀 `MCPClient` 클래스를 만듭니다.
+
+- **Client Session**: MCP server와 실제로 연결된 세션. SDK가 제공
+- **MCPClient**: 앱 코드가 쓰기 쉬운 메서드로 감싸고, 연결 정리까지 책임지는 wrapper
+
+세션은 사용 후 정리가 필요하므로 `async with` 형태로 다루는 것이 안전합니다.
+
+```python
+async with MCPClient(
+    command="uv",
+    args=["run", "mcp_server.py"],
+) as client:
+    tools = await client.list_tools()
+    print(tools)
+```
+
+앱에서 MCP client가 제공해야 하는 핵심 메서드는 우선 두 가지입니다.
+
+### `list_tools()`
+
+서버가 제공하는 tool 목록을 가져옵니다.
+
+```python
+async def list_tools(self) -> list[types.Tool]:
+    result = await self.session().list_tools()
+    return result.tools
+```
+
+이 결과를 Claude API의 `tools` 인자로 변환해 넘기면, Claude가 어떤 tool을 사용할 수 있는지 알 수 있습니다.
+
+### `call_tool()`
+
+Claude가 특정 tool을 호출하겠다고 하면, 앱은 MCP client를 통해 MCP server에 실행을 위임합니다.
+
+```python
+async def call_tool(
+    self,
+    tool_name: str,
+    tool_input: dict,
+) -> types.CallToolResult | None:
+    return await self.session().call_tool(tool_name, tool_input)
+```
+
+전체 흐름은 다음과 같습니다.
+
+1. 앱이 `list_tools()`로 MCP server의 tool 목록을 가져옴
+2. 사용자 질문과 tool 목록을 Claude에게 보냄
+3. Claude가 `read_doc_contents` 같은 tool use를 반환
+4. 앱이 `call_tool()`로 MCP server에 실행 요청
+5. tool 결과를 다시 Claude에게 보내 최종 답변 생성
+
+예를 들어 사용자가 `"What is the contents of the report.pdf document?"`라고 물으면 Claude는 문서 읽기 tool이 필요하다고 판단하고, 앱은 MCP client를 통해 `read_doc_contents`를 실행합니다.
+
 ## 자원과 프롬프트 (Resources & Prompts)
 
 - **자원 접근**: 서버가 노출한 파일·데이터를 URI로 읽어와 프롬프트에 넣을 수 있어요.
 - **프롬프트**: 서버가 제공하는 프롬프트 템플릿을 클라이언트에서 불러 사용해요. 팀이 검증한 프롬프트를 재사용하기 좋아요.
+
+## 리소스 정의와 접근
+
+MCP의 **resources**는 tool처럼 "행동"을 수행하기보다, 서버가 가진 데이터를 클라이언트가 읽을 수 있게 노출하는 기능입니다. 일반 HTTP 서버의 GET handler와 비슷하게 생각하면 됩니다.
+
+문서 챗봇 예시에서는 `@document_name` 멘션 기능을 만들 수 있습니다.
+
+- 사용자가 `@`를 입력하면 사용 가능한 문서 목록을 보여줌
+- 사용자가 `@report.pdf`를 언급하면 해당 문서 내용을 가져와 Claude 프롬프트에 직접 삽입
+
+이 경우 Claude가 tool call로 문서를 읽게 할 수도 있지만, resource를 쓰면 앱이 먼저 문서를 읽어서 Claude에게 context로 넣을 수 있습니다. 단순 조회 데이터라면 tool 호출보다 더 직접적입니다.
+
+### 리소스 종류
+
+MCP resource는 크게 두 가지입니다.
+
+- **Direct resource**: 고정 URI. 예: `docs://documents`
+- **Templated resource**: 파라미터가 있는 URI. 예: `docs://documents/{doc_id}`
+
+Templated resource에서는 URI의 `{doc_id}`가 함수 인자로 자동 전달됩니다.
+
+### 문서 목록 리소스
+
+```python
+@mcp.resource(
+    "docs://documents",
+    mime_type="application/json",
+)
+def list_docs() -> list[str]:
+    return list(docs.keys())
+```
+
+문서 목록은 구조화 데이터이므로 `application/json` MIME type을 사용합니다. Python SDK가 반환값을 알아서 직렬화하므로 직접 JSON 문자열로 바꿀 필요는 없습니다.
+
+### 문서 내용 리소스
+
+```python
+@mcp.resource(
+    "docs://documents/{doc_id}",
+    mime_type="text/plain",
+)
+def fetch_doc(doc_id: str) -> str:
+    if doc_id not in docs:
+        raise ValueError(f"Doc with id {doc_id} not found")
+
+    return docs[doc_id]
+```
+
+문서 본문은 일반 텍스트이므로 `text/plain`을 사용합니다. 리소스도 Inspector에서 테스트할 수 있고, Resources에는 direct resource가, Resource Templates에는 파라미터가 있는 resource가 표시됩니다.
+
+### 클라이언트에서 리소스 읽기
+
+MCP client에는 resource URI를 받아 서버에서 내용을 읽어오는 메서드가 필요합니다.
+
+```python
+import json
+from pydantic import AnyUrl
+```
+
+```python
+async def read_resource(self, uri: str) -> Any:
+    result = await self.session().read_resource(AnyUrl(uri))
+    resource = result.contents[0]
+
+    if isinstance(resource, types.TextResourceContents):
+        if resource.mimeType == "application/json":
+            return json.loads(resource.text)
+
+        return resource.text
+```
+
+서버 응답의 `contents`는 리스트입니다. 보통 첫 번째 요소에 실제 resource 데이터와 MIME type 같은 메타데이터가 들어 있습니다. MIME type을 보고 JSON은 Python 객체로 파싱하고, plain text는 문자열로 반환합니다.
+
+CLI에서는 `"What's in the @report.pdf document?"`처럼 입력했을 때 다음 흐름이 됩니다.
+
+1. 앱이 사용 가능한 resources를 autocomplete로 보여줌
+2. 사용자가 `@report.pdf`를 선택
+3. 앱이 MCP client의 `read_resource()`로 문서 내용을 가져옴
+4. 가져온 내용을 Claude에게 보낼 prompt에 직접 포함
+
+이 방식의 장점은 Claude가 문서 내용을 얻기 위해 별도 tool call을 하지 않아도 된다는 점입니다. 앱이 필요한 context를 미리 넣어주므로 더 빠르고 단순한 흐름을 만들 수 있습니다.
+
+## MCP 프롬프트
+
+MCP의 **prompts**는 서버가 클라이언트에게 제공하는 재사용 가능한 메시지 템플릿입니다. 단순 문자열이 아니라, user/assistant 메시지들의 묶음으로 볼 수 있습니다.
+
+좋은 MCP prompt는 다음 조건을 만족해야 합니다.
+
+- 서버의 목적과 직접 관련 있음
+- 충분히 테스트되어 있음
+- 명확하고 구체적인 지시를 포함
+- 서버가 제공하는 tools/resources와 잘 맞음
+- 필요한 인자를 사용자가 제공할 수 있게 설계됨
+
+### 프롬프트 목록 조회
+
+클라이언트에서 서버가 제공하는 prompt 목록을 가져옵니다.
+
+```python
+async def list_prompts(self) -> list[types.Prompt]:
+    result = await self.session().list_prompts()
+    return result.prompts
+```
+
+CLI에서는 사용자가 `/`를 입력했을 때 사용 가능한 prompt를 command처럼 보여줄 수 있습니다.
+
+### 개별 프롬프트 가져오기
+
+특정 prompt를 가져올 때는 필요한 인자를 함께 넘깁니다.
+
+```python
+async def get_prompt(self, prompt_name, args: dict[str, str]):
+    result = await self.session().get_prompt(prompt_name, args)
+    return result.messages
+```
+
+서버 쪽 prompt 함수가 `doc_id` 같은 인자를 받는다면:
+
+```python
+def format_document(doc_id: str):
+    ...
+```
+
+클라이언트는 다음처럼 인자를 전달합니다.
+
+```python
+messages = await client.get_prompt(
+    "format",
+    {"doc_id": "report.pdf"},
+)
+```
+
+MCP server는 이 인자를 prompt 함수에 keyword argument로 전달하고, 값이 삽입된 메시지 목록을 반환합니다. 이 메시지 목록은 Claude에게 그대로 보낼 수 있습니다.
+
+CLI 흐름은 다음과 같습니다.
+
+1. 사용자가 `/format` 같은 prompt를 선택
+2. 앱이 필요한 인자, 예를 들어 문서 ID를 물어봄
+3. `get_prompt()`로 인자가 반영된 메시지 목록을 가져옴
+4. 그 메시지를 Claude에게 보내 작업 시작
+5. Claude는 필요하면 MCP tool을 사용해 추가 데이터를 가져오고 작업을 완료
+
+Prompt는 "완전히 고정된 명령"과 "매번 새로 쓰는 자유 입력" 사이의 좋은 절충안입니다. 팀이 검증한 workflow를 제공하면서도, `doc_id` 같은 인자로 동적으로 사용할 수 있습니다.
 
 ## MCP와 API의 관계
 
@@ -319,5 +515,6 @@ response = client.beta.messages.create(
 - MCP = 도구·자원·프롬프트를 연결하는 **표준 프로토콜** ("AI의 USB-C").
 - Host 안의 MCP client가 MCP server에 연결하고, server가 기능을 제공하는 구조.
 - 3가지 제공물: **Tools**(실행), **Resources**(데이터), **Prompts**(템플릿).
+- client는 `list_tools()`/`call_tool()`로 tool 흐름을 연결하고, `read_resource()`/`get_prompt()`로 context와 템플릿을 가져옵니다.
 - local server는 보통 `stdio`, remote server는 HTTP 기반 transport를 사용.
 - 인스펙터로 서버를 점검하고, 클라이언트나 Claude API MCP connector로 Claude에 연결해요.
