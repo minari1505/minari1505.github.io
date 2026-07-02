@@ -42,3 +42,56 @@ courses:
         slug: troubleshooting-skills
         title: "Troubleshooting skills"
         ko: "트러블슈팅"
+
+  - slug: claude-with-the-anthropic-api
+    track: anthropic
+    num: "02"
+    title: "Building with the Claude API"
+    description: "Claude API로 애플리케이션 만들기 — 요청·프롬프트 평가/엔지니어링·도구 사용·RAG·MCP·에이전트 워크플로우까지."
+    source: https://anthropic.skilljar.com/claude-with-the-anthropic-api
+    done: true
+    lessons:
+      - num: "01"
+        slug: introduction
+        title: "Introduction"
+        ko: "소개 — Claude와 모델 개요"
+      - num: "02"
+        slug: accessing-claude-with-the-api
+        title: "Accessing Claude with the API"
+        ko: "API로 Claude 사용하기"
+      - num: "03"
+        slug: prompt-evaluation
+        title: "Prompt Evaluation"
+        ko: "프롬프트 평가(Eval)"
+      - num: "04"
+        slug: prompt-engineering-techniques
+        title: "Prompt Engineering Techniques"
+        ko: "프롬프트 엔지니어링 기법"
+      - num: "05"
+        slug: tool-use-with-claude
+        title: "Tool Use with Claude"
+        ko: "도구 사용(Tool Use)"
+      - num: "06"
+        slug: rag-and-agentic-search
+        title: "RAG and Agentic Search"
+        ko: "RAG와 에이전틱 검색"
+      - num: "07"
+        slug: features-of-claude
+        title: "Features of Claude"
+        ko: "Claude의 기능들"
+      - num: "08"
+        slug: model-context-protocol
+        title: "Model Context Protocol"
+        ko: "MCP (Model Context Protocol)"
+      - num: "09"
+        slug: anthropic-apps
+        title: "Anthropic Apps — Claude Code & Computer Use"
+        ko: "Claude Code와 Computer Use"
+      - num: "10"
+        slug: agents-and-workflows
+        title: "Agents and Workflows"
+        ko: "에이전트와 워크플로우"
+      - num: "11"
+        slug: final-assessment
+        title: "Final Assessment & Wrap Up"
+        ko: "마무리 & 정리"
