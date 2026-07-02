@@ -92,6 +92,10 @@ defaults:
     values:
       layout: lesson
       author_profile: false
+      tags:
+        - Anthropic
+        - Claude
+        - 강의
 
 category_archive:
   type: liquid

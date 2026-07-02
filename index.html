@@ -50,9 +50,15 @@ author_profile: false
           {% if lesson.title_ko %} — {{ lesson.title_ko }}{% endif %}
         </p>
         <div class="home-entry__tags" aria-label="태그">
-          <span>#Anthropic</span>
-          <span>#Claude</span>
-          <span>#강의</span>
+          {% if lesson.tags %}
+          {% assign lesson_tags = lesson.tags %}
+          {% else %}
+          {% assign lesson_tags = "Anthropic|Claude|강의" | split: "|" %}
+          {% endif %}
+          {% for tag in lesson_tags %}
+          {% assign tag_id = tag | downcase | replace: ' ', '-' %}
+          <a href="{{ '/tags/#' | append: tag_id | relative_url }}">#{{ tag }}</a>
+          {% endfor %}
         </div>
         <a class="home-entry__more home-entry__more--inline" href="{{ lesson.url | relative_url }}">더 읽기 →</a>
       </article>
