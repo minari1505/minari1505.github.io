@@ -5,6 +5,24 @@
 
 👉 **사이트: https://minari1505.github.io**
 
+## 🎓 강의 정리 (/courses/) 쓰는 법
+
+강의는 포스트가 아니라 **레슨 컬렉션**으로 정리해요. junoflows.github.io/courses/anthropic/ 구조를 참고했어요.
+
+1. `_data/courses.yml`에 강의(course)와 레슨 목록을 등록 (사이드바 커리큘럼 순서가 여기서 나와요)
+2. `_lessons/<강의slug>/<NN>-<레슨slug>.md`에 레슨 본문 작성. frontmatter:
+
+   ```yaml
+   ---
+   title: "What are skills?"      # 영어 원제
+   title_ko: "Skill이란 무엇인가?"  # 한글 부제
+   course: agent-skills            # courses.yml의 slug
+   lesson: 1                       # 레슨 번호 (숫자)
+   ---
+   ```
+
+3. push하면 `/courses/<강의slug>/<NN>-<레슨slug>/`에 사이드바(진행률+커리큘럼) 딸린 페이지가 생겨요.
+
 ## ✏️ 새 정리 글 쓰는 법
 
 `_posts/` 폴더에 `YYYY-MM-DD-제목.md` 형식으로 파일을 만들면 끝이에요.

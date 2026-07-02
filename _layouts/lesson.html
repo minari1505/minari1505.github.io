@@ -1,0 +1,65 @@
+---
+layout: default
+---
+{% assign course = site.data.courses.courses | where: "slug", page.course | first %}
+{% assign track = site.data.courses.tracks | where: "slug", course.track | first %}
+{% assign course_lessons = site.lessons | where: "course", page.course | sort: "lesson" %}
+{% assign total = course.lessons | size %}
+{% assign pct = page.lesson | times: 100.0 | divided_by: total %}
+
+<div class="course-shell lesson-layout">
+  <aside class="lesson-sidebar">
+    <a class="lesson-sidebar__back" href="{{ track.url | relative_url }}">← {{ track.title | upcase }}</a>
+    <p class="lesson-sidebar__label">{{ track.label }}</p>
+    <h2 class="lesson-sidebar__course">{{ course.title }}</h2>
+    <p class="lesson-sidebar__desc">{{ course.description }}</p>
+    <a class="lesson-sidebar__source" href="{{ course.source }}" target="_blank" rel="noopener">원문 강의 (영어) ↗</a>
+
+    <div class="lesson-progress">
+      <div class="lesson-progress__bar"><span style="width: {{ pct }}%"></span></div>
+      <div class="lesson-progress__meta">
+        <span>레슨 {{ page.lesson | prepend: '0' | slice: -2, 2 }} / {{ total | prepend: '0' | slice: -2, 2 }}</span>
+        <span>전체 정리 완료</span>
+      </div>
+    </div>
+
+    <nav class="lesson-toc" aria-label="커리큘럼">
+      <p class="lesson-toc__head">CURRICULUM</p>
+      <ul>
+        {% for l in course.lessons %}
+        {% assign lnum = forloop.index %}
+        <li class="{% if lnum == page.lesson %}is-current{% endif %}">
+          <a href="{{ '/courses/' | append: course.slug | append: '/' | append: l.num | append: '-' | append: l.slug | append: '/' | relative_url }}">
+            <span class="lesson-toc__dot {% if lnum <= page.lesson %}is-done{% endif %}"></span>
+            {{ l.ko }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="lesson-main">
+    <p class="lesson-breadcrumb">{{ course.title | upcase }} · 레슨 {{ page.lesson | prepend: '0' | slice: -2, 2 }}</p>
+    <span class="lesson-watermark" aria-hidden="true">{{ page.lesson | prepend: '0' | slice: -2, 2 }}</span>
+    <h1 class="lesson-title">{{ page.title }}</h1>
+    {% if page.title_ko %}<p class="lesson-subtitle">{{ page.title_ko }}</p>{% endif %}
+
+    <div class="lesson-body">
+      {{ content }}
+    </div>
+
+    <nav class="lesson-pager">
+      {% assign prev_i = page.lesson | minus: 2 %}
+      {% assign next_i = page.lesson %}
+      {% if page.lesson > 1 %}
+        {% assign prev = course.lessons[prev_i] %}
+        <a class="lesson-pager__link" href="{{ '/courses/' | append: course.slug | append: '/' | append: prev.num | append: '-' | append: prev.slug | append: '/' | relative_url }}">← {{ prev.ko }}</a>
+      {% else %}<span></span>{% endif %}
+      {% if page.lesson < total %}
+        {% assign next = course.lessons[next_i] %}
+        <a class="lesson-pager__link lesson-pager__link--next" href="{{ '/courses/' | append: course.slug | append: '/' | append: next.num | append: '-' | append: next.slug | append: '/' | relative_url }}">{{ next.ko }} →</a>
+      {% endif %}
+    </nav>
+  </article>
+</div>

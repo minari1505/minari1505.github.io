@@ -1,0 +1,44 @@
+# 강의 정리 데이터
+# tracks: 허브(/courses/)에 보이는 큰 카드
+# courses: 각 트랙 안의 강의 목록 (lessons 순서 = 사이드바 커리큘럼 순서)
+
+tracks:
+  - slug: anthropic
+    label: "ANTHROPIC ACADEMY"
+    title: "Anthropic Courses"
+    description: "Anthropic 공식 영어 강의 — CCA-F 자격증 대비로 한글로 옮겨 정리합니다."
+    url: /courses/anthropic/
+
+courses:
+  - slug: agent-skills
+    track: anthropic
+    num: "01"
+    title: "Introduction to agent skills"
+    description: "재사용 가능한 마크다운 지시서(Skill) 만들기 — 생성·설정·멀티 파일·공유·트러블슈팅까지."
+    source: https://anthropic.skilljar.com/introduction-to-agent-skills
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-are-skills
+        title: "What are skills?"
+        ko: "Skill이란 무엇인가?"
+      - num: "02"
+        slug: creating-your-first-skill
+        title: "Creating your first skill"
+        ko: "첫 Skill 만들기"
+      - num: "03"
+        slug: configuration-and-multi-file-skills
+        title: "Configuration and multi-file skills"
+        ko: "설정과 멀티 파일 Skill"
+      - num: "04"
+        slug: skills-vs-other-claude-code-features
+        title: "Skills vs. other Claude Code features"
+        ko: "Skill vs 다른 Claude Code 기능"
+      - num: "05"
+        slug: sharing-skills
+        title: "Sharing skills"
+        ko: "Skill 공유하기"
+      - num: "06"
+        slug: troubleshooting-skills
+        title: "Troubleshooting skills"
+        ko: "트러블슈팅"

@@ -49,6 +49,12 @@ timezone: Asia/Seoul
 include:
   - _pages
 
+# 강의 정리 — 레슨 컬렉션 (/courses/<강의>/<레슨>/)
+collections:
+  lessons:
+    output: true
+    permalink: /courses/:path/
+
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
@@ -79,6 +85,13 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # _lessons — 강의 레슨 페이지
+  - scope:
+      path: ""
+      type: lessons
+    values:
+      layout: lesson
+      author_profile: false
 
 category_archive:
   type: liquid
