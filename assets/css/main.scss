@@ -197,8 +197,21 @@ a:hover {
 }
 
 .home-focus__item {
+  display: block;
   border-top: 2px solid $primary-color;
   padding-top: 0.8rem;
+  color: $text-color;
+  text-decoration: none;
+
+  &:hover,
+  &:visited {
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:hover .home-focus__cta {
+    color: $link-color-hover;
+  }
 }
 
 .home-focus__item h2 {
@@ -207,10 +220,29 @@ a:hover {
 }
 
 .home-focus__item p {
-  margin: 0;
+  margin: 0 0 0.6rem;
   color: $muted-text-color;
   font-size: 0.9rem;
   line-height: 1.65;
+}
+
+.home-focus__cta {
+  font-family: $monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: $link-color;
+}
+
+.home-latest__line {
+  margin: 0 0 2rem;
+  font-size: 0.92rem;
+
+  a { text-decoration: none; }
+}
+
+.home-latest__count {
+  color: $muted-text-color;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 600px) {
