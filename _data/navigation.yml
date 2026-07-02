@@ -4,7 +4,7 @@ main:
     url: /
   - title: "🎓 강의 정리"
     url: /courses/
-  - title: "📚 정리 노트"
+  - title: "📚 논문 정리"
     url: /categories/
   - title: "🏷️ 태그"
     url: /tags/
