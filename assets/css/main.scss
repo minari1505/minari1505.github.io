@@ -137,6 +137,11 @@ a:hover {
   line-height: 1.35;
 }
 
+// 제목이 없는 페이지(홈 등)에서 빈 제목 껍데기가 여백을 만들지 않도록 숨김
+.page__title:empty {
+  display: none;
+}
+
 .archive__subtitle {
   font-size: 1.15rem;
 }
