@@ -133,3 +133,11 @@ courses:
         slug: introduction
         title: "Introduction"
         ko: "소개"
+      - num: "02"
+        slug: hands-on-with-mcp-servers
+        title: "Hands-on with MCP servers"
+        ko: "MCP 서버 실습"
+      - num: "03"
+        slug: connecting-with-mcp-clients
+        title: "Connecting with MCP clients"
+        ko: "MCP 클라이언트 연결"
