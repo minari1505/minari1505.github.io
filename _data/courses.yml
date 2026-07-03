@@ -127,7 +127,7 @@ courses:
     title: "Introduction to Model Context Protocol"
     description: "MCP의 기본 개념과 아키텍처 — MCP client/server, tool discovery, tool execution 흐름까지."
     source: https://anthropic.skilljar.com/introduction-to-model-context-protocol
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: introduction
@@ -141,3 +141,7 @@ courses:
         slug: connecting-with-mcp-clients
         title: "Connecting with MCP clients"
         ko: "MCP 클라이언트 연결"
+      - num: "04"
+        slug: assessment-and-wrap-up
+        title: "Assessment and Wrap Up"
+        ko: "평가 & 마무리"
