@@ -24,10 +24,16 @@ author_profile: false
     <div class="course-card course-card--grid">
       <div class="course-card__meta">
         <span class="course-card__label">{{ c.num }}</span>
-        {% if c.done %}<span class="course-badge">✓ 정리 완료</span>{% else %}<span class="course-badge course-badge--todo">정리 예정</span>{% endif %}
+        {% if c.done %}
+          <span class="course-badge">✓ 정리 완료</span>
+        {% elsif first %}
+          <span class="course-badge course-badge--todo">정리 중</span>
+        {% else %}
+          <span class="course-badge course-badge--todo">정리 예정</span>
+        {% endif %}
       </div>
       <h2 class="course-card__title">
-        {% if c.done %}<a href="{{ '/courses/' | append: c.slug | append: '/' | append: first.num | append: '-' | append: first.slug | append: '/' | relative_url }}">{{ c.title }}</a>{% else %}{{ c.title }}{% endif %}
+        {% if first %}<a href="{{ '/courses/' | append: c.slug | append: '/' | append: first.num | append: '-' | append: first.slug | append: '/' | relative_url }}">{{ c.title }}</a>{% else %}{{ c.title }}{% endif %}
       </h2>
       <p class="course-card__desc">{{ c.description }}</p>
       <a class="course-card__source" href="{{ c.source }}" target="_blank" rel="noopener">원문 ↗</a>

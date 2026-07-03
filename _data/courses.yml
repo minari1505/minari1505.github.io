@@ -95,3 +95,16 @@ courses:
         slug: final-assessment
         title: "Final Assessment & Wrap Up"
         ko: "마무리 & 정리"
+
+  - slug: claude-code-in-action
+    track: anthropic
+    num: "03"
+    title: "Claude Code in Action"
+    description: "Claude Code의 동작 원리와 실제 사용법 — 코딩 assistant의 tool use, 내장 도구, 실습 워크플로우, hooks와 SDK까지."
+    source: https://anthropic.skilljar.com/claude-code-in-action
+    done: false
+    lessons:
+      - num: "01"
+        slug: what-is-claude-code
+        title: "What Is Claude Code?"
+        ko: "Claude Code란 무엇인가?"
