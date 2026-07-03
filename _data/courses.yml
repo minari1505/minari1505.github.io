@@ -108,3 +108,11 @@ courses:
         slug: what-is-claude-code
         title: "What Is Claude Code?"
         ko: "Claude Code란 무엇인가?"
+      - num: "02"
+        slug: getting-hands-on
+        title: "Getting hands on"
+        ko: "직접 실습하기"
+      - num: "03"
+        slug: hooks-and-the-sdk
+        title: "Hooks and the SDK"
+        ko: "Hooks와 SDK"
