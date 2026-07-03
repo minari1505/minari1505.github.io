@@ -430,3 +430,28 @@ courses:
         slug: next-steps
         title: "Next Steps"
         ko: "정리와 다음 단계"
+
+  - slug: introduction-to-subagents
+    track: anthropic
+    num: "10"
+    title: "Introduction to subagents"
+    description: "Claude Code 서브에이전트 — 격리된 context에서 작업을 위임하는 법, 생성·설계·효과적 활용과 안티패턴까지."
+    source: https://anthropic.skilljar.com/introduction-to-subagents
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-are-subagents
+        title: "What are subagents?"
+        ko: "서브에이전트란?"
+      - num: "02"
+        slug: creating-a-subagent
+        title: "Creating a subagent"
+        ko: "서브에이전트 만들기"
+      - num: "03"
+        slug: designing-effective-subagents
+        title: "Designing effective subagents"
+        ko: "효과적인 서브에이전트 설계"
+      - num: "04"
+        slug: using-subagents-effectively
+        title: "Using subagents effectively"
+        ko: "서브에이전트 잘 활용하기"
