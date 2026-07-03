@@ -504,3 +504,20 @@ courses:
         slug: wrapping-up
         title: "Wrapping up"
         ko: "정리"
+
+  - slug: claude-in-amazon-bedrock
+    track: anthropic
+    num: "12"
+    title: "Claude with Amazon Bedrock"
+    description: "Amazon Bedrock 고유 부분만 — Bedrock 모델 ID, boto3 bedrock-runtime, inference profile(cross-region), converse API. (일반 API 개념은 Building with the Claude API 참고)"
+    source: https://anthropic.skilljar.com/claude-in-amazon-bedrock
+    done: true
+    lessons:
+      - num: "01"
+        slug: claude-models-on-bedrock
+        title: "Claude models on Amazon Bedrock"
+        ko: "Bedrock의 Claude 모델과 모델 ID"
+      - num: "02"
+        slug: accessing-claude-on-bedrock
+        title: "Accessing Claude on Amazon Bedrock"
+        ko: "Bedrock에서 Claude 접속과 요청"
