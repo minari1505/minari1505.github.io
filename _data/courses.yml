@@ -521,3 +521,20 @@ courses:
         slug: accessing-claude-on-bedrock
         title: "Accessing Claude on Amazon Bedrock"
         ko: "Bedrock에서 Claude 접속과 요청"
+
+  - slug: claude-with-google-vertex
+    track: anthropic
+    num: "13"
+    title: "Claude with Google Vertex AI"
+    description: "Vertex AI 고유 부분만 — Model Garden 활성화·gcloud 인증, anthropic[vertex] SDK, AnthropicVertex 클라이언트, 모델 ID(claude-...@date). (일반 API 개념은 Building with the Claude API 참고)"
+    source: https://anthropic.skilljar.com/claude-with-google-vertex
+    done: true
+    lessons:
+      - num: "01"
+        slug: vertex-ai-setup
+        title: "Vertex AI Setup"
+        ko: "Vertex AI 설정과 인증"
+      - num: "02"
+        slug: accessing-claude-on-vertex
+        title: "Accessing Claude on Vertex AI"
+        ko: "Vertex에서 Claude 접속과 요청"
