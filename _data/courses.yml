@@ -102,7 +102,7 @@ courses:
     title: "Claude Code in Action"
     description: "Claude Code의 동작 원리와 실제 사용법 — 코딩 assistant의 tool use, 내장 도구, 실습 워크플로우, hooks와 SDK까지."
     source: https://anthropic.skilljar.com/claude-code-in-action
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: what-is-claude-code
@@ -116,3 +116,20 @@ courses:
         slug: hooks-and-the-sdk
         title: "Hooks and the SDK"
         ko: "Hooks와 SDK"
+      - num: "04"
+        slug: wrapping-up
+        title: "Wrapping up"
+        ko: "마무리 & 정리"
+
+  - slug: introduction-to-model-context-protocol
+    track: anthropic
+    num: "04"
+    title: "Introduction to Model Context Protocol"
+    description: "MCP의 기본 개념과 아키텍처 — MCP client/server, tool discovery, tool execution 흐름까지."
+    source: https://anthropic.skilljar.com/introduction-to-model-context-protocol
+    done: false
+    lessons:
+      - num: "01"
+        slug: introduction
+        title: "Introduction"
+        ko: "소개"
