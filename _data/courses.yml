@@ -198,3 +198,190 @@ courses:
         slug: more-ways-to-work-with-claude
         title: "More ways to work with Claude"
         ko: "Claude를 사용하는 다른 방법들"
+      - num: "12"
+        slug: conclusion-and-certificate
+        title: "What's next?"
+        ko: "정리와 다음 단계"
+
+  - slug: claude-code-101
+    track: anthropic
+    num: "06"
+    title: "Claude Code 101"
+    description: "Claude Code 입문 — agentic loop, 설치, explore·plan·code·commit 워크플로우, context 관리, CLAUDE.md, 서브에이전트, MCP, hooks까지."
+    source: https://anthropic.skilljar.com/claude-code-101
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-is-claude-code
+        title: "What is Claude Code?"
+        ko: "Claude Code란?"
+      - num: "02"
+        slug: how-claude-code-works
+        title: "How Claude Code works"
+        ko: "Claude Code의 동작 원리"
+      - num: "03"
+        slug: installing-claude-code
+        title: "Installing Claude Code"
+        ko: "Claude Code 설치하기"
+      - num: "04"
+        slug: your-first-prompt
+        title: "Your first prompt"
+        ko: "첫 prompt 작성하기"
+      - num: "05"
+        slug: explore-plan-code-commit
+        title: "The explore → plan → code → commit workflow"
+        ko: "탐색 → 계획 → 코딩 → 커밋 workflow"
+      - num: "06"
+        slug: context-management
+        title: "Context management"
+        ko: "context 관리"
+      - num: "07"
+        slug: code-review
+        title: "Code review"
+        ko: "코드 리뷰"
+      - num: "08"
+        slug: claude-md-file
+        title: "The CLAUDE.md file"
+        ko: "CLAUDE.md 파일"
+      - num: "09"
+        slug: subagents
+        title: "Subagents"
+        ko: "서브에이전트"
+      - num: "10"
+        slug: skills
+        title: "Skills"
+        ko: "Skills"
+      - num: "11"
+        slug: mcp
+        title: "MCP"
+        ko: "MCP (Model Context Protocol)"
+      - num: "12"
+        slug: hooks
+        title: "Hooks"
+        ko: "Hooks"
+
+  - slug: introduction-to-claude-cowork
+    track: anthropic
+    num: "07"
+    title: "Introduction to Claude Cowork"
+    description: "Claude Cowork 입문 — 위임 개념, 설정과 권한, 작업 패턴, global instructions·projects·skills·plugins, Claude in Chrome·M365, 안전과 공유까지."
+    source: https://anthropic.skilljar.com/introduction-to-claude-cowork
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-is-claude-cowork
+        title: "What is Claude Cowork"
+        ko: "Claude Cowork란"
+      - num: "02"
+        slug: setting-up-claude-cowork
+        title: "Setting up Claude Cowork"
+        ko: "Claude Cowork 설정하기"
+      - num: "03"
+        slug: what-cowork-can-do-for-you
+        title: "What Claude Cowork can do for you"
+        ko: "Cowork에 맡기기 좋은 일"
+      - num: "04"
+        slug: hand-cowork-your-first-task
+        title: "Hand Claude Cowork your first task"
+        ko: "첫 작업 위임하기"
+      - num: "05"
+        slug: get-better-results-faster
+        title: "Get better results faster"
+        ko: "더 빠르게 더 좋은 결과 얻기"
+      - num: "06"
+        slug: global-instructions-and-projects
+        title: "Standing context: Global instructions and projects"
+        ko: "상시 맥락: global instructions와 projects"
+      - num: "07"
+        slug: skills
+        title: "Skills: Teach Claude Cowork your way"
+        ko: "Skills: Cowork에 내 방식 가르치기"
+      - num: "08"
+        slug: plugins
+        title: "Plugins: Encode your team's expertise"
+        ko: "Plugins: 팀의 전문성 담기"
+      - num: "09"
+        slug: claude-in-chrome
+        title: "Claude in Chrome"
+        ko: "Claude in Chrome"
+      - num: "10"
+        slug: claude-for-microsoft-365
+        title: "Claude for Microsoft 365"
+        ko: "Claude for Microsoft 365"
+      - num: "11"
+        slug: best-practices-for-working-safely
+        title: "Best practices for working safely"
+        ko: "안전하게 작업하는 모범 사례"
+      - num: "12"
+        slug: validating-skills-for-plugins
+        title: "Validating skills for plugins"
+        ko: "plugin을 위한 skill 검증하기"
+      - num: "13"
+        slug: share-what-you-build
+        title: "Share what you build with your team"
+        ko: "만든 것을 팀과 공유하기"
+      - num: "14"
+        slug: wrap-up-and-next-steps
+        title: "Wrap up and next steps"
+        ko: "정리와 다음 단계"
+
+  - slug: ai-fluency-framework-foundations
+    track: anthropic
+    num: "08"
+    title: "AI Fluency: Framework & Foundations"
+    description: "AI와 효과적·효율적·윤리적으로 협업하는 4D 프레임워크(Delegation·Description·Discernment·Diligence)와 생성형 AI 기초."
+    source: https://anthropic.skilljar.com/ai-fluency-framework-foundations
+    done: true
+    lessons:
+      - num: "01"
+        slug: introduction-to-ai-fluency
+        title: "Introduction to AI Fluency"
+        ko: "AI Fluency 소개"
+      - num: "02"
+        slug: why-do-we-need-ai-fluency
+        title: "Why do we need AI Fluency?"
+        ko: "왜 AI Fluency가 필요한가?"
+      - num: "03"
+        slug: the-4d-framework
+        title: "The 4D Framework"
+        ko: "4D 프레임워크"
+      - num: "04"
+        slug: generative-ai-fundamentals
+        title: "Generative AI fundamentals"
+        ko: "생성형 AI 기초"
+      - num: "05"
+        slug: capabilities-and-limitations
+        title: "Capabilities & limitations"
+        ko: "능력과 한계"
+      - num: "06"
+        slug: a-closer-look-at-delegation
+        title: "A closer look at Delegation"
+        ko: "Delegation 자세히 보기"
+      - num: "07"
+        slug: project-planning-and-delegation
+        title: "Project planning and Delegation"
+        ko: "프로젝트 계획과 Delegation"
+      - num: "08"
+        slug: a-closer-look-at-description
+        title: "A closer look at Description"
+        ko: "Description 자세히 보기"
+      - num: "09"
+        slug: effective-prompting-techniques
+        title: "Effective prompting techniques"
+        ko: "효과적인 프롬프트 기법"
+      - num: "10"
+        slug: a-closer-look-at-discernment
+        title: "A closer look at Discernment"
+        ko: "Discernment 자세히 보기"
+      - num: "11"
+        slug: the-description-discernment-loop
+        title: "The Description-Discernment loop"
+        ko: "Description-Discernment 루프"
+      - num: "12"
+        slug: a-closer-look-at-diligence
+        title: "A closer look at Diligence"
+        ko: "Diligence 자세히 보기"
+      - num: "13"
+        slug: conclusion
+        title: "Conclusion"
+        ko: "정리"
