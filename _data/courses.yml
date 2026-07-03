@@ -455,3 +455,52 @@ courses:
         slug: using-subagents-effectively
         title: "Using subagents effectively"
         ko: "서브에이전트 잘 활용하기"
+
+  - slug: model-context-protocol-advanced-topics
+    track: anthropic
+    num: "11"
+    title: "Model Context Protocol: Advanced Topics"
+    description: "MCP 심화 — Sampling·Notifications·Roots 같은 고급 기능과 STDIO·StreamableHTTP 전송, 상태(stateless_http) 트레이드오프."
+    source: https://anthropic.skilljar.com/model-context-protocol-advanced-topics
+    done: true
+    lessons:
+      - num: "01"
+        slug: lets-get-started
+        title: "Let's get started!"
+        ko: "시작하기"
+      - num: "02"
+        slug: sampling
+        title: "Sampling"
+        ko: "Sampling"
+      - num: "03"
+        slug: log-and-progress-notifications
+        title: "Log and progress notifications"
+        ko: "로그·진행 알림"
+      - num: "04"
+        slug: roots
+        title: "Roots"
+        ko: "Roots"
+      - num: "05"
+        slug: json-message-types
+        title: "JSON message types"
+        ko: "JSON 메시지 유형"
+      - num: "06"
+        slug: stdio-transport
+        title: "The STDIO transport"
+        ko: "STDIO 전송"
+      - num: "07"
+        slug: streamablehttp-transport
+        title: "The StreamableHTTP transport"
+        ko: "StreamableHTTP 전송"
+      - num: "08"
+        slug: streamablehttp-in-depth
+        title: "StreamableHTTP in depth"
+        ko: "StreamableHTTP 심화"
+      - num: "09"
+        slug: state-and-streamablehttp-transport
+        title: "State and the StreamableHTTP transport"
+        ko: "상태와 StreamableHTTP 전송"
+      - num: "10"
+        slug: wrapping-up
+        title: "Wrapping up"
+        ko: "정리"
