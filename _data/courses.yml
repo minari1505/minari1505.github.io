@@ -178,3 +178,15 @@ courses:
         slug: skills
         title: "Skills"
         ko: "Skills로 반복 작업 표준화하기"
+      - num: "07"
+        slug: connectors
+        title: "Connectors"
+        ko: "Connectors로 Claude 확장하기"
+      - num: "08"
+        slug: enterprise-search
+        title: "Enterprise Search"
+        ko: "Enterprise Search"
+      - num: "09"
+        slug: research
+        title: "Research"
+        ko: "Research로 깊이 조사하기"
