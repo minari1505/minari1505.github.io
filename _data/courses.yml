@@ -166,3 +166,15 @@ courses:
         slug: claude-desktop-app
         title: "Claude desktop app"
         ko: "Claude 데스크톱 앱"
+      - num: "04"
+        slug: projects
+        title: "Projects"
+        ko: "Projects로 작업과 지식 정리하기"
+      - num: "05"
+        slug: artifacts
+        title: "Artifacts"
+        ko: "Artifacts 만들고 공유하기"
+      - num: "06"
+        slug: skills
+        title: "Skills"
+        ko: "Skills로 반복 작업 표준화하기"
