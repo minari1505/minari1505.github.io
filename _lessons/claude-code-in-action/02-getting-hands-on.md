@@ -88,6 +88,8 @@ npm run dev
 
 Claude Code를 잘 쓰려면 "많은 context"가 아니라 **맞는 context**를 주는 것이 중요합니다. 프로젝트에 파일이 수십, 수백 개 있더라도 Claude가 지금 작업에 필요한 파일과 규칙을 빠르게 찾을 수 있어야 합니다. 관련 없는 context가 너무 많으면 오히려 성능이 떨어질 수 있습니다.
 
+![Claude Code context 관리](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1750967940%2F004_-_Adding_Context_02.1750967940092.png)
+
 ### `/init`과 `CLAUDE.md`
 
 새 프로젝트에서 가장 먼저 실행할 만한 명령은 `/init`입니다.
@@ -102,9 +104,13 @@ Claude Code를 잘 쓰려면 "많은 context"가 아니라 **맞는 context**를
 - 중요한 명령과 핵심 파일
 - 코드 패턴과 구조
 
+![init으로 프로젝트 분석하기](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1750967941%2F004_-_Adding_Context_05.1750967940882.png)
+
 분석이 끝나면 Claude는 요약을 `CLAUDE.md` 파일에 작성합니다. 이 파일은 프로젝트에 대한 persistent system prompt처럼 동작합니다. Claude가 이후 요청마다 프로젝트 규칙, 명령, 아키텍처 정보를 참고할 수 있게 해줍니다.
 
 `CLAUDE.md`는 보통 다음 세 위치에서 사용됩니다.
+
+![CLAUDE.md 파일 위치](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1750967941%2F004_-_Adding_Context_09.1750967941793.png)
 
 | 파일 | 용도 |
 |---|---|

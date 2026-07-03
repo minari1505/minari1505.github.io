@@ -17,6 +17,8 @@ lesson: 1
 
 예를 들어 에러 메시지를 보고 버그를 고치는 작업을 맡기면, 좋은 코딩 assistant는 보통 다음 과정을 거칩니다.
 
+![코딩 assistant의 작업 흐름](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1750967940%2F002_-_What_is_a_Coding_Assistant%3F_02.1750967940100.png)
+
 1. **맥락 수집**: 에러가 무엇을 의미하는지, 어떤 파일과 코드가 관련 있는지 확인
 2. **계획 수립**: 어떤 코드를 바꾸고 어떤 테스트로 검증할지 결정
 3. **실행**: 파일을 수정하고 명령을 실행해 결과 확인
@@ -60,6 +62,8 @@ Claude가 다음 판단 또는 최종 답변 생성
 ## Claude의 tool use가 중요한 이유
 
 모든 모델이 도구를 같은 수준으로 잘 쓰는 것은 아닙니다. Claude는 도구의 의미를 이해하고, 여러 도구를 조합해 복잡한 작업을 수행하는 능력이 강합니다.
+
+![Claude Code의 tool use 장점](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1750967942%2F002_-_What_is_a_Coding_Assistant%3F_14.1750967942536.png)
 
 이 능력은 Claude Code에서 세 가지 장점으로 이어집니다.
 
