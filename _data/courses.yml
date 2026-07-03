@@ -385,3 +385,48 @@ courses:
         slug: conclusion
         title: "Conclusion"
         ko: "정리"
+
+  - slug: ai-capabilities-and-limitations
+    track: anthropic
+    num: "09"
+    title: "AI Capabilities and Limitations"
+    description: "생성형 AI를 기계로 이해하기 — 네 가지 속성(Next Token Prediction·Knowledge·Working Memory·Steerability)의 능력↔한계 스펙트럼과 보정된 신뢰."
+    source: https://anthropic.skilljar.com/ai-capabilities-and-limitations
+    done: true
+    lessons:
+      - num: "01"
+        slug: intro-to-ai-capabilities-and-limitations
+        title: "Intro to AI Capabilities and Limitations"
+        ko: "AI 능력과 한계 소개"
+      - num: "02"
+        slug: what-we-mean-by-ai
+        title: "What We Mean by AI"
+        ko: "여기서 말하는 AI란"
+      - num: "03"
+        slug: how-ai-gets-its-character
+        title: "How AI Gets Its Character"
+        ko: "AI는 어떻게 성격을 갖게 되는가"
+      - num: "04"
+        slug: next-token-prediction
+        title: "Next Token Prediction"
+        ko: "다음 토큰 예측"
+      - num: "05"
+        slug: knowledge
+        title: "Knowledge"
+        ko: "지식 (Knowledge)"
+      - num: "06"
+        slug: working-memory
+        title: "Working Memory"
+        ko: "작업 기억 (context window)"
+      - num: "07"
+        slug: steerability
+        title: "Steerability"
+        ko: "조종 가능성 (Steerability)"
+      - num: "08"
+        slug: when-properties-collide
+        title: "When Properties Collide"
+        ko: "속성이 충돌할 때"
+      - num: "09"
+        slug: next-steps
+        title: "Next Steps"
+        ko: "정리와 다음 단계"

@@ -1,0 +1,32 @@
+{% comment %}
+Capability↔Limitation spectrum graphic (recreation of the AI Capabilities & Limitations course visual).
+Usage: {% include capability-spectrum.html title="Knowledge" subtitle="What does AI actually know?" %}
+{% endcomment %}
+<div class="cap-spectrum" style="margin:1.6rem 0;">
+  <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg" role="img"
+       aria-label="{{ include.title }} — capability to limitation spectrum"
+       style="width:100%;height:auto;font-family:inherit;">
+    <defs>
+      <linearGradient id="capgrad-{{ include.title | slugify }}" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"  stop-color="#6f9bd1"/>
+        <stop offset="25%" stop-color="#a9b4cf"/>
+        <stop offset="50%" stop-color="#d9d5cb"/>
+        <stop offset="75%" stop-color="#d8a98c"/>
+        <stop offset="100%" stop-color="#c0603f"/>
+      </linearGradient>
+    </defs>
+    {% if include.title %}<text x="360" y="26" text-anchor="middle" font-size="24" font-weight="700" fill="#2b2b2b">{{ include.title }}</text>{% endif %}
+    {% if include.subtitle %}<text x="360" y="52" text-anchor="middle" font-size="15" font-style="italic" fill="#6b6b6b">{{ include.subtitle }}</text>{% endif %}
+    <text x="12"  y="86" font-size="12" font-weight="700" letter-spacing="1" fill="#6f9bd1">CAPABILITY</text>
+    <text x="708" y="86" text-anchor="end" font-size="12" font-weight="700" letter-spacing="1" fill="#c0603f">LIMITATION</text>
+    <rect x="12" y="98" width="696" height="9" rx="4.5" fill="url(#capgrad-{{ include.title | slugify }})"/>
+    {% assign stops = "Trust it|Spot-check|Check details|Verify carefully|High risk" | split: "|" %}
+    {% for s in stops %}
+      {% assign i = forloop.index0 %}
+      {% assign cx = 92 | plus: 0 %}
+      {% assign cx = i | times: 152 | plus: 92 %}
+      <rect x="{{ cx | minus: 2 }}" y="95" width="4" height="15" rx="2" fill="#555"/>
+      <text x="{{ cx }}" y="128" text-anchor="middle" font-size="12" fill="#6b6b6b">{{ s }}</text>
+    {% endfor %}
+  </svg>
+</div>
