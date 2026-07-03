@@ -158,3 +158,11 @@ courses:
         slug: meet-claude
         title: "Meet Claude"
         ko: "Claude 만나보기"
+      - num: "02"
+        slug: troubleshooting-and-ai-fluency
+        title: "Troubleshooting and AI Fluency"
+        ko: "문제 해결과 AI Fluency"
+      - num: "03"
+        slug: claude-desktop-app
+        title: "Claude desktop app"
+        ko: "Claude 데스크톱 앱"
