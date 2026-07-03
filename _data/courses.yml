@@ -145,3 +145,16 @@ courses:
         slug: assessment-and-wrap-up
         title: "Assessment and Wrap Up"
         ko: "평가 & 마무리"
+
+  - slug: claude-101
+    track: anthropic
+    num: "05"
+    title: "Claude 101"
+    description: "Claude를 처음 쓰는 사람을 위한 입문 강의 — Claude의 역할, 기본 대화법, 파일 업로드, 반복 대화와 개인화까지."
+    source: https://anthropic.skilljar.com/claude-101
+    done: false
+    lessons:
+      - num: "01"
+        slug: meet-claude
+        title: "Meet Claude"
+        ko: "Claude 만나보기"
