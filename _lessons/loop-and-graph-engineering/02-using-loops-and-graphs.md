@@ -65,7 +65,7 @@ tags:
 
 ### Claude Code·Codex에 요청하는 방법
 
-제품별 마법 키워드를 외우기보다 목표, 문맥, 제약, 완료 조건을 적습니다. Codex 공식 가이드도 이 네 가지를 좋은 기본 구조로 제시합니다.
+제품별 마법 키워드를 외우기보다 목표, 문맥, 제약, 완료 조건을 적습니다. Codex 공식 prompting 문서도 원하는 동작, 관련 코드나 재현 단계, 중요한 제약, 검증 방법을 포함하라고 권합니다.
 
 ```text
 목표: 결제 완료 후 주문 상태가 갱신되지 않는 버그를 수정해줘.
@@ -85,7 +85,7 @@ tags:
 - 마지막에 변경 파일과 검증 명령을 요약해.
 ```
 
-이 요청은 에이전트가 스스로 loop를 돌 수 있게 하면서도, 반복 범위와 성공 판정은 사람이 통제합니다. 자세한 기본 원칙은 [Codex Best Practices](https://learn.chatgpt.com/guides/best-practices.md)에서 확인할 수 있습니다.
+이 요청은 에이전트가 스스로 loop를 돌 수 있게 하면서도, 반복 범위와 성공 판정은 사람이 통제합니다. 자세한 기본 원칙은 [OpenAI의 Codex Prompting 문서](https://developers.openai.com/codex/prompting/)에서 확인할 수 있습니다.
 
 ## Loop가 실패하는 방식
 

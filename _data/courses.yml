@@ -107,6 +107,7 @@ courses:
     title: "Loop and Graph Engineering"
     description: "반복 개선 루프와 작업 그래프의 차이부터 Claude Code·Codex 활용, 형식적 설계 원칙까지."
     source: https://www.anthropic.com/engineering/building-effective-agents
+    source_label: "대표 참고 자료"
     done: true
     lessons:
       - num: "01"
