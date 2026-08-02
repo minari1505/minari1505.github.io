@@ -8,6 +8,11 @@ tracks:
     title: "Anthropic Courses"
     description: "Anthropic 공식 영어 강의 — CCA-F 자격증 대비로 한글로 옮겨 정리합니다."
     url: /courses/anthropic/
+  - slug: agent-engineering
+    label: "INDEPENDENT STUDY"
+    title: "Agent Engineering"
+    description: "AI 에이전트의 반복 실행과 작업 그래프를 이해하고 실무 설계에 적용하는 학습 노트입니다."
+    url: /courses/agent-engineering/
 
 courses:
   - slug: agent-skills
@@ -95,3 +100,24 @@ courses:
         slug: final-assessment
         title: "Final Assessment & Wrap Up"
         ko: "마무리 & 정리"
+
+  - slug: loop-and-graph-engineering
+    track: agent-engineering
+    num: "01"
+    title: "Loop and Graph Engineering"
+    description: "반복 개선 루프와 작업 그래프의 차이부터 Claude Code·Codex 활용, 형식적 설계 원칙까지."
+    source: https://www.anthropic.com/engineering/building-effective-agents
+    done: true
+    lessons:
+      - num: "01"
+        slug: understanding-loops-and-graphs
+        title: "Understanding Loops and Graphs"
+        ko: "Loop와 Graph를 쉽게 이해하기"
+      - num: "02"
+        slug: using-loops-and-graphs
+        title: "Using Loops and Graphs"
+        ko: "Claude Code·Codex에서 사용하는 방법"
+      - num: "03"
+        slug: formal-models-and-design-principles
+        title: "Formal Models and Design Principles"
+        ko: "형식적 모델과 설계 원칙"
