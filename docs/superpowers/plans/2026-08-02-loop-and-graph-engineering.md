@@ -1,12 +1,12 @@
 ---
 title: "Loop and Graph Engineering 구현 계획"
 date: 2026-08-02
-status: active
+status: completed
 ---
 
 # Loop and Graph Engineering Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** `강의 정리`에 ELI15 설명, Claude Code·Codex 실전 활용, ELIPhD 분석으로 이어지는 Loop and Graph Engineering 강의 3편을 추가한다.
 
@@ -36,17 +36,17 @@ status: active
 - Consumes: `_layouts/lesson.html`이 사용하는 `tracks`, `courses`, `lessons` YAML 구조
 - Produces: `/courses/agent-engineering/` 트랙 페이지와 `/courses/loop-and-graph-engineering/<lesson>/` 경로
 
-- [ ] **Step 1: 현재 YAML이 파싱되는지 확인**
+- [x] **Step 1: 현재 YAML이 파싱되는지 확인**
 
 Run:
 
 ```bash
-ruby -e 'require "yaml"; YAML.load_file("_data/courses.yml", aliases: true); puts "YAML OK"'
+ruby -e 'require "yaml"; YAML.load_file("_data/courses.yml"); puts "YAML OK"'
 ```
 
 Expected: `YAML OK`
 
-- [ ] **Step 2: 트랙과 강의 메타데이터 추가**
+- [x] **Step 2: 트랙과 강의 메타데이터 추가**
 
 `_data/courses.yml`에 다음 구조를 추가한다.
 
@@ -75,21 +75,21 @@ Expected: `YAML OK`
         ko: "형식적 모델과 설계 원칙"
 ```
 
-- [ ] **Step 3: 독립 트랙 페이지 작성**
+- [x] **Step 3: 독립 트랙 페이지 작성**
 
 `_pages/courses-agent-engineering.md`에 frontmatter를 넣고, 기존 `courses-anthropic.md`의 카드 구조를 재사용한다. 설명은 특정 업체의 공식 강의가 아니라 공식 문서·논문·사례를 종합한 학습 노트임을 밝힌다.
 
-- [ ] **Step 4: YAML과 트랙 페이지를 검증**
+- [x] **Step 4: YAML과 트랙 페이지를 검증**
 
 Run:
 
 ```bash
-ruby -e 'require "yaml"; d=YAML.load_file("_data/courses.yml", aliases: true); abort unless d["tracks"].any? { |t| t["slug"] == "agent-engineering" }; abort unless d["courses"].any? { |c| c["slug"] == "loop-and-graph-engineering" && c["lessons"].size == 3 }; puts "COURSE DATA OK"'
+ruby -e 'require "yaml"; d=YAML.load_file("_data/courses.yml"); abort unless d["tracks"].any? { |t| t["slug"] == "agent-engineering" }; abort unless d["courses"].any? { |c| c["slug"] == "loop-and-graph-engineering" && c["lessons"].size == 3 }; puts "COURSE DATA OK"'
 ```
 
 Expected: `COURSE DATA OK`
 
-- [ ] **Step 5: 변경 파일만 커밋**
+- [x] **Step 5: 변경 파일만 커밋**
 
 ```bash
 git add _data/courses.yml _pages/courses-agent-engineering.md
@@ -105,7 +105,7 @@ git commit -m "Add agent engineering course track"
 - Consumes: Task 1의 course slug와 lesson 번호·slug
 - Produces: loop와 graph의 관계를 비전문가도 구분할 수 있는 첫 레슨
 
-- [ ] **Step 1: frontmatter와 학습 목표 작성**
+- [x] **Step 1: frontmatter와 학습 목표 작성**
 
 다음 값을 정확히 사용한다.
 
@@ -122,7 +122,7 @@ tags:
 ---
 ```
 
-- [ ] **Step 2: 쉬운 비유와 텍스트 도식 작성**
+- [x] **Step 2: 쉬운 비유와 텍스트 도식 작성**
 
 한 작업자가 글을 고쳐 제출하는 loop와, 팀장이 조사·검토·통합 작업을 배치하는 graph를 예로 든다. 다음 관계를 명시한다.
 
@@ -136,11 +136,11 @@ Graph: 시작 → 작업 분배 ┬→ 조사 ─┐
                        └→ 테스트 ┘
 ```
 
-- [ ] **Step 3: 핵심 오해와 선택 기준 작성**
+- [x] **Step 3: 핵심 오해와 선택 기준 작성**
 
 `graph가 loop를 대체한다`, `멀티 에이전트면 항상 빠르다`, `그래프는 반드시 여러 에이전트다`를 오해로 설명한다. 마지막에 단일 호출·loop·graph 비교표와 세 문장 요약을 둔다.
 
-- [ ] **Step 4: 레슨 구조 검증**
+- [x] **Step 4: 레슨 구조 검증**
 
 Run:
 
@@ -150,7 +150,7 @@ ruby -e 'require "yaml"; s=File.read("_lessons/loop-and-graph-engineering/01-und
 
 Expected: `LESSON 1 OK`
 
-- [ ] **Step 5: 레슨만 커밋**
+- [x] **Step 5: 레슨만 커밋**
 
 ```bash
 git add _lessons/loop-and-graph-engineering/01-understanding-loops-and-graphs.md
@@ -166,19 +166,19 @@ git commit -m "Add introductory loop and graph lesson"
 - Consumes: Task 2의 쉬운 용어와 단일 호출 → loop → graph 복잡도 단계
 - Produces: 작업 구조 선택표, loop·graph 설계 절차, 실전 프롬프트 예시
 
-- [ ] **Step 1: frontmatter와 학습 목표 작성**
+- [x] **Step 1: frontmatter와 학습 목표 작성**
 
 `course: loop-and-graph-engineering`, `lesson: 2`를 사용하고 Task 2와 동일한 태그 3개를 넣는다.
 
-- [ ] **Step 2: loop 실전 구성 작성**
+- [x] **Step 2: loop 실전 구성 작성**
 
 `목표 → 상태 → 행동 → 검증 → 종료 판단`을 설명한다. 테스트 실패 수정 예시에는 최대 반복 횟수, 시간·token 예산, 같은 오류의 반복 감지, 사람이 확인해야 하는 조건을 포함한다.
 
-- [ ] **Step 3: graph 실전 구성 작성**
+- [x] **Step 3: graph 실전 구성 작성**
 
 node, edge, router, reducer, checkpoint, contract를 쉬운 말로 정의한다. 문서 조사·비교 작업을 fan-out/fan-in 예시로 들고, 공유 파일 충돌과 누락된 결과를 예방하는 규칙을 포함한다.
 
-- [ ] **Step 4: Claude Code·Codex용 자연어 요청 예시 작성**
+- [x] **Step 4: Claude Code·Codex용 자연어 요청 예시 작성**
 
 모델 전용 마법 키워드 대신 다음 정보를 명시하는 예시를 제공한다.
 
@@ -190,7 +190,7 @@ node, edge, router, reducer, checkpoint, contract를 쉬운 말로 정의한다.
 5. 테스트와 출처 검증이 실패하면 최대 2회만 수정한다.
 ```
 
-- [ ] **Step 5: 출처와 레슨 구조 검증 후 커밋**
+- [x] **Step 5: 출처와 레슨 구조 검증 후 커밋**
 
 Anthropic의 `Building effective agents`, Claude Code workflows, LangGraph Graph API 공식 링크를 관련 문단에 배치한다.
 
@@ -213,23 +213,23 @@ Expected: `LESSON 2 OK` and a commit containing only lesson 2.
 - Consumes: Task 2·3의 개념과 실전 용어
 - Produces: 형식적 모델, 실패 조건, 비용 모델, 설계 체크리스트를 담은 심화 레슨
 
-- [ ] **Step 1: frontmatter와 전문 학습 목표 작성**
+- [x] **Step 1: frontmatter와 전문 학습 목표 작성**
 
 `course: loop-and-graph-engineering`, `lesson: 3`을 사용하고 `ELIPhD`라는 학습 수준을 서문에서 설명한다.
 
-- [ ] **Step 2: loop의 형식적 모델 작성**
+- [x] **Step 2: loop의 형식적 모델 작성**
 
 상태 `s_t`, 전이 함수 `T`, 관측 `o_t`, 정책 `π`, 검증 함수 `V`, 종료 술어 `τ`를 정의한다. 수렴은 보장되지 않으므로 반복 상한, no-progress 판정, 외부 검증 기준이 필요함을 설명한다.
 
-- [ ] **Step 3: graph의 형식적 모델 작성**
+- [x] **Step 3: graph의 형식적 모델 작성**
 
 `G=(V,E)`와 node contract를 정의하고 chain, DAG, cyclic graph를 비교한다. 위상 정렬, 임계 경로, fan-in 병목, 라우터의 reject 경로, 부분 실패, checkpoint·resume, 멱등성을 다룬다.
 
-- [ ] **Step 4: 성능과 품질의 한계 작성**
+- [x] **Step 4: 성능과 품질의 한계 작성**
 
 멀티 에이전트가 추가 token을 사용하는 점과, 동일한 추론 예산에서는 단일 에이전트가 대등하거나 우세할 수 있다는 연구를 함께 설명한다. topology만으로 품질 향상을 주장하지 않고 `품질 이득 - 조정 비용 - 추가 계산 비용` 관점으로 평가한다.
 
-- [ ] **Step 5: 공식 문서·논문과 설계 체크리스트 추가**
+- [x] **Step 5: 공식 문서·논문과 설계 체크리스트 추가**
 
 다음 출처를 관련 주장 가까이에 연결한다.
 
@@ -243,7 +243,7 @@ Expected: `LESSON 2 OK` and a commit containing only lesson 2.
 
 마지막 체크리스트는 실제 의존성, 병렬 안전성, state owner, node contract, 종료 조건, 예산, 검증 기준, 재시도·멱등성, 관찰 가능성 항목을 포함한다.
 
-- [ ] **Step 6: 레슨 검증 후 커밋**
+- [x] **Step 6: 레슨 검증 후 커밋**
 
 Run:
 
@@ -266,7 +266,7 @@ Expected: `LESSON 3 OK` and a commit containing only lesson 3.
 - Consumes: Tasks 1–4의 완성된 트랙과 레슨
 - Produces: 빌드 가능하고 링크 구조가 일치하는 강의 묶음
 
-- [ ] **Step 1: 변경 범위와 frontmatter 확인**
+- [x] **Step 1: 변경 범위와 frontmatter 확인**
 
 Run:
 
@@ -277,17 +277,17 @@ for f in _pages/courses-agent-engineering.md _lessons/loop-and-graph-engineering
 
 Expected: 기존 사용자 변경 외에 계획된 파일만 표시되고, 모든 파일이 `---` frontmatter로 시작한다.
 
-- [ ] **Step 2: course 데이터와 파일 slug 대조**
+- [x] **Step 2: course 데이터와 파일 slug 대조**
 
 Run:
 
 ```bash
-ruby -e 'require "yaml"; d=YAML.load_file("_data/courses.yml", aliases: true); c=d["courses"].find { |x| x["slug"]=="loop-and-graph-engineering" }; abort unless c; c["lessons"].each { |l| p="_lessons/#{c["slug"]}/#{l["num"]}-#{l["slug"]}.md"; abort "missing #{p}" unless File.exist?(p) }; puts "LESSON PATHS OK"'
+ruby -e 'require "yaml"; d=YAML.load_file("_data/courses.yml"); c=d["courses"].find { |x| x["slug"]=="loop-and-graph-engineering" }; abort unless c; c["lessons"].each { |l| p="_lessons/#{c["slug"]}/#{l["num"]}-#{l["slug"]}.md"; abort "missing #{p}" unless File.exist?(p) }; puts "LESSON PATHS OK"'
 ```
 
 Expected: `LESSON PATHS OK`
 
-- [ ] **Step 3: 금지된 placeholder와 링크 형식 확인**
+- [x] **Step 3: 금지된 placeholder와 링크 형식 확인**
 
 Run:
 
@@ -298,7 +298,7 @@ rg -n 'http://' _pages/courses-agent-engineering.md _lessons/loop-and-graph-engi
 
 Expected: 출력 없음.
 
-- [ ] **Step 4: Jekyll 전체 빌드**
+- [x] **Step 4: Jekyll 전체 빌드**
 
 Run:
 
@@ -308,7 +308,7 @@ bundle exec jekyll build
 
 Expected: exit code 0, 새 트랙과 세 레슨이 `_site/courses/` 아래 생성됨.
 
-- [ ] **Step 5: 생성 경로 확인**
+- [x] **Step 5: 생성 경로 확인**
 
 Run:
 
@@ -321,7 +321,7 @@ test -f _site/courses/loop-and-graph-engineering/03-formal-models-and-design-pri
 
 Expected: exit code 0.
 
-- [ ] **Step 6: 계획 상태를 완료로 갱신하고 커밋**
+- [x] **Step 6: 계획 상태를 완료로 갱신하고 커밋**
 
 이 문서의 `status`를 `completed`로 바꾸고 실행한 checkbox를 모두 `[x]`로 변경한다.
 
