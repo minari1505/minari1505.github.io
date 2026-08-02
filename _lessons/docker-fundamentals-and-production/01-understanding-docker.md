@@ -105,7 +105,7 @@ docker run --rm hello-world
 background container를 실행하고 host의 8080 port를 container의 80 port에 연결합니다.
 
 ```bash
-docker run -d --name se-nginx -p 8080:80 nginx:alpine
+docker run -d --name se-nginx -p 127.0.0.1:8080:80 nginx:alpine
 ```
 
 옵션을 하나씩 읽어보겠습니다.
@@ -114,7 +114,7 @@ docker run -d --name se-nginx -p 8080:80 nginx:alpine
 |---|---|
 | `-d` | background(detached)에서 실행 |
 | `--name se-nginx` | 사람이 읽을 수 있는 container 이름 지정 |
-| `-p 8080:80` | host 8080 → container 80으로 publish |
+| `-p 127.0.0.1:8080:80` | host의 loopback 8080 → container 80으로 publish |
 | `nginx:alpine` | 사용할 image와 tag |
 
 `nginx:alpine` 같은 tag는 시간이 지나며 가리키는 image가 바뀔 수 있습니다. 첫 실습에서는 간단함을 위해 사용하고, 프로덕션에서는 version과 digest 정책을 별도로 정합니다.
@@ -125,7 +125,17 @@ docker run -d --name se-nginx -p 8080:80 nginx:alpine
 docker ps
 ```
 
-예상 결과에는 `se-nginx`, `Up ...`, `0.0.0.0:8080->80/tcp`가 포함됩니다.
+예상 결과에는 `se-nginx`, `Up ...`, `127.0.0.1:8080->80/tcp`가 포함됩니다.
+
+Local Docker에서는 loopback에만 bind해 같은 computer 밖에서 접근하지 못하게 하는 것이 안전합니다. Play with Docker의 browser port link를 사용할 때는 실습 session에서만 다음처럼 모든 interface에 임시 publish합니다.
+
+```bash
+docker stop se-nginx
+docker rm se-nginx
+docker run -d --name se-nginx -p 8080:80 nginx:alpine
+```
+
+Play with Docker session URL을 아는 사람이 접근할 수 있으므로 실제 data나 credential을 넣지 말고 실습 뒤 container를 제거합니다.
 
 HTTP 응답을 확인합니다.
 
@@ -207,7 +217,7 @@ docker ps --filter publish=8080
 기존 container를 확인해 멈추거나, 새 실습의 host port만 바꿉니다.
 
 ```bash
-docker run -d --name se-nginx -p 8081:80 nginx:alpine
+docker run -d --name se-nginx -p 127.0.0.1:8081:80 nginx:alpine
 ```
 
 ### container name is already in use

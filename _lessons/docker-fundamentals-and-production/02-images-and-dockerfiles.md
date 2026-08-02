@@ -136,7 +136,7 @@ EOF
 | `EXPOSE` | metadata | application이 사용할 port를 문서화 |
 | `CMD` | run metadata | 기본 process와 argument 지정 |
 
-`EXPOSE 8000`은 host에 port를 열지 않습니다. 실제 publish는 `docker run -p 8000:8000`처럼 실행할 때 합니다.
+`EXPOSE 8000`은 host에 port를 열지 않습니다. 실제 publish는 `docker run -p 127.0.0.1:8000:8000`처럼 실행할 때 합니다.
 
 `USER 65532:65532`는 숫자 UID·GID로 application process가 root가 아니게 합니다. 이것만으로 모든 privilege가 사라지는 것은 아닙니다. Capability, mount, daemon 권한과 host 설정도 함께 봐야 합니다.
 
@@ -172,16 +172,18 @@ Dockerfile instruction과 연결되는 여러 항목이 보입니다. History는
 
 설정 metadata를 확인합니다.
 
+{% raw %}
 ```bash
 docker image inspect --format '{{json .Config}}' se-web:1.0
 ```
+{% endraw %}
 
 `User`, `ExposedPorts`, `Cmd`를 찾을 수 있습니다.
 
 ## 실습 4: 만든 Image 실행하기
 
 ```bash
-docker run -d --name se-web -p 8000:8000 se-web:1.0
+docker run -d --name se-web -p 127.0.0.1:8000:8000 se-web:1.0
 ```
 
 상태와 process user를 확인합니다.

@@ -1,5 +1,5 @@
 ---
-title: "Production Container Design"
+title: "Production Docker Design"
 title_ko: "프로덕션 Docker 설계와 운영 원리"
 course: docker-fundamentals-and-production
 lesson: 4
@@ -84,7 +84,15 @@ docker rm signal-demo
 ```
 {% endraw %}
 
-`docker stop`은 먼저 `SIGTERM`을 보내고 제한 시간 뒤에도 종료하지 않으면 `SIGKILL`을 보냅니다. Grace period는 application의 request drain·transaction 종료 시간보다 짧지 않게 정합니다.
+`docker stop`은 image의 `STOPSIGNAL` 또는 실행 시 `--stop-signal`로 설정된 signal을 먼저 보내고, 설정이 없으면 `SIGTERM`을 사용합니다. 제한 시간 뒤에도 종료하지 않으면 `SIGKILL`을 보냅니다. Image 설정은 다음처럼 확인합니다.
+
+{% raw %}
+```bash
+docker image inspect --format '{{json .Config.StopSignal}}' nginx:alpine
+```
+{% endraw %}
+
+Grace period는 application의 request drain·transaction 종료 시간보다 짧지 않게 정합니다.
 
 ## 실습 2: Resource limit 관찰하기
 
@@ -98,7 +106,7 @@ docker run -d \
   --name limited-nginx \
   --memory 128m \
   --cpus 0.50 \
-  -p 8081:80 \
+  -p 127.0.0.1:8081:80 \
   nginx:alpine
 
 docker stats --no-stream limited-nginx
@@ -135,17 +143,23 @@ ENTRYPOINT ["/server"]
 
 Secret을 `ARG`, `ENV`, `COPY`로 image에 넣지 않습니다. BuildKit secret mount는 해당 `RUN` 동안만 secret을 노출합니다.
 
-```dockerfile
+```bash
+cat > Dockerfile.secret-demo <<'EOF'
 # syntax=docker/dockerfile:1
 FROM alpine:3.21
 RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
     test -s /root/.npmrc
+EOF
 ```
 
 ```bash
 printf '//registry.npmjs.org/:_authToken=example-token\n' > .npmrc.demo
-DOCKER_BUILDKIT=1 docker build --secret id=npmrc,src=.npmrc.demo -t secret-demo .
-rm .npmrc.demo
+DOCKER_BUILDKIT=1 docker build \
+  -f Dockerfile.secret-demo \
+  --secret id=npmrc,src=.npmrc.demo \
+  -t secret-demo \
+  .
+rm .npmrc.demo Dockerfile.secret-demo
 docker image rm secret-demo
 ```
 
@@ -167,7 +181,7 @@ docker run -d \
   --cap-add SETGID \
   --cap-add SETUID \
   --cap-add NET_BIND_SERVICE \
-  -p 8082:80 \
+  -p 127.0.0.1:8082:80 \
   nginx:alpine
 
 curl http://localhost:8082

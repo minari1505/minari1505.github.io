@@ -117,7 +117,7 @@ EOF
 ```bash
 docker run -d \
   --name se-bind-web \
-  -p 8080:80 \
+  -p 127.0.0.1:8080:80 \
   -v "$(pwd)/bind-lab/site:/usr/share/nginx/html:ro" \
   nginx:alpine
 ```
@@ -226,7 +226,7 @@ services:
   web:
     image: nginx:alpine
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     volumes:
       - ./site:/usr/share/nginx/html:ro
     healthcheck:
@@ -263,7 +263,7 @@ docker compose up -d
 상태를 확인합니다.
 
 ```bash
-docker compose ps
+docker compose ps --all
 ```
 
 `web`은 `healthy`, `checker`는 한 번 요청한 뒤 `Exited (0)`가 될 수 있습니다.
