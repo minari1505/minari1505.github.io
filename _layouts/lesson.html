@@ -13,7 +13,7 @@ layout: default
     <p class="lesson-sidebar__label">{{ track.label }}</p>
     <h2 class="lesson-sidebar__course">{{ course.title }}</h2>
     <p class="lesson-sidebar__desc">{{ course.description }}</p>
-    <a class="lesson-sidebar__source" href="{{ course.source }}" target="_blank" rel="noopener">원문 강의 (영어) ↗</a>
+    <a class="lesson-sidebar__source" href="{{ course.source }}" target="_blank" rel="noopener">{{ course.source_label | default: "원문 강의 (영어)" }} ↗</a>
 
     <div class="lesson-progress">
       <div class="lesson-progress__bar"><span style="width: {{ pct }}%"></span></div>
