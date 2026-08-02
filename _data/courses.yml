@@ -13,6 +13,11 @@ tracks:
     title: "Agent Engineering"
     description: "AI 에이전트의 반복 실행과 작업 그래프를 이해하고 실무 설계에 적용하는 학습 노트입니다."
     url: /courses/agent-engineering/
+  - slug: software-engineering
+    label: "INDEPENDENT STUDY"
+    title: "Software Engineering"
+    description: "개발 도구를 직접 사용하고 요구사항·설계·운영 원리까지 연결하는 실습형 학습 노트입니다."
+    url: /courses/software-engineering/
 
 courses:
   - slug: agent-skills
@@ -564,3 +569,29 @@ courses:
         slug: accessing-claude-on-vertex
         title: "Accessing Claude on Vertex AI"
         ko: "Vertex에서 Claude 접속과 요청"
+
+  - slug: docker-fundamentals-and-production
+    track: software-engineering
+    num: "01"
+    title: "Docker Fundamentals & Production"
+    description: "브라우저에서 첫 컨테이너를 실행하고 image·Dockerfile·volume·network·Compose부터 프로덕션 설계까지 학습합니다."
+    source: https://y-ohgi.com/introduction-docker/
+    source_label: "일본어 원문 교재"
+    done: true
+    lessons:
+      - num: "01"
+        slug: understanding-docker
+        title: "Understanding Docker"
+        ko: "Docker를 쉽게 이해하고 첫 컨테이너 실행하기"
+      - num: "02"
+        slug: images-and-dockerfiles
+        title: "Images and Dockerfiles"
+        ko: "Image와 Dockerfile 직접 만들기"
+      - num: "03"
+        slug: storage-networking-and-compose
+        title: "Storage, Networking, and Compose"
+        ko: "Volume·Network·Docker Compose 실습"
+      - num: "04"
+        slug: production-design
+        title: "Production Docker Design"
+        ko: "프로덕션 Docker 설계"
