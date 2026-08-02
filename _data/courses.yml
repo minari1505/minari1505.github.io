@@ -595,3 +595,29 @@ courses:
         slug: production-design
         title: "Production Docker Design"
         ko: "프로덕션 Docker 설계"
+
+  - slug: software-development-process
+    track: software-engineering
+    num: "02"
+    title: "Software Development Process"
+    description: "요구사항부터 기본·상세 설계, 구현·검증·운영의 피드백 루프까지 하나의 API 예제로 실습합니다."
+    source: https://zenn.dev/nyanchu/articles/27a3f95d98df45
+    source_label: "일본어 원문 아티클"
+    done: true
+    lessons:
+      - num: "01"
+        slug: understanding-the-development-process
+        title: "Understanding the Development Process"
+        ko: "개발 프로세스를 쉽게 이해하기"
+      - num: "02"
+        slug: writing-requirements
+        title: "Writing Requirements"
+        ko: "요구사항 정의서 직접 작성하기"
+      - num: "03"
+        slug: writing-system-design
+        title: "Writing System Design"
+        ko: "기본·상세 설계 직접 작성하기"
+      - num: "04"
+        slug: modern-process-and-traceability
+        title: "Modern Process and Traceability"
+        ko: "현대적 개발 프로세스와 추적성"
