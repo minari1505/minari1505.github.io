@@ -62,7 +62,7 @@ info:
   title: Work Request API
   version: 1.0.0
 servers:
-  - url: https://work-api.example.internal/v1
+  - url: /v1
 security:
   - bearerAuth: []
 paths:
@@ -215,7 +215,7 @@ components:
       description: Missing or invalid access token
 ```
 
-문서에서 `POST /requests`, `PATCH /requests/{requestId}/status`, `GET /requests`라고 부르는 세 contract가 이제 validator·client generation·contract test의 입력이 됩니다. 담당자 배정 endpoint는 같은 방식으로 `REQ-002`를 확장합니다.
+`servers`는 재사용 가능한 상대 경로로 두고 배포 환경에서 실제 host를 제공합니다. 문서에서 `POST /requests`, `PATCH /requests/{requestId}/status`, `GET /requests`라고 부르는 세 contract가 이제 validator·client generation·contract test의 입력이 됩니다. 담당자 배정 endpoint는 같은 방식으로 `REQ-002`를 확장합니다.
 
 ## 3. Data model과 invariant
 
