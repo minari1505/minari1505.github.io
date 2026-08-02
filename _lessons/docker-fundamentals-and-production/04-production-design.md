@@ -75,12 +75,14 @@ CMD ["python", "app.py"]
 
 Container의 PID 1은 종료 signal을 받고 child process를 회수해야 합니다. Application이 이를 제대로 처리하지 못하면 `--init`로 작은 init process를 둘 수 있습니다.
 
+{% raw %}
 ```bash
 docker run -d --name signal-demo --init nginx:alpine
 docker inspect --format '{{.State.Pid}}' signal-demo
 time docker stop --time 10 signal-demo
 docker rm signal-demo
 ```
+{% endraw %}
 
 `docker stop`은 먼저 `SIGTERM`을 보내고 제한 시간 뒤에도 종료하지 않으면 `SIGKILL`을 보냅니다. Grace period는 application의 request drain·transaction 종료 시간보다 짧지 않게 정합니다.
 
@@ -90,6 +92,7 @@ docker rm signal-demo
 
 Container가 host resource를 무제한 소비하지 않도록 memory와 CPU 상한을 둡니다.
 
+{% raw %}
 ```bash
 docker run -d \
   --name limited-nginx \
@@ -104,6 +107,7 @@ curl http://localhost:8081
 docker stop limited-nginx
 docker rm limited-nginx
 ```
+{% endraw %}
 
 예상 결과는 memory limit `134217728` bytes와 NanoCPU `500000000`입니다. Limit은 capacity planning을 대신하지 않으며, memory 초과 시 OOM kill과 application latency를 함께 관찰해야 합니다.
 

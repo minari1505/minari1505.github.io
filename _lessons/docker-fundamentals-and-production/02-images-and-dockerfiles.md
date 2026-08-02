@@ -287,10 +287,12 @@ cat .dockerignore
 
 Host와 image platform 또는 실행 파일 architecture가 맞지 않을 수 있습니다.
 
+{% raw %}
 ```bash
 docker version --format '{{.Server.Arch}}'
 docker image inspect --format '{{.Architecture}}/{{.Os}}' se-web:1.0
 ```
+{% endraw %}
 
 Multi-platform build와 emulation은 프로덕션 레슨에서 다룹니다.
 

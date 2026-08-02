@@ -332,11 +332,13 @@ docker network inspect se-course-net
 
 ### Compose service가 계속 starting
 
+{% raw %}
 ```bash
 docker compose ps
 docker compose logs web
 docker inspect --format '{{json .State.Health}}' compose-lab-web-1
 ```
+{% endraw %}
 
 Compose가 만든 실제 container 이름은 project 이름에 따라 다를 수 있으므로 먼저 `docker compose ps`에서 확인합니다.
 

@@ -153,10 +153,12 @@ docker inspect se-nginx
 
 출력이 길다면 필요한 값만 고를 수 있습니다.
 
+{% raw %}
 ```bash
 docker inspect --format '{{.State.Status}}' se-nginx
 docker inspect --format '{{json .NetworkSettings.Ports}}' se-nginx
 ```
+{% endraw %}
 
 예상 결과는 각각 `running`, port mapping JSON입니다.
 
