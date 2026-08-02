@@ -121,3 +121,445 @@ courses:
         slug: formal-models-and-design-principles
         title: "Formal Models and Design Principles"
         ko: "형식적 모델과 설계 원칙"
+  - slug: claude-code-in-action
+    track: anthropic
+    num: "03"
+    title: "Claude Code in Action"
+    description: "Claude Code의 동작 원리와 실제 사용법 — 코딩 assistant의 tool use, 내장 도구, 실습 워크플로우, hooks와 SDK까지."
+    source: https://anthropic.skilljar.com/claude-code-in-action
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-is-claude-code
+        title: "What Is Claude Code?"
+        ko: "Claude Code란 무엇인가?"
+      - num: "02"
+        slug: getting-hands-on
+        title: "Getting hands on"
+        ko: "직접 실습하기"
+      - num: "03"
+        slug: hooks-and-the-sdk
+        title: "Hooks and the SDK"
+        ko: "Hooks와 SDK"
+      - num: "04"
+        slug: wrapping-up
+        title: "Wrapping up"
+        ko: "마무리 & 정리"
+
+  - slug: introduction-to-model-context-protocol
+    track: anthropic
+    num: "04"
+    title: "Introduction to Model Context Protocol"
+    description: "MCP의 기본 개념과 아키텍처 — MCP client/server, tool discovery, tool execution 흐름까지."
+    source: https://anthropic.skilljar.com/introduction-to-model-context-protocol
+    done: true
+    lessons:
+      - num: "01"
+        slug: introduction
+        title: "Introduction"
+        ko: "소개"
+      - num: "02"
+        slug: hands-on-with-mcp-servers
+        title: "Hands-on with MCP servers"
+        ko: "MCP 서버 실습"
+      - num: "03"
+        slug: connecting-with-mcp-clients
+        title: "Connecting with MCP clients"
+        ko: "MCP 클라이언트 연결"
+      - num: "04"
+        slug: assessment-and-wrap-up
+        title: "Assessment and Wrap Up"
+        ko: "평가 & 마무리"
+
+  - slug: claude-101
+    track: anthropic
+    num: "05"
+    title: "Claude 101"
+    description: "Claude를 처음 쓰는 사람을 위한 입문 강의 — Claude의 역할, 기본 대화법, 파일 업로드, 반복 대화와 개인화까지."
+    source: https://anthropic.skilljar.com/claude-101
+    done: false
+    lessons:
+      - num: "01"
+        slug: meet-claude
+        title: "Meet Claude"
+        ko: "Claude 만나보기"
+      - num: "02"
+        slug: troubleshooting-and-ai-fluency
+        title: "Troubleshooting and AI Fluency"
+        ko: "문제 해결과 AI Fluency"
+      - num: "03"
+        slug: claude-desktop-app
+        title: "Claude desktop app"
+        ko: "Claude 데스크톱 앱"
+      - num: "04"
+        slug: projects
+        title: "Projects"
+        ko: "Projects로 작업과 지식 정리하기"
+      - num: "05"
+        slug: artifacts
+        title: "Artifacts"
+        ko: "Artifacts 만들고 공유하기"
+      - num: "06"
+        slug: skills
+        title: "Skills"
+        ko: "Skills로 반복 작업 표준화하기"
+      - num: "07"
+        slug: connectors
+        title: "Connectors"
+        ko: "Connectors로 Claude 확장하기"
+      - num: "08"
+        slug: enterprise-search
+        title: "Enterprise Search"
+        ko: "Enterprise Search"
+      - num: "09"
+        slug: research
+        title: "Research"
+        ko: "Research로 깊이 조사하기"
+      - num: "10"
+        slug: use-cases-by-role
+        title: "Use cases by role"
+        ko: "역할별 Claude 활용 사례"
+      - num: "11"
+        slug: more-ways-to-work-with-claude
+        title: "More ways to work with Claude"
+        ko: "Claude를 사용하는 다른 방법들"
+      - num: "12"
+        slug: conclusion-and-certificate
+        title: "What's next?"
+        ko: "정리와 다음 단계"
+
+  - slug: claude-code-101
+    track: anthropic
+    num: "06"
+    title: "Claude Code 101"
+    description: "Claude Code 입문 — agentic loop, 설치, explore·plan·code·commit 워크플로우, context 관리, CLAUDE.md, 서브에이전트, MCP, hooks까지."
+    source: https://anthropic.skilljar.com/claude-code-101
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-is-claude-code
+        title: "What is Claude Code?"
+        ko: "Claude Code란?"
+      - num: "02"
+        slug: how-claude-code-works
+        title: "How Claude Code works"
+        ko: "Claude Code의 동작 원리"
+      - num: "03"
+        slug: installing-claude-code
+        title: "Installing Claude Code"
+        ko: "Claude Code 설치하기"
+      - num: "04"
+        slug: your-first-prompt
+        title: "Your first prompt"
+        ko: "첫 prompt 작성하기"
+      - num: "05"
+        slug: explore-plan-code-commit
+        title: "The explore → plan → code → commit workflow"
+        ko: "탐색 → 계획 → 코딩 → 커밋 workflow"
+      - num: "06"
+        slug: context-management
+        title: "Context management"
+        ko: "context 관리"
+      - num: "07"
+        slug: code-review
+        title: "Code review"
+        ko: "코드 리뷰"
+      - num: "08"
+        slug: claude-md-file
+        title: "The CLAUDE.md file"
+        ko: "CLAUDE.md 파일"
+      - num: "09"
+        slug: subagents
+        title: "Subagents"
+        ko: "서브에이전트"
+      - num: "10"
+        slug: skills
+        title: "Skills"
+        ko: "Skills"
+      - num: "11"
+        slug: mcp
+        title: "MCP"
+        ko: "MCP (Model Context Protocol)"
+      - num: "12"
+        slug: hooks
+        title: "Hooks"
+        ko: "Hooks"
+
+  - slug: introduction-to-claude-cowork
+    track: anthropic
+    num: "07"
+    title: "Introduction to Claude Cowork"
+    description: "Claude Cowork 입문 — 위임 개념, 설정과 권한, 작업 패턴, global instructions·projects·skills·plugins, Claude in Chrome·M365, 안전과 공유까지."
+    source: https://anthropic.skilljar.com/introduction-to-claude-cowork
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-is-claude-cowork
+        title: "What is Claude Cowork"
+        ko: "Claude Cowork란"
+      - num: "02"
+        slug: setting-up-claude-cowork
+        title: "Setting up Claude Cowork"
+        ko: "Claude Cowork 설정하기"
+      - num: "03"
+        slug: what-cowork-can-do-for-you
+        title: "What Claude Cowork can do for you"
+        ko: "Cowork에 맡기기 좋은 일"
+      - num: "04"
+        slug: hand-cowork-your-first-task
+        title: "Hand Claude Cowork your first task"
+        ko: "첫 작업 위임하기"
+      - num: "05"
+        slug: get-better-results-faster
+        title: "Get better results faster"
+        ko: "더 빠르게 더 좋은 결과 얻기"
+      - num: "06"
+        slug: global-instructions-and-projects
+        title: "Standing context: Global instructions and projects"
+        ko: "상시 맥락: global instructions와 projects"
+      - num: "07"
+        slug: skills
+        title: "Skills: Teach Claude Cowork your way"
+        ko: "Skills: Cowork에 내 방식 가르치기"
+      - num: "08"
+        slug: plugins
+        title: "Plugins: Encode your team's expertise"
+        ko: "Plugins: 팀의 전문성 담기"
+      - num: "09"
+        slug: claude-in-chrome
+        title: "Claude in Chrome"
+        ko: "Claude in Chrome"
+      - num: "10"
+        slug: claude-for-microsoft-365
+        title: "Claude for Microsoft 365"
+        ko: "Claude for Microsoft 365"
+      - num: "11"
+        slug: best-practices-for-working-safely
+        title: "Best practices for working safely"
+        ko: "안전하게 작업하는 모범 사례"
+      - num: "12"
+        slug: validating-skills-for-plugins
+        title: "Validating skills for plugins"
+        ko: "plugin을 위한 skill 검증하기"
+      - num: "13"
+        slug: share-what-you-build
+        title: "Share what you build with your team"
+        ko: "만든 것을 팀과 공유하기"
+      - num: "14"
+        slug: wrap-up-and-next-steps
+        title: "Wrap up and next steps"
+        ko: "정리와 다음 단계"
+
+  - slug: ai-fluency-framework-foundations
+    track: anthropic
+    num: "08"
+    title: "AI Fluency: Framework & Foundations"
+    description: "AI와 효과적·효율적·윤리적으로 협업하는 4D 프레임워크(Delegation·Description·Discernment·Diligence)와 생성형 AI 기초."
+    source: https://anthropic.skilljar.com/ai-fluency-framework-foundations
+    done: true
+    lessons:
+      - num: "01"
+        slug: introduction-to-ai-fluency
+        title: "Introduction to AI Fluency"
+        ko: "AI Fluency 소개"
+      - num: "02"
+        slug: why-do-we-need-ai-fluency
+        title: "Why do we need AI Fluency?"
+        ko: "왜 AI Fluency가 필요한가?"
+      - num: "03"
+        slug: the-4d-framework
+        title: "The 4D Framework"
+        ko: "4D 프레임워크"
+      - num: "04"
+        slug: generative-ai-fundamentals
+        title: "Generative AI fundamentals"
+        ko: "생성형 AI 기초"
+      - num: "05"
+        slug: capabilities-and-limitations
+        title: "Capabilities & limitations"
+        ko: "능력과 한계"
+      - num: "06"
+        slug: a-closer-look-at-delegation
+        title: "A closer look at Delegation"
+        ko: "Delegation 자세히 보기"
+      - num: "07"
+        slug: project-planning-and-delegation
+        title: "Project planning and Delegation"
+        ko: "프로젝트 계획과 Delegation"
+      - num: "08"
+        slug: a-closer-look-at-description
+        title: "A closer look at Description"
+        ko: "Description 자세히 보기"
+      - num: "09"
+        slug: effective-prompting-techniques
+        title: "Effective prompting techniques"
+        ko: "효과적인 프롬프트 기법"
+      - num: "10"
+        slug: a-closer-look-at-discernment
+        title: "A closer look at Discernment"
+        ko: "Discernment 자세히 보기"
+      - num: "11"
+        slug: the-description-discernment-loop
+        title: "The Description-Discernment loop"
+        ko: "Description-Discernment 루프"
+      - num: "12"
+        slug: a-closer-look-at-diligence
+        title: "A closer look at Diligence"
+        ko: "Diligence 자세히 보기"
+      - num: "13"
+        slug: conclusion
+        title: "Conclusion"
+        ko: "정리"
+
+  - slug: ai-capabilities-and-limitations
+    track: anthropic
+    num: "09"
+    title: "AI Capabilities and Limitations"
+    description: "생성형 AI를 기계로 이해하기 — 네 가지 속성(Next Token Prediction·Knowledge·Working Memory·Steerability)의 능력↔한계 스펙트럼과 보정된 신뢰."
+    source: https://anthropic.skilljar.com/ai-capabilities-and-limitations
+    done: true
+    lessons:
+      - num: "01"
+        slug: intro-to-ai-capabilities-and-limitations
+        title: "Intro to AI Capabilities and Limitations"
+        ko: "AI 능력과 한계 소개"
+      - num: "02"
+        slug: what-we-mean-by-ai
+        title: "What We Mean by AI"
+        ko: "여기서 말하는 AI란"
+      - num: "03"
+        slug: how-ai-gets-its-character
+        title: "How AI Gets Its Character"
+        ko: "AI는 어떻게 성격을 갖게 되는가"
+      - num: "04"
+        slug: next-token-prediction
+        title: "Next Token Prediction"
+        ko: "다음 토큰 예측"
+      - num: "05"
+        slug: knowledge
+        title: "Knowledge"
+        ko: "지식 (Knowledge)"
+      - num: "06"
+        slug: working-memory
+        title: "Working Memory"
+        ko: "작업 기억 (context window)"
+      - num: "07"
+        slug: steerability
+        title: "Steerability"
+        ko: "조종 가능성 (Steerability)"
+      - num: "08"
+        slug: when-properties-collide
+        title: "When Properties Collide"
+        ko: "속성이 충돌할 때"
+      - num: "09"
+        slug: next-steps
+        title: "Next Steps"
+        ko: "정리와 다음 단계"
+
+  - slug: introduction-to-subagents
+    track: anthropic
+    num: "10"
+    title: "Introduction to subagents"
+    description: "Claude Code 서브에이전트 — 격리된 context에서 작업을 위임하는 법, 생성·설계·효과적 활용과 안티패턴까지."
+    source: https://anthropic.skilljar.com/introduction-to-subagents
+    done: true
+    lessons:
+      - num: "01"
+        slug: what-are-subagents
+        title: "What are subagents?"
+        ko: "서브에이전트란?"
+      - num: "02"
+        slug: creating-a-subagent
+        title: "Creating a subagent"
+        ko: "서브에이전트 만들기"
+      - num: "03"
+        slug: designing-effective-subagents
+        title: "Designing effective subagents"
+        ko: "효과적인 서브에이전트 설계"
+      - num: "04"
+        slug: using-subagents-effectively
+        title: "Using subagents effectively"
+        ko: "서브에이전트 잘 활용하기"
+
+  - slug: model-context-protocol-advanced-topics
+    track: anthropic
+    num: "11"
+    title: "Model Context Protocol: Advanced Topics"
+    description: "MCP 심화 — Sampling·Notifications·Roots 같은 고급 기능과 STDIO·StreamableHTTP 전송, 상태(stateless_http) 트레이드오프."
+    source: https://anthropic.skilljar.com/model-context-protocol-advanced-topics
+    done: true
+    lessons:
+      - num: "01"
+        slug: lets-get-started
+        title: "Let's get started!"
+        ko: "시작하기"
+      - num: "02"
+        slug: sampling
+        title: "Sampling"
+        ko: "Sampling"
+      - num: "03"
+        slug: log-and-progress-notifications
+        title: "Log and progress notifications"
+        ko: "로그·진행 알림"
+      - num: "04"
+        slug: roots
+        title: "Roots"
+        ko: "Roots"
+      - num: "05"
+        slug: json-message-types
+        title: "JSON message types"
+        ko: "JSON 메시지 유형"
+      - num: "06"
+        slug: stdio-transport
+        title: "The STDIO transport"
+        ko: "STDIO 전송"
+      - num: "07"
+        slug: streamablehttp-transport
+        title: "The StreamableHTTP transport"
+        ko: "StreamableHTTP 전송"
+      - num: "08"
+        slug: streamablehttp-in-depth
+        title: "StreamableHTTP in depth"
+        ko: "StreamableHTTP 심화"
+      - num: "09"
+        slug: state-and-streamablehttp-transport
+        title: "State and the StreamableHTTP transport"
+        ko: "상태와 StreamableHTTP 전송"
+      - num: "10"
+        slug: wrapping-up
+        title: "Wrapping up"
+        ko: "정리"
+
+  - slug: claude-in-amazon-bedrock
+    track: anthropic
+    num: "12"
+    title: "Claude with Amazon Bedrock"
+    description: "Amazon Bedrock 고유 부분만 — Bedrock 모델 ID, boto3 bedrock-runtime, inference profile(cross-region), converse API. (일반 API 개념은 Building with the Claude API 참고)"
+    source: https://anthropic.skilljar.com/claude-in-amazon-bedrock
+    done: true
+    lessons:
+      - num: "01"
+        slug: claude-models-on-bedrock
+        title: "Claude models on Amazon Bedrock"
+        ko: "Bedrock의 Claude 모델과 모델 ID"
+      - num: "02"
+        slug: accessing-claude-on-bedrock
+        title: "Accessing Claude on Amazon Bedrock"
+        ko: "Bedrock에서 Claude 접속과 요청"
+
+  - slug: claude-with-google-vertex
+    track: anthropic
+    num: "13"
+    title: "Claude with Google Vertex AI"
+    description: "Vertex AI 고유 부분만 — Model Garden 활성화·gcloud 인증, anthropic[vertex] SDK, AnthropicVertex 클라이언트, 모델 ID(claude-...@date). (일반 API 개념은 Building with the Claude API 참고)"
+    source: https://anthropic.skilljar.com/claude-with-google-vertex
+    done: true
+    lessons:
+      - num: "01"
+        slug: vertex-ai-setup
+        title: "Vertex AI Setup"
+        ko: "Vertex AI 설정과 인증"
+      - num: "02"
+        slug: accessing-claude-on-vertex
+        title: "Accessing Claude on Vertex AI"
+        ko: "Vertex에서 Claude 접속과 요청"
