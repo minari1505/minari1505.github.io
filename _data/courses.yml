@@ -702,6 +702,10 @@ courses:
         slug: prompts-evals-guardrails-and-human-review
         title: "Prompt Design, Evals, Moderation, Guardrails, and Human Review"
         ko: "프롬프트·평가·가드레일·사람 검토"
+      - num: "08"
+        slug: devops-observability-and-production-readiness
+        title: "DevOps, Observability, and Production Readiness for APIs"
+        ko: "DevOps·관측성·프로덕션 준비"
 
   - slug: openai-foundational-knowledge
     track: openai
