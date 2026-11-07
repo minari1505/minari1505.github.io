@@ -682,6 +682,10 @@ courses:
         slug: api-solution-architecture
         title: "API Solution Architecture"
         ko: "API 솔루션 아키텍처 브리프"
+      - num: "03"
+        slug: api-contracts-and-core-interfaces
+        title: "API Contracts and Core Interfaces"
+        ko: "API 계약과 핵심 인터페이스"
 
   - slug: openai-foundational-knowledge
     track: openai
