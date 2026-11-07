@@ -690,6 +690,10 @@ courses:
         slug: model-and-capability-selection
         title: "Model and Capability Selection for API Solutions"
         ko: "모델·역량 선택 근거 만들기"
+      - num: "05"
+        slug: api-security-data-handling-and-access
+        title: "API Security, Data Handling, and Access Controls"
+        ko: "API 보안·데이터 처리·접근 통제"
 
   - slug: openai-foundational-knowledge
     track: openai
