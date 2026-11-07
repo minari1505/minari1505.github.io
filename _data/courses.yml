@@ -706,6 +706,10 @@ courses:
         slug: devops-observability-and-production-readiness
         title: "DevOps, Observability, and Production Readiness for APIs"
         ko: "DevOps·관측성·프로덕션 준비"
+      - num: "09"
+        slug: realtime-voice-and-multimodal
+        title: "Realtime, Voice, and Multimodal API Experiences"
+        ko: "실시간·음성·멀티모달 API 경험"
 
   - slug: openai-foundational-knowledge
     track: openai
