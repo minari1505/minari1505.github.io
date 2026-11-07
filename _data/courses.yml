@@ -18,6 +18,11 @@ tracks:
     title: "Software Engineering"
     description: "개발 도구를 직접 사용하고 요구사항·설계·운영 원리까지 연결하는 실습형 학습 노트입니다."
     url: /courses/software-engineering/
+  - slug: openai
+    label: "OPENAI PARTNERU"
+    title: "OpenAI Course"
+    description: "OpenAI PartnerU 공식 프로그램을 한글로 옮겨, 그림과 표로 한눈에 이해되게 정리합니다."
+    url: /courses/openai/
 
 courses:
   - slug: agent-skills
@@ -659,3 +664,120 @@ courses:
         slug: modern-process-and-traceability
         title: "Modern Process and Traceability"
         ko: "현대적 개발 프로세스와 추적성"
+
+  - slug: openai-api-deployment
+    track: openai
+    num: "01"
+    title: "API Deployment Practitioner"
+    description: "OpenAI API 솔루션을 설계·검증·운영 준비까지 — 아키텍처, 계약, 모델 선택, 보안, RAG, 평가·가드레일, 관측성, 멀티모달을 증거 중심으로."
+    source: https://openai-partneru.sana.ai/program/7cd03f84-3008-482f-b5d8-7c605dd0bfa2
+    source_label: "원문 프로그램 (PartnerU, 로그인 필요)"
+    done: false
+    lessons:
+      - num: "01"
+        slug: api-deployment-foundations
+        title: "API Deployment Foundations: Run, Build, and Verify a Minimal API"
+        ko: "API 배포 기초 — 최소 API 실행·검증"
+      - num: "02"
+        slug: api-solution-architecture
+        title: "API Solution Architecture"
+        ko: "API 솔루션 아키텍처 브리프"
+
+  - slug: openai-foundational-knowledge
+    track: openai
+    num: "02"
+    title: "OpenAI Foundational Knowledge"
+    description: "파트너 포털 활용과 조직 접근 관리, 산업별 AI 전략·책임 있는 AI 도입 기초 (15 steps)."
+    source: https://openai-partneru.sana.ai/program/ba84417c-230f-42eb-82a3-5f29e713b0dd
+    done: false
+    lessons: []
+
+  - slug: openai-consultative-solutions
+    track: openai
+    num: "03"
+    title: "OpenAI Consultative Solutions Practitioner"
+    description: "고객 discovery, 유스케이스 우선순위, 비즈니스 가치 프레이밍, 솔루션 매핑 등 컨설팅 역량 (9 steps)."
+    source: https://openai-partneru.sana.ai/program/fa03be88-38c3-4739-9157-42c4ead2f668
+    done: false
+    lessons: []
+
+  - slug: openai-technical-practitioner
+    track: openai
+    num: "04"
+    title: "OpenAI Technical Practitioner"
+    description: "요구사항 라우팅, 역량 선택, 아키텍처, 보안·데이터·거버넌스 제약을 고려한 기술 설계 (8 steps)."
+    source: https://openai-partneru.sana.ai/program/d4d206ae-aa74-4f86-b503-d5b2fbab1a0f
+    done: false
+    lessons: []
+
+  - slug: chatgpt-solutions
+    track: openai
+    num: "05"
+    title: "ChatGPT Solutions Practitioner"
+    description: "ChatGPT 제품 적합성 판단, 고가치 워크플로우 설계, 비즈니스 성과 연결 (7 steps)."
+    source: https://openai-partneru.sana.ai/program/a6c9a5b3-f5d5-4be3-be75-cda764bd8c59
+    done: false
+    lessons: []
+
+  - slug: codex-solutions
+    track: openai
+    num: "06"
+    title: "Codex Solutions Practitioner"
+    description: "Codex 기회 발굴·자격 판단, 개발 워크플로우 포지셔닝, 보안·거버넌스·도입 (7 steps)."
+    source: https://openai-partneru.sana.ai/program/d78a1839-437b-4de1-bb7d-69f5ae1dde6d
+    done: false
+    lessons: []
+
+  - slug: chatgpt-deployment
+    track: openai
+    num: "07"
+    title: "ChatGPT Deployment Practitioner"
+    description: "ChatGPT 롤아웃 계획, 워크스페이스·활성화, 사용자 enablement, 도입 측정과 확장 (10 steps)."
+    source: https://openai-partneru.sana.ai/program/ac303f88-ae3f-49f2-b80b-7cf4353559bd
+    done: false
+    lessons: []
+
+  - slug: codex-deployment
+    track: openai
+    num: "08"
+    title: "Codex Deployment Practitioner"
+    description: "Codex 운영 모델, 개발 워크플로우 매핑, 보안·리뷰 통제, 고급 통합 (9 steps)."
+    source: https://openai-partneru.sana.ai/program/9b23459e-9443-4943-a81b-e93211b8303a
+    done: false
+    lessons: []
+
+  - slug: openai-cyber-deployment
+    track: openai
+    num: "09"
+    title: "OpenAI Cyber Deployment Practitioner"
+    description: "방어 보안 워크플로우용 Daybreak 기회 판단, 파일럿 설계, 거버넌스, 가치 스토리 (8 steps)."
+    source: https://openai-partneru.sana.ai/program/7d983d86-cb00-472b-89fb-6c9d7142f5eb
+    done: false
+    lessons: []
+
+  - slug: openai-cyber-solutions
+    track: openai
+    num: "10"
+    title: "OpenAI Cyber Solutions Practitioner"
+    description: "find → validate → test → remediate → prove 프레임워크와 Daybreak 솔루션 라우팅 (5 steps)."
+    source: https://openai-partneru.sana.ai/program/50ba62b7-a7c3-4de3-9bb4-333e8cd8208c
+    done: false
+    lessons: []
+
+  - slug: openai-advanced-cyber-deployment
+    track: openai
+    num: "11"
+    title: "OpenAI Advanced Cyber Deployment Practitioner"
+    description: "Daybreak Blue/Red, Codex Security 스캔·CLI, GitHub Actions PR 체크와 감사 기록 (9 steps)."
+    source: https://openai-partneru.sana.ai/program/4660340f-67ef-4e01-a926-4752cbe72a0f
+    done: false
+    lessons: []
+
+  - slug: partner-portal-admin
+    track: openai
+    num: "12"
+    title: "Partner Portal - Admin Training"
+    description: "관리자 관점의 파트너 포털 — 계정·역할 관리, 딜 등록, 실적 추적 (2 steps)."
+    source: https://openai-partneru.sana.ai/program/e6f0a021-de92-4cd6-8ffc-7607da1c747a
+    done: false
+    lessons: []
