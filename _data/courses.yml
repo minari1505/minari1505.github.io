@@ -672,7 +672,7 @@ courses:
     description: "OpenAI API 솔루션을 설계·검증·운영 준비까지 — 아키텍처, 계약, 모델 선택, 보안, RAG, 평가·가드레일, 관측성, 멀티모달을 증거 중심으로."
     source: https://openai-partneru.sana.ai/program/7cd03f84-3008-482f-b5d8-7c605dd0bfa2
     source_label: "원문 프로그램 (PartnerU, 로그인 필요)"
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: api-deployment-foundations
@@ -714,6 +714,10 @@ courses:
         slug: specialized-api-pattern-fit
         title: "Deep Research, Images, Distillation, and Specialized API Pattern Fit"
         ko: "특화 API 패턴 적합성 — Deep Research·이미지·증류"
+      - num: "11"
+        slug: api-deployment-practice-application
+        title: "API Deployment Practice Application"
+        ko: "종합 실전 — Northstar 배포 판단"
 
   - slug: openai-foundational-knowledge
     track: openai
