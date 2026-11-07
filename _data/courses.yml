@@ -710,6 +710,10 @@ courses:
         slug: realtime-voice-and-multimodal
         title: "Realtime, Voice, and Multimodal API Experiences"
         ko: "실시간·음성·멀티모달 API 경험"
+      - num: "10"
+        slug: specialized-api-pattern-fit
+        title: "Deep Research, Images, Distillation, and Specialized API Pattern Fit"
+        ko: "특화 API 패턴 적합성 — Deep Research·이미지·증류"
 
   - slug: openai-foundational-knowledge
     track: openai
