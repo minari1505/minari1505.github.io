@@ -31,31 +31,26 @@ lesson: 11
     <text x="24" y="86" fill="#4a4a4a">L02 아키텍처 브리프</text>
     <text x="24" y="110" fill="#4a4a4a">L03 API 계약 · 인터페이스</text>
     <text x="24" y="134" fill="#4a4a4a">L04 모델 · 역량 선택</text>
-
     <rect x="250" y="10" width="220" height="150" rx="14" fill="#fffdf5" stroke="#f1e4b8"/>
     <text x="360" y="34" text-anchor="middle" font-size="14" font-weight="700" fill="#c99400">② 보호 — 무엇을 지킬까</text>
     <text x="264" y="62" fill="#4a4a4a">L05 보안 · 데이터 · 접근</text>
     <text x="264" y="86" fill="#4a4a4a">L06 컨텍스트 · 검색(RAG)</text>
     <text x="264" y="118" fill="#8a8a8a">승인 소스, 권한 경계,</text>
     <text x="264" y="136" fill="#8a8a8a">로그 · 보관 · 마스킹</text>
-
     <rect x="490" y="10" width="220" height="150" rx="14" fill="#fffdf5" stroke="#f1e4b8"/>
     <text x="600" y="34" text-anchor="middle" font-size="14" font-weight="700" fill="#c99400">③ 검증 — 정말 안전한가</text>
     <text x="504" y="62" fill="#4a4a4a">L07 프롬프트 · eval ·</text>
     <text x="504" y="80" fill="#4a4a4a">      가드레일 · 사람 검토</text>
     <text x="504" y="118" fill="#8a8a8a">정상 케이스 + 경계 ·</text>
     <text x="504" y="136" fill="#8a8a8a">실패 · 에스컬레이션 케이스</text>
-
     <rect x="10" y="180" width="220" height="100" rx="14" fill="#fffdf5" stroke="#f1e4b8"/>
     <text x="120" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#c99400">④ 운영 — 지켜볼 수 있나</text>
     <text x="24" y="232" fill="#4a4a4a">L08 DevOps · 관측성 ·</text>
     <text x="24" y="250" fill="#4a4a4a">      프로덕션 준비</text>
-
     <rect x="250" y="180" width="220" height="100" rx="14" fill="#fffdf5" stroke="#f1e4b8"/>
     <text x="360" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#c99400">⑤ 확장 — 꼭 필요한가</text>
     <text x="264" y="232" fill="#4a4a4a">L09 실시간 · 음성 · 멀티모달</text>
     <text x="264" y="250" fill="#4a4a4a">L10 Deep Research · 이미지 · 증류</text>
-
     <rect x="490" y="180" width="220" height="100" rx="14" fill="#fff3c4" stroke="#e9c75c"/>
     <text x="600" y="210" text-anchor="middle" font-size="15" font-weight="700" fill="#5a4500">L11 배포 판단</text>
     <text x="600" y="234" text-anchor="middle" fill="#5a4500">증거 → 갭 → 결정</text>

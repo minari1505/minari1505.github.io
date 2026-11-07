@@ -124,7 +124,6 @@ lesson: 9
     <text x="650" y="62" text-anchor="middle" fill="#4a4a4a">🔊 음성 응답</text>
     <path d="M130 57 H195 M520 57 H585" stroke="#c99400" stroke-width="2" marker-end="url(#ar9)"/>
     <text x="360" y="98" text-anchor="middle" font-size="11" fill="#8a8a8a">자연스러운 대화·끼어들기·실시간 도구 사용이 필요할 때</text>
-
     <text x="10" y="135" font-weight="700" fill="#4a4a4a">② Chained voice pipeline</text>
     <rect x="10" y="148" width="120" height="44" rx="10" fill="#fff8df" stroke="#f1e4b8"/>
     <text x="70" y="175" text-anchor="middle" fill="#4a4a4a">🎤 사용자 음성</text>
