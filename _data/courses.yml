@@ -698,6 +698,11 @@ courses:
         slug: context-data-and-retrieval
         title: "Context, Data, and Retrieval for Grounded API Solutions"
         ko: "컨텍스트·데이터·검색 (Retrieval 설계)"
+      - num: "07"
+        slug: prompts-evals-guardrails-and-human-review
+        title: "Prompt Design, Evals, Moderation, Guardrails, and Human Review"
+        ko: "프롬프트·평가·가드레일·사람 검토"
+
   - slug: openai-foundational-knowledge
     track: openai
     num: "02"
