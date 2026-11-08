@@ -751,6 +751,10 @@ courses:
         slug: ai-applications-and-technologies
         title: "AI Applications & Technologies"
         ko: "AI 애플리케이션과 기술"
+      - num: "07"
+        slug: ai-infrastructure-and-implementation
+        title: "AI Infrastructure & Implementation"
+        ko: "AI 인프라와 구현"
 
   - slug: openai-consultative-solutions
     track: openai
