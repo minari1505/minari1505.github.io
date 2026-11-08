@@ -725,7 +725,7 @@ courses:
     title: "OpenAI Foundational Knowledge"
     description: "파트너 포털 활용과 조직 접근 관리, 산업별 AI 전략·책임 있는 AI 도입 기초 (15 steps)."
     source: https://openai-partneru.sana.ai/program/ba84417c-230f-42eb-82a3-5f29e713b0dd
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: introduction-to-openai
