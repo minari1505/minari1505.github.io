@@ -731,6 +731,10 @@ courses:
         slug: introduction-to-openai
         title: "Introduction to OpenAI"
         ko: "OpenAI 입문 — 미션과 파트너 역할"
+      - num: "02"
+        slug: understanding-the-badging-program
+        title: "Understanding the Badging Program"
+        ko: "배지 프로그램 이해하기"
 
   - slug: openai-consultative-solutions
     track: openai
