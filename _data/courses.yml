@@ -747,6 +747,10 @@ courses:
         slug: core-ai-and-ml-fundamentals
         title: "Core AI & Machine Learning Fundamentals"
         ko: "AI·머신러닝 핵심 개념"
+      - num: "06"
+        slug: ai-applications-and-technologies
+        title: "AI Applications & Technologies"
+        ko: "AI 애플리케이션과 기술"
 
   - slug: openai-consultative-solutions
     track: openai
