@@ -735,6 +735,10 @@ courses:
         slug: understanding-the-badging-program
         title: "Understanding the Badging Program"
         ko: "배지 프로그램 이해하기"
+      - num: "03"
+        slug: ai-safety-and-responsible-ai
+        title: "AI Safety & Responsible AI"
+        ko: "AI 안전과 책임 있는 AI"
 
   - slug: openai-consultative-solutions
     track: openai
