@@ -787,7 +787,11 @@ courses:
     description: "고객 discovery, 유스케이스 우선순위, 비즈니스 가치 프레이밍, 솔루션 매핑 등 컨설팅 역량 (9 steps)."
     source: https://openai-partneru.sana.ai/program/fa03be88-38c3-4739-9157-42c4ead2f668
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: recognizing-strong-ai-opportunities
+        title: "Recognizing Strong AI Opportunities"
+        ko: "좋은 AI 기회 알아보기"
 
   - slug: openai-technical-practitioner
     track: openai
