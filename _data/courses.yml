@@ -739,6 +739,10 @@ courses:
         slug: ai-safety-and-responsible-ai
         title: "AI Safety & Responsible AI"
         ko: "AI 안전과 책임 있는 AI"
+      - num: "04"
+        slug: ai-driving-business-transformation
+        title: "How AI is Driving Business Transformation"
+        ko: "AI가 이끄는 비즈니스 전환"
 
   - slug: openai-consultative-solutions
     track: openai
