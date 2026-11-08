@@ -771,6 +771,10 @@ courses:
         slug: codex-essentials
         title: "Codex Essentials"
         ko: "Codex 핵심"
+      - num: "12"
+        slug: api-essentials
+        title: "API Essentials"
+        ko: "API 핵심"
 
   - slug: openai-consultative-solutions
     track: openai
