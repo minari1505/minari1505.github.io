@@ -759,6 +759,10 @@ courses:
         slug: agents-and-agentic-workflows
         title: "Agents & Agentic Workflows"
         ko: "에이전트와 에이전트형 워크플로"
+      - num: "09"
+        slug: openai-product-portfolio-overview
+        title: "OpenAI Product Portfolio Overview"
+        ko: "OpenAI 제품 포트폴리오 개요"
 
   - slug: openai-consultative-solutions
     track: openai
