@@ -763,6 +763,10 @@ courses:
         slug: openai-product-portfolio-overview
         title: "OpenAI Product Portfolio Overview"
         ko: "OpenAI 제품 포트폴리오 개요"
+      - num: "10"
+        slug: chatgpt-essentials
+        title: "ChatGPT Essentials"
+        ko: "ChatGPT 핵심"
 
   - slug: openai-consultative-solutions
     track: openai
