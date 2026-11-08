@@ -775,6 +775,10 @@ courses:
         slug: api-essentials
         title: "API Essentials"
         ko: "API 핵심"
+      - num: "13"
+        slug: real-world-openai-solutions
+        title: "Real World OpenAI Solutions"
+        ko: "실전 OpenAI 솔루션"
 
   - slug: openai-consultative-solutions
     track: openai
