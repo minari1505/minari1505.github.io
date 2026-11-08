@@ -726,7 +726,11 @@ courses:
     description: "파트너 포털 활용과 조직 접근 관리, 산업별 AI 전략·책임 있는 AI 도입 기초 (15 steps)."
     source: https://openai-partneru.sana.ai/program/ba84417c-230f-42eb-82a3-5f29e713b0dd
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: introduction-to-openai
+        title: "Introduction to OpenAI"
+        ko: "OpenAI 입문 — 미션과 파트너 역할"
 
   - slug: openai-consultative-solutions
     track: openai
