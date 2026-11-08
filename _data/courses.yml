@@ -743,6 +743,10 @@ courses:
         slug: ai-driving-business-transformation
         title: "How AI is Driving Business Transformation"
         ko: "AI가 이끄는 비즈니스 전환"
+      - num: "05"
+        slug: core-ai-and-ml-fundamentals
+        title: "Core AI & Machine Learning Fundamentals"
+        ko: "AI·머신러닝 핵심 개념"
 
   - slug: openai-consultative-solutions
     track: openai
