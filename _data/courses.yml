@@ -755,6 +755,10 @@ courses:
         slug: ai-infrastructure-and-implementation
         title: "AI Infrastructure & Implementation"
         ko: "AI 인프라와 구현"
+      - num: "08"
+        slug: agents-and-agentic-workflows
+        title: "Agents & Agentic Workflows"
+        ko: "에이전트와 에이전트형 워크플로"
 
   - slug: openai-consultative-solutions
     track: openai
