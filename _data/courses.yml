@@ -932,6 +932,10 @@ courses:
         slug: design-use-cases-for-activation
         title: "Design Use Cases for Activation"
         ko: "활성화 유스케이스 설계"
+      - num: "05"
+        slug: enable-users-and-drive-adoption
+        title: "Enable Users and Drive Adoption"
+        ko: "사용자 지원과 도입 촉진"
 
   - slug: codex-deployment
     track: openai
