@@ -1043,7 +1043,11 @@ courses:
     description: "Daybreak Blue/Red, Codex Security 스캔·CLI, GitHub Actions PR 체크와 감사 기록 (9 steps)."
     source: https://openai-partneru.sana.ai/program/4660340f-67ef-4e01-a926-4752cbe72a0f
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: orientation-use-cases-and-readiness
+        title: "Orientation, Use Cases and Deployment Readiness"
+        ko: "오리엔테이션·사용 사례·준비도"
 
   - slug: partner-portal-admin
     track: openai
