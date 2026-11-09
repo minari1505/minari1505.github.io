@@ -1031,6 +1031,10 @@ courses:
         slug: cyber-opportunity-qualification-and-personas
         title: "Cyber Opportunity Qualification and Personas"
         ko: "사이버 기회 검증과 페르소나"
+      - num: "03"
+        slug: daybreak-solution-routing-and-access-paths
+        title: "Daybreak solution routing and access paths"
+        ko: "Daybreak 솔루션 라우팅과 접근 경로"
 
   - slug: openai-advanced-cyber-deployment
     track: openai
