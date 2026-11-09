@@ -903,6 +903,10 @@ courses:
         slug: codex-trust-security-and-adoption
         title: "Codex Trust, Security, and Adoption Conversations"
         ko: "Codex 신뢰·보안·도입 대화"
+      - num: "05"
+        slug: selling-codex-application-practice
+        title: "Selling Codex Application Practice"
+        ko: "Codex 영업 실전 연습"
 
   - slug: chatgpt-deployment
     track: openai
