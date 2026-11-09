@@ -885,7 +885,7 @@ courses:
     title: "Codex Solutions Practitioner"
     description: "Codex 기회 발굴·자격 판단, 개발 워크플로우 포지셔닝, 보안·거버넌스·도입 (7 steps)."
     source: https://openai-partneru.sana.ai/program/d78a1839-437b-4de1-bb7d-69f5ae1dde6d
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: codex-opportunity-fit
