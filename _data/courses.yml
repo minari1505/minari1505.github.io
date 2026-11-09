@@ -808,6 +808,10 @@ courses:
         slug: mapping-solutions-and-advancing-the-opportunity
         title: "Mapping Solutions & Advancing the Opportunity"
         ko: "솔루션 매핑과 기회 진전"
+      - num: "06"
+        slug: vertical-solution-application
+        title: "Vertical Solution Application"
+        ko: "버티컬 솔루션 적용"
 
   - slug: openai-technical-practitioner
     track: openai
