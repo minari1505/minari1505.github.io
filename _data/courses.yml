@@ -870,6 +870,10 @@ courses:
         slug: positioning-chatgpt-for-business
         title: "Positioning ChatGPT for Business"
         ko: "ChatGPT 비즈니스 포지셔닝"
+      - num: "04"
+        slug: opportunity-readiness-and-handoff
+        title: "ChatGPT Opportunity Readiness & Handoff"
+        ko: "기회 준비도와 인수인계"
 
   - slug: codex-solutions
     track: openai
