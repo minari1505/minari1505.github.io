@@ -994,6 +994,10 @@ courses:
         slug: codex-security-workflow-patterns
         title: "Codex Security Workflow Patterns"
         ko: "Codex Security 워크플로우 패턴"
+      - num: "02"
+        slug: bounded-evaluation-and-pilot-design
+        title: "Bounded evaluation and pilot design"
+        ko: "제한된 평가와 파일럿 설계"
 
   - slug: openai-cyber-solutions
     track: openai
