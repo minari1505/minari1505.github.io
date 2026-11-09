@@ -866,6 +866,10 @@ courses:
         slug: designing-chatgpt-workflows
         title: "Designing ChatGPT Workflows"
         ko: "ChatGPT 워크플로우 설계"
+      - num: "03"
+        slug: positioning-chatgpt-for-business
+        title: "Positioning ChatGPT for Business"
+        ko: "ChatGPT 비즈니스 포지셔닝"
 
   - slug: codex-solutions
     track: openai
