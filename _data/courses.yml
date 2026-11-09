@@ -944,6 +944,10 @@ courses:
         slug: scaling-chatgpt-across-the-organization
         title: "Scaling ChatGPT Across the Organization"
         ko: "조직 전체로 확장하기"
+      - num: "08"
+        slug: deploying-chatgpt-practice-application
+        title: "Deploying ChatGPT Practice Application"
+        ko: "배포 실전 연습"
 
   - slug: codex-deployment
     track: openai
