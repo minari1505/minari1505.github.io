@@ -792,6 +792,10 @@ courses:
         slug: recognizing-strong-ai-opportunities
         title: "Recognizing Strong AI Opportunities"
         ko: "좋은 AI 기회 알아보기"
+      - num: "02"
+        slug: discovery-that-drives-qualification
+        title: "Discovery That Drives Qualification"
+        ko: "검증으로 이어지는 Discovery"
 
   - slug: openai-technical-practitioner
     track: openai
