@@ -899,6 +899,10 @@ courses:
         slug: codex-value-and-use-cases
         title: "Codex Value & Use Cases"
         ko: "Codex 가치와 활용 사례"
+      - num: "04"
+        slug: codex-trust-security-and-adoption
+        title: "Codex Trust, Security, and Adoption Conversations"
+        ko: "Codex 신뢰·보안·도입 대화"
 
   - slug: chatgpt-deployment
     track: openai
