@@ -1002,6 +1002,10 @@ courses:
         slug: cyber-governance-and-operating-model
         title: "Cyber governance and operating model"
         ko: "사이버 거버넌스와 운영 모델"
+      - num: "04"
+        slug: cyber-value-story-and-executive-readout
+        title: "Cyber Value Story & Executive Readout"
+        ko: "사이버 가치 스토리와 임원 보고"
 
   - slug: openai-cyber-solutions
     track: openai
