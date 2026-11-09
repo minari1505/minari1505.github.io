@@ -891,6 +891,10 @@ courses:
         slug: codex-opportunity-fit
         title: "Codex Opportunity Fit"
         ko: "Codex 기회 적합성 판단"
+      - num: "02"
+        slug: codex-positioning
+        title: "Codex Positioning"
+        ko: "Codex 포지셔닝"
 
   - slug: chatgpt-deployment
     track: openai
