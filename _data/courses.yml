@@ -824,7 +824,11 @@ courses:
     description: "요구사항 라우팅, 역량 선택, 아키텍처, 보안·데이터·거버넌스 제약을 고려한 기술 설계 (8 steps)."
     source: https://openai-partneru.sana.ai/program/d4d206ae-aa74-4f86-b503-d5b2fbab1a0f
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: technical-fluency-orientation
+        title: "Technical Fluency Orientation"
+        ko: "기술 유창성 오리엔테이션"
 
   - slug: chatgpt-solutions
     track: openai
