@@ -1027,6 +1027,10 @@ courses:
         slug: cyber-market-moment-and-daybreak-positioning
         title: "Cyber Market Moment And Daybreak Positioning"
         ko: "사이버 시장의 지금과 Daybreak 포지셔닝"
+      - num: "02"
+        slug: cyber-opportunity-qualification-and-personas
+        title: "Cyber Opportunity Qualification and Personas"
+        ko: "사이버 기회 검증과 페르소나"
 
   - slug: openai-advanced-cyber-deployment
     track: openai
