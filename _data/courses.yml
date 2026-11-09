@@ -1059,7 +1059,7 @@ courses:
     title: "Partner Portal - Admin Training"
     description: "관리자 관점의 파트너 포털 — 계정·역할 관리, 딜 등록, 실적 추적 (2 steps)."
     source: https://openai-partneru.sana.ai/program/e6f0a021-de92-4cd6-8ffc-7607da1c747a
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: partner-portal-for-smb-admins
