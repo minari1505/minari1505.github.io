@@ -1021,7 +1021,7 @@ courses:
     title: "OpenAI Cyber Solutions Practitioner"
     description: "find → validate → test → remediate → prove 프레임워크와 Daybreak 솔루션 라우팅 (5 steps)."
     source: https://openai-partneru.sana.ai/program/50ba62b7-a7c3-4de3-9bb4-333e8cd8208c
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: cyber-market-moment-and-daybreak-positioning
