@@ -800,6 +800,10 @@ courses:
         slug: designing-high-impact-use-cases
         title: "Designing High-Impact Use Cases"
         ko: "효과 큰 유스케이스 설계"
+      - num: "04"
+        slug: building-the-business-value
+        title: "Building the Business Value"
+        ko: "비즈니스 가치 세우기"
 
   - slug: openai-technical-practitioner
     track: openai
