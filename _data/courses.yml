@@ -1006,6 +1006,10 @@ courses:
         slug: cyber-value-story-and-executive-readout
         title: "Cyber Value Story & Executive Readout"
         ko: "사이버 가치 스토리와 임원 보고"
+      - num: "05"
+        slug: cyber-application-practice
+        title: "Cyber application practice"
+        ko: "사이버 적용 실습 (Harborline Bank)"
 
   - slug: openai-cyber-solutions
     track: openai
