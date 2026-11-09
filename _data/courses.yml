@@ -1010,6 +1010,10 @@ courses:
         slug: cyber-application-practice
         title: "Cyber application practice"
         ko: "사이버 적용 실습 (Harborline Bank)"
+      - num: "06"
+        slug: cyber-lab-northstar-financial
+        title: "Cyber Lab - Northstar Financial"
+        ko: "사이버 랩 — Northstar Financial"
 
   - slug: openai-cyber-solutions
     track: openai
