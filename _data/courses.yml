@@ -812,6 +812,10 @@ courses:
         slug: vertical-solution-application
         title: "Vertical Solution Application"
         ko: "버티컬 솔루션 적용"
+      - num: "07"
+        slug: early-opportunity-progression-application
+        title: "Early Opportunity Progression Application"
+        ko: "초기 기회 진전 실습"
 
   - slug: openai-technical-practitioner
     track: openai
