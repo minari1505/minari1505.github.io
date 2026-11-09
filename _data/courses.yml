@@ -989,7 +989,11 @@ courses:
     description: "방어 보안 워크플로우용 Daybreak 기회 판단, 파일럿 설계, 거버넌스, 가치 스토리 (8 steps)."
     source: https://openai-partneru.sana.ai/program/7d983d86-cb00-472b-89fb-6c9d7142f5eb
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: codex-security-workflow-patterns
+        title: "Codex Security Workflow Patterns"
+        ko: "Codex Security 워크플로우 패턴"
 
   - slug: openai-cyber-solutions
     track: openai
