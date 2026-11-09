@@ -965,6 +965,10 @@ courses:
         slug: codex-in-developer-workflows
         title: "Codex in Developer Workflows"
         ko: "개발 워크플로우 속 Codex"
+      - num: "03"
+        slug: codex-security-governance-and-controls
+        title: "Codex Security, Governance and Controls"
+        ko: "Codex 보안·거버넌스·통제"
 
   - slug: openai-cyber-deployment
     track: openai
