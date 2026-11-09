@@ -862,6 +862,10 @@ courses:
         slug: chatgpt-solution-framing-and-fit
         title: "ChatGPT Solution Framing & Fit"
         ko: "ChatGPT 적합성 판단"
+      - num: "02"
+        slug: designing-chatgpt-workflows
+        title: "Designing ChatGPT Workflows"
+        ko: "ChatGPT 워크플로우 설계"
 
   - slug: codex-solutions
     track: openai
