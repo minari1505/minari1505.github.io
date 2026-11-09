@@ -920,6 +920,10 @@ courses:
         slug: from-opportunity-to-deployment-plan
         title: "From Qualified Opportunity to Deployment Plan"
         ko: "기회에서 배포 계획으로"
+      - num: "02"
+        slug: plan-for-success
+        title: "Plan for Success"
+        ko: "성공 계획 세우기"
 
   - slug: codex-deployment
     track: openai
