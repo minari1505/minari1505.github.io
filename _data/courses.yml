@@ -874,6 +874,10 @@ courses:
         slug: opportunity-readiness-and-handoff
         title: "ChatGPT Opportunity Readiness & Handoff"
         ko: "기회 준비도와 인수인계"
+      - num: "05"
+        slug: selling-chatgpt-application-practice
+        title: "Selling ChatGPT Application Practice"
+        ko: "ChatGPT 판매 실전 연습"
 
   - slug: codex-solutions
     track: openai
