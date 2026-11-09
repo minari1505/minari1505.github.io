@@ -928,6 +928,10 @@ courses:
         slug: set-up-your-workspace
         title: "Set Up Your Workspace"
         ko: "워크스페이스 준비"
+      - num: "04"
+        slug: design-use-cases-for-activation
+        title: "Design Use Cases for Activation"
+        ko: "활성화 유스케이스 설계"
 
   - slug: codex-deployment
     track: openai
