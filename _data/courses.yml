@@ -845,6 +845,10 @@ courses:
         slug: architecture-patterns-and-solution-blueprints
         title: "Architecture Patterns & Solution Blueprints"
         ko: "아키텍처 패턴과 솔루션 블루프린트"
+      - num: "06"
+        slug: security-governance-and-data
+        title: "Security, Governance & Data"
+        ko: "보안·거버넌스·데이터"
 
   - slug: chatgpt-solutions
     track: openai
