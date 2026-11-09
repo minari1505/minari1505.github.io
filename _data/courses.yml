@@ -1065,3 +1065,7 @@ courses:
         slug: partner-portal-for-smb-admins
         title: "OpenAI's Partner Portal for SMB Admins"
         ko: "파트너 포털 관리자 가이드"
+      - num: "02"
+        slug: partneru-admin-training
+        title: "PartnerU Admin Training"
+        ko: "PartnerU 관리자 교육"
