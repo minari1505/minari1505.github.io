@@ -969,6 +969,10 @@ courses:
         slug: codex-security-governance-and-controls
         title: "Codex Security, Governance and Controls"
         ko: "Codex 보안·거버넌스·통제"
+      - num: "04"
+        slug: advanced-codex-workflow-integration
+        title: "Advanced Codex Workflow Integration"
+        ko: "고급 Codex 워크플로우 통합"
 
   - slug: openai-cyber-deployment
     track: openai
