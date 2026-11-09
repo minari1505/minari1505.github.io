@@ -977,6 +977,10 @@ courses:
         slug: codex-use-cases-deployment-depth
         title: "Codex Use Cases: Deployment Depth"
         ko: "Codex 활용 사례와 배포 깊이"
+      - num: "06"
+        slug: advanced-codex-lab-coding-task-tracker
+        title: "Advanced Codex Lab - Coding Task Tracker"
+        ko: "고급 Codex 실습 — 할 일 관리 API"
 
   - slug: openai-cyber-deployment
     track: openai
