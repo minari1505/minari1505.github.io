@@ -841,6 +841,10 @@ courses:
         slug: platform-capabilities-and-developer-tools
         title: "Platform Capabilities and Developer Tools"
         ko: "플랫폼 역량과 개발자 도구"
+      - num: "05"
+        slug: architecture-patterns-and-solution-blueprints
+        title: "Architecture Patterns & Solution Blueprints"
+        ko: "아키텍처 패턴과 솔루션 블루프린트"
 
   - slug: chatgpt-solutions
     track: openai
