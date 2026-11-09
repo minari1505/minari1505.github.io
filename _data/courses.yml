@@ -961,6 +961,10 @@ courses:
         slug: codex-deployment-operating-model
         title: "Codex Deployment Operating Model"
         ko: "Codex 배포 운영 모델"
+      - num: "02"
+        slug: codex-in-developer-workflows
+        title: "Codex in Developer Workflows"
+        ko: "개발 워크플로우 속 Codex"
 
   - slug: openai-cyber-deployment
     track: openai
