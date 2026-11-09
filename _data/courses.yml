@@ -915,7 +915,11 @@ courses:
     description: "ChatGPT 롤아웃 계획, 워크스페이스·활성화, 사용자 enablement, 도입 측정과 확장 (10 steps)."
     source: https://openai-partneru.sana.ai/program/ac303f88-ae3f-49f2-b80b-7cf4353559bd
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: from-opportunity-to-deployment-plan
+        title: "From Qualified Opportunity to Deployment Plan"
+        ko: "기회에서 배포 계획으로"
 
   - slug: codex-deployment
     track: openai
