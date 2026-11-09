@@ -940,6 +940,10 @@ courses:
         slug: activate-measure-and-scale
         title: "Activate, Measure, and Scale"
         ko: "활성화·측정·확장"
+      - num: "07"
+        slug: scaling-chatgpt-across-the-organization
+        title: "Scaling ChatGPT Across the Organization"
+        ko: "조직 전체로 확장하기"
 
   - slug: codex-deployment
     track: openai
