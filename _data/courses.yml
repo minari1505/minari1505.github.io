@@ -829,6 +829,10 @@ courses:
         slug: technical-fluency-orientation
         title: "Technical Fluency Orientation"
         ko: "기술 유창성 오리엔테이션"
+      - num: "02"
+        slug: technical-implementation-foundations
+        title: "Technical Implementation Foundations"
+        ko: "기술 구현 기초"
 
   - slug: chatgpt-solutions
     track: openai
