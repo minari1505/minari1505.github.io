@@ -796,6 +796,10 @@ courses:
         slug: discovery-that-drives-qualification
         title: "Discovery That Drives Qualification"
         ko: "검증으로 이어지는 Discovery"
+      - num: "03"
+        slug: designing-high-impact-use-cases
+        title: "Designing High-Impact Use Cases"
+        ko: "효과 큰 유스케이스 설계"
 
   - slug: openai-technical-practitioner
     track: openai
