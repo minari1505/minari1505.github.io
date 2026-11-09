@@ -998,6 +998,10 @@ courses:
         slug: bounded-evaluation-and-pilot-design
         title: "Bounded evaluation and pilot design"
         ko: "제한된 평가와 파일럿 설계"
+      - num: "03"
+        slug: cyber-governance-and-operating-model
+        title: "Cyber governance and operating model"
+        ko: "사이버 거버넌스와 운영 모델"
 
   - slug: openai-cyber-solutions
     track: openai
