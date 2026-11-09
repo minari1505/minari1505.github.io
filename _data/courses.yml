@@ -1048,6 +1048,10 @@ courses:
         slug: orientation-use-cases-and-readiness
         title: "Orientation, Use Cases and Deployment Readiness"
         ko: "오리엔테이션·사용 사례·준비도"
+      - num: "02"
+        slug: lab-set-up-codex-security
+        title: "Lab: Set Up Codex Security"
+        ko: "랩: Codex Security 설정 준비"
 
   - slug: partner-portal-admin
     track: openai
