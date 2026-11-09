@@ -833,6 +833,10 @@ courses:
         slug: technical-implementation-foundations
         title: "Technical Implementation Foundations"
         ko: "기술 구현 기초"
+      - num: "03"
+        slug: model-selection-and-solution-patterns
+        title: "Model Selection and Solution Patterns"
+        ko: "모델 선택과 솔루션 패턴"
 
   - slug: chatgpt-solutions
     track: openai
