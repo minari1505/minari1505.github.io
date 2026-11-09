@@ -956,7 +956,11 @@ courses:
     description: "Codex 운영 모델, 개발 워크플로우 매핑, 보안·리뷰 통제, 고급 통합 (9 steps)."
     source: https://openai-partneru.sana.ai/program/9b23459e-9443-4943-a81b-e93211b8303a
     done: false
-    lessons: []
+    lessons:
+      - num: "01"
+        slug: codex-deployment-operating-model
+        title: "Codex Deployment Operating Model"
+        ko: "Codex 배포 운영 모델"
 
   - slug: openai-cyber-deployment
     track: openai
