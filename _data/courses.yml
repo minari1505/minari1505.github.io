@@ -804,6 +804,10 @@ courses:
         slug: building-the-business-value
         title: "Building the Business Value"
         ko: "비즈니스 가치 세우기"
+      - num: "05"
+        slug: mapping-solutions-and-advancing-the-opportunity
+        title: "Mapping Solutions & Advancing the Opportunity"
+        ko: "솔루션 매핑과 기회 진전"
 
   - slug: openai-technical-practitioner
     track: openai
