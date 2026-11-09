@@ -936,6 +936,10 @@ courses:
         slug: enable-users-and-drive-adoption
         title: "Enable Users and Drive Adoption"
         ko: "사용자 지원과 도입 촉진"
+      - num: "06"
+        slug: activate-measure-and-scale
+        title: "Activate, Measure, and Scale"
+        ko: "활성화·측정·확장"
 
   - slug: codex-deployment
     track: openai
