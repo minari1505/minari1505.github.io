@@ -973,6 +973,10 @@ courses:
         slug: advanced-codex-workflow-integration
         title: "Advanced Codex Workflow Integration"
         ko: "고급 Codex 워크플로우 통합"
+      - num: "05"
+        slug: codex-use-cases-deployment-depth
+        title: "Codex Use Cases: Deployment Depth"
+        ko: "Codex 활용 사례와 배포 깊이"
 
   - slug: openai-cyber-deployment
     track: openai
