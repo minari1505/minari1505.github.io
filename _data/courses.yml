@@ -856,7 +856,7 @@ courses:
     title: "ChatGPT Solutions Practitioner"
     description: "ChatGPT 제품 적합성 판단, 고가치 워크플로우 설계, 비즈니스 성과 연결 (7 steps)."
     source: https://openai-partneru.sana.ai/program/a6c9a5b3-f5d5-4be3-be75-cda764bd8c59
-    done: false
+    done: true
     lessons:
       - num: "01"
         slug: chatgpt-solution-framing-and-fit
