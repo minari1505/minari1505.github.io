@@ -157,6 +157,174 @@ project 스코프로 `.mcp.json`을 커밋하면 API 키가 문제입니다. 값
 
 두 가지 더: 설정 파일 최상위 키는 `mcpServers`이고 이게 없으면 로드되지 않습니다. project 스코프 `.mcp.json`은 팀원이 처음 실행할 때 승인 프롬프트가 뜹니다.
 
+## 공식 가이드 v1.1로 보완하기
+
+교재에 없거나 짧게만 나온 내용을 공식 시험 가이드 v1.1(2026년 11월)의 과제 설명(Task Statement 2.1~2.5)에 맞춰 채운 부분입니다. 예시 속 도구 이름과 숫자는 이해를 돕기 위한 가정입니다.
+
+### 1. 설명이 겹치면 엉뚱한 도구가 불린다 (2.1)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🗄️ 쉽게 말하면</span>
+  <p>서랍 두 개에 "서류"와 "문서"라고 붙여 두면 어디에 넣을지 매번 헷갈립니다. "세금 영수증"과 "임대 계약서"라고 붙이면 헷갈리지 않습니다. 모델도 도구 설명만 보고 고르기 때문에 이름과 설명이 비슷하면 잘못 고릅니다.</p>
+</div>
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 겹치는 설명</span>
+    <ul>
+      <li><code>analyze_content</code>: "콘텐츠를 분석한다"</li>
+      <li><code>analyze_document</code>: "문서를 분석한다"</li>
+      <li>웹 페이지 요청이 문서 도구로 가는 일이 반복됩니다.</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 목적별로 나누고 경계를 적음</span>
+    <ul>
+      <li><code>extract_web_results</code>: "URL의 웹 페이지에서 본문과 게시일을 뽑는다. 입력은 https URL. 업로드된 파일에는 쓰지 않는다."</li>
+      <li><code>summarize_pdf_report</code>: "업로드된 PDF 보고서를 요약한다. 입력은 file_id. 웹 URL에는 쓰지 않는다."</li>
+    </ul>
+  </div>
+</div>
+
+좋은 설명에 들어가는 네 가지입니다.
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📥</span><span class="oa-card__title">입력 형식</span>"주문 번호는 #으로 시작하는 6자리"</div>
+  <div class="oa-card"><span class="oa-card__icon">💬</span><span class="oa-card__title">예시 질의</span>"내 주문 어디쯤 왔어?" 같은 요청에 사용</div>
+  <div class="oa-card"><span class="oa-card__icon">🚧</span><span class="oa-card__title">경계와 예외</span>취소된 주문은 조회되지 않음</div>
+  <div class="oa-card oa-card--hl"><span class="oa-card__icon">↔️</span><span class="oa-card__title">비슷한 도구와의 차이</span>고객 정보는 <code>get_customer</code>, 주문은 이 도구</div>
+</div>
+
+한 가지 더: 설명을 잘 써도 **시스템 프롬프트의 키워드**가 이를 덮어쓸 수 있습니다. "고객 관련 질문은 항상 get_customer부터"처럼 적혀 있으면 주문 질문도 그쪽으로 끌려갑니다. 오라우팅이 나면 도구 설명과 시스템 프롬프트를 같이 점검합니다.
+
+시험 문제 "비슷한 두 도구 사이에서 선택이 자주 틀린다" → **도구 설명 개선**이 첫 번째 답입니다. 모델을 더 큰 것으로 바꾸거나 라우팅 분류기를 새로 붙이는 것은 과한 해법입니다.
+
+### 2. 에러는 네 종류로 나눠서 알려 준다 (2.2)
+
+| 범주 | 예시 | 재시도 | 에이전트가 할 일 |
+|---|---|---|---|
+| 일시적(transient) | 타임아웃, 서비스 일시 중단 | 가능 | 잠시 뒤 재시도 |
+| 검증(validation) | 날짜 형식이 틀림 | 입력을 고치면 가능 | 인자를 고쳐 다시 호출 |
+| 비즈니스(business) | 환불 기한 초과 | 불가 | 고객에게 설명하거나 에스컬레이션 |
+| 권한(permission) | 접근 권한 없음 | 불가 | 다른 경로를 찾거나 에스컬레이션 |
+
+MCP 도구는 결과의 `isError` 플래그로 실패를 알리고, 내용에 구조화된 정보를 담습니다.
+
+```json
+{
+  "isError": true,
+  "content": [{
+    "type": "text",
+    "text": "{\"errorCategory\": \"business\", \"isRetryable\": false, \"message\": \"구매 후 30일이 지나 환불할 수 없습니다. 교환은 가능합니다.\"}"
+  }]
+}
+```
+
+`"Operation failed"` 같은 일반 에러만 돌려주면 에이전트는 재시도할지, 입력을 고칠지, 사람에게 넘길지 판단할 수 없습니다. 같은 호출을 반복하는 흔한 원인입니다.
+
+위 절의 `is_error: True`는 Claude API의 `tool_result` 블록에 쓰는 필드이고, `isError`는 MCP 도구 결과의 필드입니다. 이름이 비슷하지만 위치가 다릅니다.
+
+### 3. "실패했다"와 "없었다"는 다르다 (2.2)
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">접근 실패: 조회를 못 함</span>
+    <ul>
+      <li><code>isError: true</code>, <code>errorCategory: "transient"</code></li>
+      <li>"검색 서비스 타임아웃"</li>
+      <li>재시도할지 결정해야 합니다.</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">정상적인 빈 결과: 조회는 성공</span>
+    <ul>
+      <li><code>isError: false</code>, <code>results: []</code></li>
+      <li>"조건에 맞는 주문 없음"</li>
+      <li>재시도해도 같습니다. 고객에게 그대로 알립니다.</li>
+    </ul>
+  </div>
+</div>
+
+타임아웃을 빈 목록으로 돌려주면 에이전트는 "주문이 없다"고 고객에게 잘못 안내합니다.
+
+서브에이전트는 일시적 에러를 **자기 선에서 먼저 복구**(재시도)합니다. 그래도 안 풀린 에러만 코디네이터에 올리고, 그때는 부분 결과와 시도한 내용을 함께 올립니다.
+
+### 4. 도구는 역할별로 나눠 준다 (2.2, 2.3)
+
+도구가 18개인 에이전트 하나보다 4~5개씩 가진 에이전트 여러 개가 도구를 더 정확히 고릅니다.
+
+| 에이전트 | 가진 도구 | 갖지 않는 도구 |
+|---|---|---|
+| 검색 서브에이전트 | `web_search`, `load_document` | 보고서 작성 도구 |
+| 분석 서브에이전트 | `load_document`, `extract_tables` | 웹 검색 |
+| 종합 서브에이전트 | `write_report`, `verify_fact` | 웹 검색, 문서 로드 |
+
+역할 밖 도구를 주면 실제로 씁니다. 종합 에이전트에게 웹 검색을 주면 종합하다 말고 검색을 시작합니다.
+
+두 가지 설계 요령입니다.
+
+- **범용 도구를 제한된 도구로 바꿉니다.** 아무 URL이나 받는 `fetch_url` 대신, 허용된 문서 URL인지 검증하는 `load_document`를 줍니다.
+- **자주 쓰는 교차 역할 기능은 범위를 좁힌 도구로 줍니다.** 종합 에이전트가 사실 하나를 확인하려고 매번 코디네이터를 거쳐 검색 에이전트를 부르면 왕복이 늘어납니다. 단순 확인용 `verify_fact`만 주고, 복잡한 조사는 계속 코디네이터를 거치게 합니다.
+
+### 5. `tool_choice`로 순서를 강제한다 (2.3)
+
+문서 처리에서 메타데이터 추출이 반드시 먼저여야 한다면, 첫 턴에만 강제 지정을 씁니다.
+
+<ol class="oa-flow">
+  <li><strong>1턴: 강제 지정</strong><code>{"type": "tool", "name": "extract_metadata"}</code></li>
+  <li><strong>결과 수신</strong>메타데이터가 대화 기록에 들어감</li>
+  <li><strong>2턴 이후: auto</strong>모델이 보강 도구를 스스로 고름</li>
+</ol>
+
+대화형 답변 대신 도구 호출을 반드시 받아야 하는데 어느 도구인지는 모델에게 맡기려면 `"any"`입니다.
+
+### 6. MCP 리소스와 서버 선택 (2.4)
+
+**리소스는 "무엇이 있는지" 알려 주는 목록**으로 씁니다. 이슈 요약, 문서 계층, 데이터베이스 스키마를 리소스로 노출하면 에이전트가 구조를 알아내려고 탐색용 도구를 여러 번 부를 필요가 없습니다.
+
+<div class="oa-bars">
+  <div class="oa-bar"><span>리소스 없음</span><span class="oa-bar__track"><span class="oa-bar__fill oa-bar__fill--low" style="width:100%"></span><span class="oa-bar__val">list_tables → describe × 5 → 쿼리 (7회)</span></span></div>
+  <div class="oa-bar"><span>스키마 리소스 제공</span><span class="oa-bar__track"><span class="oa-bar__fill" style="width:15%"></span><span class="oa-bar__val">쿼리 (1회)</span></span></div>
+  <div class="oa-bars__caption">테이블 5개인 데이터베이스를 가정한 예시입니다.</div>
+</div>
+
+| 상황 | 선택 |
+|---|---|
+| Jira, GitHub 같은 표준 서비스 연동 | 이미 있는 커뮤니티 MCP 서버 사용 |
+| 우리 팀만의 배포 절차, 사내 시스템 | 커스텀 서버 개발 |
+
+여러 서버를 설정하면 모든 서버의 도구가 연결 시점에 발견되어 **한꺼번에** 쓸 수 있게 됩니다. 이때 MCP 도구 설명이 부실하면 에이전트는 익숙한 내장 도구(Grep 등)를 대신 씁니다. 더 적합한 MCP 도구가 선택되게 하려면 설명을 자세히 씁니다.
+
+### 7. 내장 도구 고르기 (2.5)
+
+| 도구 | 쓰는 때 | 예시 |
+|---|---|---|
+| Grep | 파일 **내용** 검색 | 함수 이름, 에러 메시지, import 문 찾기 |
+| Glob | 파일 **경로** 패턴 | `**/*.test.tsx` 파일 목록 |
+| Read / Write | 파일 전체 읽기·쓰기 | 설정 파일 통째로 읽기 |
+| Edit | 일부만 수정 | 고유한 문자열을 찾아 바꾸기 |
+| Bash | 명령 실행 | 테스트 실행, git 명령 |
+
+Edit는 바꿀 문자열이 파일 안에서 **고유**해야 합니다. 같은 줄이 여러 번 나오면 실패합니다.
+
+<ol class="oa-flow">
+  <li><strong>Edit 시도</strong><code>return null;</code>을 바꾸려 함</li>
+  <li><strong>실패</strong>같은 문자열이 4곳에 있음</li>
+  <li><strong>대안</strong>Read로 전체를 읽고 Write로 다시 씀</li>
+</ol>
+
+코드베이스를 파악할 때는 처음부터 모든 파일을 읽지 않습니다. Grep으로 진입점을 찾고, Read로 import를 따라가며 흐름을 추적합니다. 래퍼 모듈을 거쳐 쓰이는 함수를 추적할 때는 먼저 export된 이름을 모두 나열하고 이름마다 검색합니다.
+
+<details class="oa-quiz">
+  <summary>Q1. 검색 서브에이전트가 타임아웃이 났는데 빈 목록을 성공으로 돌려줬습니다. 무엇이 문제입니까?</summary>
+  <p><b>정답: 접근 실패와 정상적인 빈 결과를 구분하지 않았다.</b> 코디네이터는 "자료가 없다"고 판단해 그대로 보고서를 씁니다. 실패 유형, 시도한 질의, 부분 결과를 구조화해서 올려야 합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 종합 에이전트가 단순 사실 확인 때문에 코디네이터를 자주 왕복해 지연이 큽니다. 가장 알맞은 수정은?</summary>
+  <p><b>정답: 범위를 좁힌 <code>verify_fact</code> 도구를 종합 에이전트에 준다.</b> 모든 검색 도구를 주면 역할 밖 사용이 생기고, 왕복을 그대로 두면 지연이 남습니다.</p>
+</details>
+
 ## 설계 리뷰 문제 대비
 
 "다음 툴의 문제점 5가지를 쓰라"는 서술형 대비용 체크리스트입니다.
@@ -183,3 +351,4 @@ def db_op(query: str) -> str:
 - 에러는 `{status, code, message, retryable, suggestion}`. 무한 호출의 원인은 대개 비구조화 에러.
 - 부수효과 툴은 `idempotency_key`. 권한은 최소. 타임아웃은 connect/read 분리.
 - 팀 공유 + 키 보호 = project 스코프 + `${VAR}`.
+- 가이드 보완: 겹치는 설명은 오라우팅을 만든다. 에러는 4범주와 `isRetryable`로 알리고, 접근 실패와 빈 결과를 구분한다. 도구는 역할별 4~5개로 나누고, Edit가 실패하면 Read 후 Write로 돌린다.

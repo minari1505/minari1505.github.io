@@ -134,6 +134,244 @@ description은 주석이 아닙니다. 모델은 이걸 읽고 값의 뜻을 이
 
 시험 판단 축: "중요 문서의 품질을 최대화" → 생성과 비평을 분리해 반복하는 멀티패스. temperature 올리기, max_tokens 늘리기는 품질을 체계적으로 올리는 수단이 아니라 오답입니다.
 
+## 공식 가이드 v1.1로 보완하기
+
+교재에 없거나 짧게만 나온 내용을 공식 시험 가이드 v1.1(2026년 11월)의 과제 설명(Task Statement 4.1~4.6)에 맞춰 채운 부분입니다. 예시 속 숫자는 이해를 돕기 위한 가정입니다.
+
+### 1. "꼼꼼히 봐 줘" 대신 기준을 적는다 (4.1)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🚨 쉽게 말하면</span>
+  <p>화재 경보기가 토스트만 구워도 울리면 사람들은 경보를 끕니다. 코드 리뷰 봇도 같습니다. 틀린 지적(오탐)이 많으면 개발자는 맞는 지적까지 무시합니다. 그래서 "무엇을 문제로 볼지"를 구체적으로 정해 줍니다.</p>
+</div>
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 모호한 지시</span>
+    <ul>
+      <li>"주석이 정확한지 확인해"</li>
+      <li>"보수적으로 판단해"</li>
+      <li>"확신이 높은 것만 보고해"</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 명시적 범주 기준</span>
+    <ul>
+      <li>"주석이 코드 동작과 <b>모순될 때만</b> 표시한다"</li>
+      <li>"버그와 보안 문제는 보고한다"</li>
+      <li>"사소한 스타일과 해당 파일의 기존 패턴은 건너뛴다"</li>
+    </ul>
+  </div>
+</div>
+
+"보수적으로", "확신이 높을 때만" 같은 일반 문구는 정밀도를 안정적으로 올리지 못합니다. 시험에서 이런 선택지는 오답입니다.
+
+**심각도는 예시로 정의합니다.**
+
+| 심각도 | 기준 | 코드 예시 |
+|---|---|---|
+| critical | 데이터 손실이나 보안 사고로 이어짐 | 사용자 입력을 그대로 SQL에 이어 붙임 |
+| major | 특정 조건에서 잘못 동작 | 빈 배열일 때 0으로 나눔 |
+| minor | 동작은 맞지만 유지보수가 어려움 | 같은 계산을 세 곳에 복사 |
+
+그 밖에 가이드가 짚는 두 가지입니다.
+
+- **오탐이 많은 범주는 잠시 끕니다.** 그 범주의 프롬프트를 고치는 동안 꺼 두는 편이 신뢰를 지킵니다.
+- **재실행할 때는 이전 발견을 함께 넣습니다.** 새 커밋이 올라와 다시 리뷰할 때 이전 지적 목록을 주고 "새 문제와 아직 안 고쳐진 문제만 보고해"라고 해야 같은 코멘트가 반복되지 않습니다.
+
+테스트 생성도 같습니다. 기존 테스트와 테스트 표준을 같이 주어야 이미 있는 테스트를 또 만들지 않습니다.
+
+### 2. Few-shot은 2~4개, 이유를 붙여서 (4.2)
+
+위 절은 교재 기준으로 3~5개라고 적었지만, 공식 가이드는 **모호한 경우를 겨냥한 2~4개**를 권합니다. 개수보다 중요한 것은 "왜 이 선택인지"를 예시에 같이 보여 주는 것입니다.
+
+```text
+예시 1
+코드: catch (e) { /* 재시도 로직이 상위에서 처리 */ }
+판단: 문제 아님
+이유: 빈 catch처럼 보이지만 주석이 의도를 설명하고, 상위 호출부에 재시도가 있다.
+
+예시 2
+코드: catch (e) { }
+판단: 문제 (major)
+이유: 예외를 삼키고 아무 기록도 남기지 않는다. 의도를 알 수 없다.
+출력: {"location": "pay.ts:42", "issue": "예외 무시", "severity": "major", "fix": "로그를 남기거나 다시 던진다"}
+```
+
+예시가 하는 일은 세 가지입니다.
+
+| 목적 | 예시에 담는 것 |
+|---|---|
+| 모호한 경계 가르기 | 허용되는 패턴과 실제 문제를 나란히, 이유와 함께 |
+| 출력 형식 고정 | 위치, 문제, 심각도, 수정 제안 |
+| 빈 추출 줄이기 | 다양한 문서 구조(본문 인용과 참고문헌 목록, 방법론 절이 따로 있는 문서와 본문에 섞인 문서), "두 뼘 정도" 같은 비공식 표현에서 값을 뽑는 예 |
+
+### 3. `tool_choice` 세 가지를 상황으로 구분 (4.3)
+
+위 절은 강제 지정만 다뤘습니다. 세 가지를 같이 봅니다.
+
+| 값 | 동작 | 쓰는 상황 |
+|---|---|---|
+| `{"type": "auto"}` | 도구를 쓸지 모델이 정함. **텍스트로만 답할 수도 있음** | 일반 대화형 에이전트 |
+| `{"type": "any"}` | 도구를 반드시 호출. 어느 도구인지는 모델이 고름 | 추출 스키마가 여러 개이고 문서 유형을 모를 때 |
+| `{"type": "tool", "name": "extract_invoice"}` | 지정한 도구를 반드시 호출 | 특정 단계를 반드시 먼저 실행할 때 |
+
+구조화 출력이 필요한데 `auto`로 두면 모델이 "다음과 같이 추출했습니다…"라는 문장으로 답할 수 있습니다. 문서 유형을 모르는 추출 파이프라인의 정답은 `any`입니다.
+
+### 4. 스키마는 문법만 지켜 준다 (4.3, 4.4)
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">스키마가 막아 주는 것: 문법 오류</span>
+    <ul>
+      <li>닫히지 않은 괄호</li>
+      <li>필수 필드 누락</li>
+      <li>숫자 자리에 문자열</li>
+    </ul>
+  </div>
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">스키마가 못 막는 것: 의미 오류</span>
+    <ul>
+      <li>품목 합계와 총액이 안 맞음</li>
+      <li>납품일이 발행일 칸에 들어감</li>
+      <li>원문에 없는 값을 지어냄</li>
+    </ul>
+  </div>
+</div>
+
+의미 오류를 줄이는 스키마 설계입니다.
+
+```json
+{
+  "vendor_name": {"type": "string"},
+  "due_date": {"type": ["string", "null"]},
+  "payment_method": {"enum": ["card", "transfer", "cash", "unclear"]},
+  "category": {"enum": ["software", "hardware", "service", "other"]},
+  "category_detail": {"type": ["string", "null"]},
+  "calculated_total": {"type": "number"},
+  "stated_total": {"type": "number"},
+  "conflict_detected": {"type": "boolean"}
+}
+```
+
+| 장치 | 막는 문제 |
+|---|---|
+| nullable 필드 (`due_date`) | 원문에 없는 값을 지어내는 것. 없으면 `null`을 낼 수 있음 |
+| enum의 `"unclear"` | 애매한데 억지로 하나를 고르는 것 |
+| `"other"` + 상세 문자열 | 목록에 없는 범주를 엉뚱한 값에 끼워 넣는 것 |
+| `calculated_total`과 `stated_total` | 합계 불일치. 모델이 직접 더한 값과 문서에 적힌 값을 둘 다 받아 코드로 비교 |
+| `conflict_detected` | 문서 안에서 값이 서로 다를 때 표시 |
+
+엄격한 스키마를 써도 "날짜는 YYYY-MM-DD", "금액은 통화 기호 없이 숫자만" 같은 **형식 정규화 규칙은 프롬프트에 따로** 적습니다. 리뷰 결과에는 `detected_pattern` 필드를 두면 개발자가 어떤 유형의 지적을 자주 기각하는지 나중에 분석할 수 있습니다.
+
+### 5. 재시도로 고쳐지는 오류, 안 고쳐지는 오류 (4.4)
+
+재시도할 때는 세 가지를 함께 보냅니다.
+
+<ol class="oa-flow">
+  <li><strong>원문</strong>처음 그 문서</li>
+  <li><strong>실패한 추출</strong>직전에 낸 결과</li>
+  <li><strong>구체적 검증 에러</strong>"due_date가 YYYY-MM-DD 형식이 아님"</li>
+</ol>
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 재시도로 고쳐짐</span>
+    <ul>
+      <li>날짜 형식이 틀림</li>
+      <li>배열이어야 할 값을 문자열로 냄</li>
+      <li>값이 옆 필드에 들어감</li>
+    </ul>
+  </div>
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 재시도해도 안 고쳐짐</span>
+    <ul>
+      <li>원문에 그 정보가 아예 없음</li>
+      <li>몇 번을 시켜도 없는 것은 없습니다. 계속 요구하면 지어냅니다.</li>
+      <li>대책: 필드를 nullable로 바꾸거나 사람 검토로 보냄</li>
+    </ul>
+  </div>
+</div>
+
+### 6. Message Batches API: 기다릴 수 있는 일만 (4.5)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">📮 쉽게 말하면</span>
+  <p>퀵서비스는 비싸지만 바로 옵니다. 일반 택배는 반값이지만 내일까지 온다는 것만 약속합니다. 배치 API는 일반 택배입니다. 지금 문 앞에서 기다리는 사람이 있는 일에는 쓸 수 없습니다.</p>
+</div>
+
+| 항목 | 내용 |
+|---|---|
+| 비용 | 50% 절감 |
+| 처리 시간 | 최대 24시간. 지연 보장(SLA) 없음 |
+| 제약 | 한 요청 안에서 멀티턴 도구 호출 불가 |
+| 결과 매칭 | 요청마다 붙인 `custom_id`로 응답을 찾음 |
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 맞는 일</span>
+    <ul>
+      <li>야간 리포트 생성</li>
+      <li>주간 코드 감사</li>
+      <li>밤사이 테스트 생성</li>
+    </ul>
+  </div>
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 안 맞는 일</span>
+    <ul>
+      <li>머지를 막는 PR 사전 검사</li>
+      <li>사용자가 화면에서 기다리는 응답</li>
+      <li>도구를 여러 턴 오가야 하는 에이전트 작업</li>
+    </ul>
+  </div>
+</div>
+
+**제출 주기 계산**이 문제로 나옵니다. "문서가 들어온 뒤 30시간 안에 결과가 나와야 한다"면 얼마나 자주 제출해야 할까요?
+
+<div class="oa-svg">
+<svg viewBox="0 0 720 150" role="img" aria-label="4시간 대기와 24시간 처리를 합쳐 28시간이면 30시간 SLA 안에 들어온다">
+  <defs>
+    <style>.d4w{fill:#fff5f3;stroke:#f3cfc6;stroke-width:1.5}.d4p{fill:#fffdf5;stroke:#f1e4b8;stroke-width:1.5}.d4g{fill:#f4fbf3;stroke:#cfe8c9;stroke-width:1.5}.d4t{font-size:13px;fill:#4a4a4a;font-weight:bold}.d4s{font-size:11.5px;fill:#8a8a8a}.d4l{stroke:#c99400;stroke-width:2;stroke-dasharray:5 4}</style>
+  </defs>
+  <rect x="20" y="40" width="88" height="46" rx="8" class="d4w"/><text x="64" y="60" text-anchor="middle" class="d4t">대기</text><text x="64" y="77" text-anchor="middle" class="d4s">최대 4시간</text>
+  <rect x="108" y="40" width="528" height="46" rx="8" class="d4p"/><text x="372" y="60" text-anchor="middle" class="d4t">배치 처리</text><text x="372" y="77" text-anchor="middle" class="d4s">최대 24시간</text>
+  <rect x="636" y="40" width="44" height="46" rx="8" class="d4g"/><text x="658" y="68" text-anchor="middle" class="d4s">여유</text>
+  <line x1="680" y1="24" x2="680" y2="104" class="d4l"/>
+  <text x="20" y="118" class="d4s">0시간 (문서 도착)</text>
+  <text x="108" y="118" text-anchor="middle" class="d4s">4</text>
+  <text x="636" y="118" text-anchor="middle" class="d4s">28</text>
+  <text x="680" y="118" text-anchor="middle" class="d4t">30</text>
+  <text x="680" y="18" text-anchor="middle" class="d4t">SLA</text>
+  <text x="360" y="142" text-anchor="middle" class="d4s">가장 운 나쁜 문서: 제출 직후 도착해 4시간 대기 + 처리 24시간 = 28시간 ≤ 30시간</text>
+</svg>
+</div>
+
+4시간마다 제출하면 가장 오래 기다린 문서도 28시간 안에 끝납니다. 하루 한 번 제출하면 최악의 경우 48시간이 걸려 SLA를 넘깁니다.
+
+**실패 처리**: 배치 전체를 다시 돌리지 않습니다. `custom_id`로 실패한 항목만 골라 다시 제출합니다. 컨텍스트 한도를 넘어 실패한 문서는 나눠서 넣습니다. 대량으로 돌리기 전에 표본 몇 건으로 프롬프트를 먼저 다듬으면 1차 성공률이 올라갑니다.
+
+### 7. 만든 인스턴스에게 검토를 맡기지 않는다 (4.6)
+
+코드를 생성한 인스턴스는 "왜 이렇게 짰는지"를 그대로 갖고 있습니다. 그래서 자기 코드를 다시 봐도 같은 가정을 그대로 통과시킵니다. 그 추론을 모르는 **두 번째 인스턴스**가 결과물만 보고 검토하면 미묘한 문제를 더 잘 잡습니다.
+
+| 구조 | 누가 검토하나 | 잡는 문제 |
+|---|---|---|
+| 자기 검토 | 생성한 인스턴스 | 눈에 띄는 실수 |
+| 독립 검토 | 생성 추론이 없는 새 인스턴스 | 잘못된 가정, 미묘한 논리 오류 |
+| 다중 패스 | 파일별 패스 + 파일 간 통합 패스 | 큰 PR에서 주의 분산으로 놓치는 문제, 서로 모순되는 지적 |
+
+위 "멀티패스 리뷰" 절의 역할 분리와 같은 원리이고, 가이드는 여기에 **별도 인스턴스**라는 조건을 붙입니다.
+
+<details class="oa-quiz">
+  <summary>Q1. 팀이 비용을 줄이려고 머지 전 필수 리뷰를 Message Batches API로 옮기려 합니다. 적절합니까?</summary>
+  <p><b>정답: 적절하지 않다.</b> 배치는 최대 24시간이 걸리고 지연 보장이 없어서 머지를 막는 검사에 쓸 수 없습니다. 야간 감사 같은 비차단 작업만 배치로 옮깁니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 계약서 추출에서 "해지 통보 기간"이 원문에 없는 문서가 많은데, 모델이 그럴듯한 값을 채워 넣습니다. 가장 알맞은 수정은?</summary>
+  <p><b>정답: 해당 필드를 nullable로 바꾼다.</b> 재시도 횟수를 늘리거나 "지어내지 마"라고 강조해도 필수 필드인 한 값을 채우려 합니다.</p>
+</details>
+
 ## 핵심 정리
 
 - 프롬프트는 역할·태스크·입력·예시·제약·출력 지정. 부정형·형용사 나열·포맷 미지정이 단골 안티패턴.
@@ -143,3 +381,4 @@ description은 주석이 아닙니다. 모델은 이걸 읽고 값의 뜻을 이
 - 구조화 출력은 Tool Use + `tool_choice={"type":"tool","name":...}`, temperature 0, description에 단위·형식·"번역 금지".
 - 리트라이는 에러 내용 피드백 + 상한 + 넘으면 스키마 재검토/HITL.
 - 중요 문서는 draft→review→refine(역할 분리). Best of N은 여러 안 중 선택.
+- 가이드 보완: 모호한 지시 대신 범주 기준과 이유를 붙인 few-shot 2~4개. 스키마는 문법만 보장하니 nullable·`unclear`·`other`와 합계 교차 검증을 쓴다. 배치 API는 50% 절감·최대 24시간이라 기다릴 수 있는 일에만 쓴다.
