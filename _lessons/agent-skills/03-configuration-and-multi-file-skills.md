@@ -11,6 +11,16 @@ lesson: 3
 - 인자 전달(`$ARGUMENTS`)과 동적 컨텍스트 주입(`` !`command` ``) 활용하기
 - 부속 파일과 스크립트로 컨텍스트 효율이 좋은 멀티 파일 skill 구성하기
 
+## 한눈에 보는 설정
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🚦</span><span class="oa-card__title">호출 제어</span><code>disable-model-invocation</code>, <code>user-invocable</code></div>
+  <div class="oa-card"><span class="oa-card__icon">🔑</span><span class="oa-card__title">도구 권한</span><code>allowed-tools</code>, <code>disallowed-tools</code></div>
+  <div class="oa-card"><span class="oa-card__icon">📥</span><span class="oa-card__title">입력</span><code>$ARGUMENTS</code>, <code>!`command`</code></div>
+  <div class="oa-card"><span class="oa-card__icon">📁</span><span class="oa-card__title">멀티 파일</span>SKILL.md는 얇게, 상세는 부속 파일로</div>
+  <div class="oa-card"><span class="oa-card__icon">🧬</span><span class="oa-card__title">격리 실행</span><code>context: fork</code></div>
+</div>
+
 ## Frontmatter 주요 필드
 
 모든 필드는 선택 사항이고, `description`만 강력 권장입니다.
@@ -38,12 +48,31 @@ lesson: 3
 | `disable-model-invocation: true` | ⭕ | ❌ | description도 로드 안 됨 |
 | `user-invocable: false` | ❌ | ⭕ | description 상시, 본문은 호출 시 |
 
-- **부수효과가 있는 작업** (`/deploy`, `/commit`, 메시지 전송) → `disable-model-invocation: true`. *"코드가 준비돼 보인다고 Claude가 멋대로 배포하면 안 되니까!"*
-- **명령이 아닌 배경지식** (레거시 시스템 설명 등) → `user-invocable: false`. Claude는 알아야 하지만 `/legacy-system-context`가 사용자에게 의미 있는 액션은 아니죠.
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label"><code>disable-model-invocation: true</code></span>
+    <ul>
+      <li><b>부수효과가 있는 작업</b> (<code>/deploy</code>, <code>/commit</code>, 메시지 전송)</li>
+      <li><i>"코드가 준비돼 보인다고 Claude가 멋대로 배포하면 안 되니까!"</i></li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label"><code>user-invocable: false</code></span>
+    <ul>
+      <li><b>명령이 아닌 배경지식</b> (레거시 시스템 설명 등)</li>
+      <li>Claude는 알아야 하지만 <code>/legacy-system-context</code>가 사용자에게 의미 있는 액션은 아니죠.</li>
+    </ul>
+  </div>
+</div>
 
 ## 도구 권한: allowed-tools
 
 `allowed-tools`에 적은 도구는 skill이 활성화된 동안 **매번 허가를 묻지 않고** 사용됩니다.
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🎫 쉽게 말하면</span>
+  <p><code>allowed-tools</code>는 출입 금지 목록이 아니라 <b>프리패스</b>입니다. 목록에 있는 도구는 묻지 않고 통과시키고, 목록에 없는 도구는 평소처럼 입구에서 허가를 받습니다.</p>
+</div>
 
 ```markdown
 ---
@@ -94,7 +123,13 @@ allowed-tools: Bash(gh *)
 Summarize this pull request...
 ```
 
-실행 순서: ① 각 `` !`command` `` 즉시 실행 → ② 출력이 자리를 치환 → ③ Claude는 실제 데이터가 채워진 완성본을 받음.
+실행 순서는 다음과 같습니다.
+
+<ol class="oa-flow">
+  <li><strong>명령 실행</strong>각 <code>!`command`</code>를 즉시 실행</li>
+  <li><strong>치환</strong>출력이 그 자리를 대신함</li>
+  <li><strong>전달</strong>Claude는 실제 데이터가 채워진 완성본을 받음</li>
+</ol>
 
 **Claude가 실행하는 게 아니라 전처리**라는 점이 핵심입니다. 추측이 아닌 실데이터 기반 응답을 보장해요.
 
@@ -143,6 +178,28 @@ Research $ARGUMENTS thoroughly:
 ```
 
 ⚠️ `context: fork`는 **명시적인 작업 지시가 있는 skill**에만 의미가 있습니다. "이 컨벤션을 따르라" 같은 가이드라인만 있으면 서브에이전트가 할 일이 없어 빈손으로 돌아와요.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. <code>/deploy</code> skill을 Claude가 스스로 실행하지 못하게 하려면 어떤 필드를 씁니까?</summary>
+  <p><b>정답: <code>disable-model-invocation: true</code>.</b> 부수효과가 있는 작업은 사용자만 <code>/이름</code>으로 실행하게 합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. <code>allowed-tools</code>에 없는 도구는 skill 실행 중 쓸 수 없습니까?</summary>
+  <p><b>정답: 쓸 수 있습니다.</b> 이 필드는 도구를 제한하는 것이 아니라 사전 승인합니다. 목록에 없는 도구는 평소 권한 설정을 따릅니다. 빼고 싶으면 <code>disallowed-tools</code>를 씁니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. "이 컨벤션을 따르라"는 가이드라인만 담긴 skill에 <code>context: fork</code>를 붙이면 어떻게 됩니까?</summary>
+  <p><b>정답: 서브에이전트가 할 일이 없어 빈손으로 돌아옵니다.</b> <code>context: fork</code>는 명시적인 작업 지시가 있는 skill에만 의미가 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 번들 스크립트(<code>scripts/helper.py</code>)의 장점은 무엇입니까?</summary>
+  <p><b>정답: 컨텍스트를 쓰지 않고 실행됩니다.</b> 대용량 데이터 처리나 결정론적 작업에 적합합니다.</p>
+</details>
 
 ## 정리
 
