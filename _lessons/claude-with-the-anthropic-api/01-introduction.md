@@ -35,7 +35,7 @@ lesson: 1
 
 <div class="oa-eli">
   <span class="oa-eli__head">🚚 쉽게 말하면</span>
-  <p>배송 수단을 고르는 것과 같습니다. <b>Opus</b>는 무겁고 까다로운 짐을 맡기는 특수 운송, <b>Sonnet</b>은 대부분의 짐에 쓰는 일반 택배, <b>Haiku</b>는 작은 물건을 빠르고 싸게 보내는 퀵서비스입니다. 모든 짐을 특수 운송으로 보낼 필요는 없습니다.</p>
+  <p>배송 수단을 고르는 것과 같아요. <b>Opus</b>는 무겁고 까다로운 짐을 맡기는 특수 운송, <b>Sonnet</b>은 대부분의 짐에 쓰는 일반 택배, <b>Haiku</b>는 작은 물건을 빠르고 싸게 보내는 퀵서비스예요. 모든 짐을 특수 운송으로 보낼 필요는 없어요.</p>
 </div>
 
 모델은 **지능 ↔ 속도 ↔ 비용**의 트레이드오프로 나뉘어요. 작업에 맞는 모델을 고르는 게 핵심이에요.
@@ -55,18 +55,18 @@ lesson: 1
 ## 확인 문제
 
 <details class="oa-quiz">
-  <summary>Q1. 도구 사용이나 구조화 출력을 쓰려면 Messages API와 다른 별도 API를 호출해야 합니까?</summary>
-  <p><b>정답: 아닙니다.</b> 모든 상호작용은 <code>POST /v1/messages</code> 하나로 이뤄지고, 이런 기능은 그 엔드포인트의 옵션입니다.</p>
+  <summary>Q1. 도구 사용이나 구조화 출력을 쓰려면 Messages API와 다른 별도 API를 호출해야 하나요?</summary>
+  <p><b>정답: 아니에요.</b> 모든 상호작용은 <code>POST /v1/messages</code> 하나로 이뤄지고, 이런 기능은 그 엔드포인트의 옵션이에요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q2. 대량의 단순 분류 작업에서 지연과 비용이 중요합니다. 어느 계열이 맞습니까?</summary>
-  <p><b>정답: Haiku.</b> 가장 빠르고 저렴합니다. 복잡한 추론은 Opus, 대부분의 프로덕션 워크로드는 Sonnet입니다.</p>
+  <summary>Q2. 대량의 단순 분류 작업에서 지연과 비용이 중요해요. 어느 계열이 맞나요?</summary>
+  <p><b>정답: Haiku.</b> 가장 빠르고 저렴해요. 복잡한 추론은 Opus, 대부분의 프로덕션 워크로드는 Sonnet이에요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q3. 모델 ID를 기억나는 대로 적어 요청했더니 404가 났습니다. 어떻게 확인합니까?</summary>
-  <p><b>정답: 정확한 모델 ID 문자열을 써야 합니다.</b> Models API(<code>GET /v1/models</code>)로 조회할 수 있습니다.</p>
+  <summary>Q3. 모델 ID를 기억나는 대로 적어 요청했더니 404가 났어요. 어떻게 확인하나요?</summary>
+  <p><b>정답: 정확한 모델 ID 문자열을 써야 해요.</b> Models API(<code>GET /v1/models</code>)로 조회할 수 있어요.</p>
 </details>
 
 ## 정리

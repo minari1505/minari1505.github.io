@@ -16,10 +16,10 @@ lesson: 4
 ## 한눈에 보는 네 가지 기법
 
 <div class="oa-cards">
-  <div class="oa-card"><span class="oa-card__icon">🎯</span><span class="oa-card__title">명확하고 직접적으로</span>원하는 것을 분명히 말합니다.</div>
-  <div class="oa-card"><span class="oa-card__icon">📏</span><span class="oa-card__title">구체적으로</span>형식, 길이, 제약을 명시합니다.</div>
-  <div class="oa-card"><span class="oa-card__icon">🏷️</span><span class="oa-card__title">XML 태그</span>지시와 데이터의 경계를 구분합니다.</div>
-  <div class="oa-card"><span class="oa-card__icon">🧪</span><span class="oa-card__title">예시 제공</span>말보다 보여 줍니다(few-shot).</div>
+  <div class="oa-card"><span class="oa-card__icon">🎯</span><span class="oa-card__title">명확하고 직접적으로</span>원하는 것을 분명히 말해요.</div>
+  <div class="oa-card"><span class="oa-card__icon">📏</span><span class="oa-card__title">구체적으로</span>형식, 길이, 제약을 명시해요.</div>
+  <div class="oa-card"><span class="oa-card__icon">🏷️</span><span class="oa-card__title">XML 태그</span>지시와 데이터의 경계를 구분해요.</div>
+  <div class="oa-card"><span class="oa-card__icon">🧪</span><span class="oa-card__title">예시 제공</span>말보다 보여 줘요(few-shot).</div>
 </div>
 
 ## 프롬프트 엔지니어링의 기본 흐름
@@ -101,7 +101,7 @@ The output should include:
 
 <div class="oa-eli">
   <span class="oa-eli__head">🧑‍💼 쉽게 말하면</span>
-  <p>오늘 처음 출근한 <b>똑똑한 신입 사원</b>에게 일을 맡긴다고 생각하면 됩니다. 능력은 충분하지만 우리 회사의 사정은 모릅니다. "알아서 잘"이 아니라 무엇을, 누구를 위해, 어떤 형식으로 원하는지 말해 줘야 합니다.</p>
+  <p>오늘 처음 출근한 <b>똑똑한 신입 사원</b>에게 일을 맡긴다고 생각하면 돼요. 능력은 충분하지만 우리 회사의 사정은 몰라요. "알아서 잘"이 아니라 무엇을, 누구를 위해, 어떤 형식으로 원하는지 말해 줘야 해요.</p>
 </div>
 
 Claude에게 **무엇을 원하는지 분명하게** 말하세요. 사람 신입에게 지시하듯, 애매함을 없애는 게 핵심이에요.
@@ -359,18 +359,18 @@ and respects the athlete's goal and restrictions.
 ## 확인 문제
 
 <details class="oa-quiz">
-  <summary>Q1. 여러 기법을 한꺼번에 적용하지 않고 하나씩 바꾸는 이유는 무엇입니까?</summary>
-  <p><b>정답: 점수 변화의 원인을 파악하기 쉽기 때문입니다.</b> 목표는 좋아 보이는 프롬프트가 아니라 eval 점수가 개선되는 프롬프트입니다.</p>
+  <summary>Q1. 여러 기법을 한꺼번에 적용하지 않고 하나씩 바꾸는 이유는 무엇인가요?</summary>
+  <p><b>정답: 점수 변화의 원인을 파악하기 쉽기 때문이에요.</b> 목표는 좋아 보이는 프롬프트가 아니라 eval 점수가 개선되는 프롬프트예요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q2. 프롬프트 안에서 지시문과 사용자가 넣은 긴 문서가 섞여 Claude가 헷갈려 합니다. 어떤 기법이 맞습니까?</summary>
-  <p><b>정답: XML 태그로 구조화.</b> 지시와 데이터의 경계를 구분합니다.</p>
+  <summary>Q2. 프롬프트 안에서 지시문과 사용자가 넣은 긴 문서가 섞여 Claude가 헷갈려 해요. 어떤 기법이 맞나요?</summary>
+  <p><b>정답: XML 태그로 구조화.</b> 지시와 데이터의 경계를 구분해요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q3. 출력 형식을 말로 설명해도 결과가 들쭉날쭉합니다. 어떤 기법을 더합니까?</summary>
-  <p><b>정답: 예시 제공(few-shot).</b> 원하는 입력과 출력을 직접 보여 줍니다.</p>
+  <summary>Q3. 출력 형식을 말로 설명해도 결과가 들쭉날쭉해요. 어떤 기법을 더하나요?</summary>
+  <p><b>정답: 예시 제공(few-shot).</b> 원하는 입력과 출력을 직접 보여 줘요.</p>
 </details>
 
 ## 정리
