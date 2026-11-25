@@ -27,6 +27,27 @@ lesson: 10
 - **StreamableHTTP 심화** — SSE와 session ID, dual SSE connection으로 우회
 - **State** — 수평 확장 시 `stateless_http`·`json_response` 플래그의 필요성과 트레이드오프
 
+## 기능별로 필요한 통신 방향
+
+| 기능 | 서버 → 클라이언트 통신 필요 | stateless HTTP에서 |
+|---|---|---|
+| 도구 호출과 결과 | 아니오 | 동작 |
+| Sampling | 예 | 사용 불가 |
+| Progress·Logging 알림 | 예 | 사용 불가 |
+| 리소스 업데이트 구독 | 예 | 사용 불가 |
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 공개 MCP 서버가 모든 사용자의 AI 비용을 떠안지 않게 하는 기능은 무엇입니까?</summary>
+  <p><b>정답: Sampling.</b> 서버가 클라이언트를 통해 Claude를 호출해 비용과 복잡도를 클라이언트로 옮깁니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. sampling과 실시간 알림에 의존하는 서버를 수평 확장하려 합니다. 무엇을 다시 검토해야 합니까?</summary>
+  <p><b>정답: transport와 상태 플래그.</b> <code>stateless_http=True</code>에서는 서버→클라이언트 통신에 의존하는 기능이 제한됩니다.</p>
+</details>
+
 ## 핵심 정리
 
 - 고급 기능(Sampling·Notifications·Roots)은 서버↔클라이언트의 양방향 통신 위에서 동작합니다.
