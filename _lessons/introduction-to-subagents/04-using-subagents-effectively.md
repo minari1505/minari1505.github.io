@@ -12,9 +12,35 @@ lesson: 4
 - 피해야 할 안티패턴(전문가 페르소나, 순차 파이프라인, test runner) 알기
 - "중간 작업이 중요한가?"라는 판단 규칙 적용하기
 
+## 한눈에 보는 판단
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 메인 스레드에 둘 일</span>
+    <ul>
+      <li>각 단계가 이전 단계의 발견에 의존</li>
+      <li>과정을 보고 반응해야 함</li>
+      <li>전체 출력이 필요함(테스트 실행)</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 서브에이전트에 맡길 일</span>
+    <ul>
+      <li>답만 필요하고 과정은 상관없음</li>
+      <li>탐색이 메인 context를 어지럽힘</li>
+      <li>새로운 시선이나 커스텀 system prompt가 도움이 됨</li>
+    </ul>
+  </div>
+</div>
+
 ## 서브에이전트가 빛나는 때
 
 핵심은 하나 — **탐색이 실행과 분리**될 때입니다. 각 단계가 이전 단계의 발견에 의존한다면 메인 스레드에 두어야 합니다. 하지만 **답만 필요하고 과정은 상관없다면** 위임하세요.
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🛒 쉽게 말하면</span>
+  <p>장보기 심부름과 요리를 떠올리면 됩니다. "우유 사 와"는 <b>결과만</b> 받으면 되니 맡겨도 됩니다. 요리는 간을 보면서 다음 행동을 정해야 하니 <b>직접</b> 합니다. 간 보는 과정을 남에게 맡기면 "짜다/싱겁다"만 전해 듣게 됩니다.</p>
+</div>
 
 서브에이전트가 뛰어난 작업:
 
@@ -46,16 +72,52 @@ Claude Code의 기본 prompt는 간결·코드 중심 응답을 지향합니다.
 
 서브에이전트를 띄우는 오버헤드(가시성 상실, 요약 압축)는 **메인 스레드가 못 하는 무언가**를 할 때만 정당화됩니다.
 
-- **전문가 주장(Expert claims)** — "너는 Python 전문가야" 같은 prompt는 가치가 없습니다. Claude는 이미 그 지식이 있고, 전문가 서브에이전트가 메인 스레드보다 더 할 수 있는 건 없습니다.
-- **순차 파이프라인(Sequential pipelines)** — 버그 재현→디버그→수정 같은 3-에이전트 흐름. 작업이 진정 독립적일 때만 되고, 각 단계가 이전 발견에 의존하면(버그 수정은 거의 항상 그렇습니다) 핸드오프에서 정보가 손실됩니다.
-- **Test runner** — 테스트 실패 시 진단하려면 전체 출력이 필요한데, "tests failed"만 돌려주면 세부를 얻으려 추가 스크립트를 만들어야 합니다. 테스트 결과 이 패턴이 모든 구성 중 가장 나빴습니다.
+<div class="oa-cards">
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">🎓</span><span class="oa-card__title">전문가 주장(Expert claims)</span>"너는 Python 전문가야" 같은 prompt는 가치가 없습니다. Claude는 이미 그 지식이 있고, 전문가 서브에이전트가 메인 스레드보다 더 할 수 있는 건 없습니다.</div>
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">⛓️</span><span class="oa-card__title">순차 파이프라인(Sequential pipelines)</span>버그 재현→디버그→수정 같은 3-에이전트 흐름. 작업이 진정 독립적일 때만 되고, 각 단계가 이전 발견에 의존하면(버그 수정은 거의 항상 그렇습니다) 핸드오프에서 정보가 손실됩니다.</div>
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">🧪</span><span class="oa-card__title">Test runner</span>테스트 실패 시 진단하려면 전체 출력이 필요한데, "tests failed"만 돌려주면 세부를 얻으려 추가 스크립트를 만들어야 합니다. 테스트 결과 이 패턴이 모든 구성 중 가장 나빴습니다.</div>
+</div>
 
 ## 판단 규칙
 
 서브에이전트를 쓸지 정할 때 한 가지만 물으세요: **"중간 작업이 중요한가?"**
 
-- **아니오** (최종 결과만 필요) → 서브에이전트에 위임
-- **예** (과정을 보고 반응해야 함) → 메인 스레드에 유지
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">"예" — 과정을 보고 반응해야 함</span>
+    <ul>
+      <li>메인 스레드에 유지</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">"아니오" — 최종 결과만 필요</span>
+    <ul>
+      <li>서브에이전트에 위임</li>
+    </ul>
+  </div>
+</div>
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 버그 재현 → 디버그 → 수정을 서브에이전트 3개에 차례로 맡기려 합니다. 무엇이 문제입니까?</summary>
+  <p><b>정답: 각 단계가 이전 단계의 발견에 의존해 핸드오프에서 정보가 손실됩니다.</b> 순차 파이프라인은 작업이 서로 독립적일 때만 통합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 여러 턴에 걸쳐 만든 기능을 리뷰하려 합니다. 같은 스레드보다 reviewer 서브에이전트가 나은 이유는 무엇입니까?</summary>
+  <p><b>정답: 작성 이력이 없는 별도 context에서 보기 때문입니다.</b> Claude는 코드가 다른 사람이 쓴 것으로 제시될 때 더 효과적으로 리뷰합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 테스트 실행을 서브에이전트에 맡겼더니 "tests failed"만 돌아옵니다. 어떻게 해야 합니까?</summary>
+  <p><b>정답: 테스트 실행은 메인 스레드에 둡니다.</b> 실패를 진단하려면 전체 출력이 필요합니다. "중간 작업이 중요한가?"의 답이 "예"인 경우입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. "너는 Python 전문가야"라는 system prompt만 가진 서브에이전트는 왜 가치가 없습니까?</summary>
+  <p><b>정답: 메인 스레드가 못 하는 일을 하지 않기 때문입니다.</b> Claude는 이미 그 지식이 있고, 서브에이전트의 오버헤드(가시성 상실, 요약 압축)만 남습니다.</p>
+</details>
 
 ## 핵심 정리
 
