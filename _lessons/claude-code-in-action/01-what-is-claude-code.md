@@ -11,6 +11,17 @@ lesson: 1
 - Claude Code가 tool use를 통해 파일, 명령, 코드베이스와 상호작용하는 방식 파악하기
 - Claude의 강한 tool use 능력이 Claude Code의 보안성, 확장성, 지속성을 어떻게 높이는지 정리하기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>맥락 수집</strong>에러의 의미와 관련 파일 확인 — 도구 필요</li>
+  <li><strong>계획 수립</strong>무엇을 바꾸고 어떻게 검증할지 결정</li>
+  <li><strong>실행</strong>파일 수정, 명령 실행 — 도구 필요</li>
+  <li><strong>결과 확인</strong>다시 관찰하고 반복</li>
+</ol>
+
+이 레슨을 관통하는 한 문장: **코딩 assistant = 언어 모델 + 도구 실행 시스템.**
+
 ## 코딩 assistant는 무엇인가?
 
 코딩 assistant는 단순히 코드를 써주는 모델이 아닙니다. 실제 개발자가 문제를 해결할 때처럼 **맥락을 모으고, 계획을 세우고, 행동을 실행하는 시스템**에 가깝습니다.
@@ -26,6 +37,11 @@ lesson: 1
 여기서 중요한 점은 1번과 3번이 모델 내부 텍스트 처리만으로는 불가능하다는 것입니다. 코딩 assistant는 파일을 읽고, 문서를 찾고, 명령을 실행하고, 코드를 편집할 수 있어야 합니다.
 
 ## 언어 모델만으로는 부족한 이유
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🧑‍🍳 쉽게 말하면</span>
+  <p>언어 모델은 <b>레시피를 완벽히 외운 요리사</b>인데, 손이 묶여 있는 상태입니다. 냉장고를 열어 재료를 확인할 수도, 불을 켤 수도 없습니다. tool use는 이 요리사에게 <b>손</b>을 주는 것입니다. 이제 냉장고(파일)를 열어 보고, 불(명령)을 켜고, 맛(테스트 결과)을 볼 수 있습니다.</p>
+</div>
 
 언어 모델은 기본적으로 텍스트를 입력받아 텍스트를 출력합니다. 혼자서는 로컬 파일을 읽거나 셸 명령을 실행하거나 저장소를 탐색할 수 없습니다.
 
@@ -101,14 +117,33 @@ Claude Code의 도구는 고정된 기능 목록으로 끝나지 않습니다. �
 
 Claude Code에는 일반적인 개발 작업에 필요한 기본 도구들이 포함되어 있습니다. 대표적으로 다음과 같은 작업을 할 수 있습니다.
 
-- 파일 읽기
-- 파일 생성과 수정
-- 디렉터리 탐색
-- 코드 검색
-- 셸 명령 실행
-- 테스트 실행
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📖</span><span class="oa-card__title">파일 읽기</span></div>
+  <div class="oa-card"><span class="oa-card__icon">✏️</span><span class="oa-card__title">파일 생성과 수정</span></div>
+  <div class="oa-card"><span class="oa-card__icon">📁</span><span class="oa-card__title">디렉터리 탐색</span></div>
+  <div class="oa-card"><span class="oa-card__icon">🔎</span><span class="oa-card__title">코드 검색</span></div>
+  <div class="oa-card"><span class="oa-card__icon">⌨️</span><span class="oa-card__title">셸 명령 실행</span></div>
+  <div class="oa-card"><span class="oa-card__icon">🧪</span><span class="oa-card__title">테스트 실행</span></div>
+</div>
 
 중요한 점은 도구 하나하나보다, Claude가 이 도구들을 **어떤 순서로 조합하는가**입니다. 좋은 코딩 assistant는 "파일을 읽어라", "테스트를 실행해라" 같은 단일 명령만 수행하는 것이 아니라, 목표를 달성하기 위해 필요한 도구 사용 흐름을 스스로 구성합니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 코딩 작업의 세 단계(맥락 수집, 계획 수립, 실행) 중 외부 도구가 꼭 필요한 단계는 어디입니까?</summary>
+  <p><b>정답: 맥락 수집과 실행.</b> 파일을 읽고 명령을 실행하는 일은 모델 내부의 텍스트 처리만으로는 할 수 없습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 순수한 언어 모델에게 "main.go 파일에 어떤 코드가 있어?"라고 물으면 왜 답하지 못합니까?</summary>
+  <p><b>정답: 실제 파일 시스템에 접근할 수 없기 때문입니다.</b> 언어 모델은 텍스트를 받아 텍스트를 낼 뿐입니다. Claude Code는 이 한계를 tool use로 해결합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 내장 도구에서 도구 하나하나보다 더 중요한 것은 무엇입니까?</summary>
+  <p><b>정답: Claude가 도구들을 어떤 순서로 조합하는가.</b> 목표를 달성하는 데 필요한 도구 사용 흐름을 스스로 구성하는 것이 핵심입니다.</p>
+</details>
 
 ## 정리
 

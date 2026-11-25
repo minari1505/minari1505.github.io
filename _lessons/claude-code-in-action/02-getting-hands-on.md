@@ -15,6 +15,16 @@ lesson: 2
 
 원문 레슨: [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action/301615)
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>프로젝트 준비</strong>setup, API key, 실행</li>
+  <li><strong>Context 추가</strong>/init, CLAUDE.md, @file</li>
+  <li><strong>변경 작업</strong>screenshot, Planning Mode, /effort</li>
+  <li><strong>흐름 제어</strong>Escape, /rewind, /compact, /clear</li>
+  <li><strong>확장</strong>custom commands, MCP, GitHub</li>
+</ol>
+
 ## 왜 실습 프로젝트가 필요한가?
 
 Claude Code는 실제 코드베이스가 있을 때 훨씬 흥미롭게 배울 수 있습니다. 파일을 읽고, 프로젝트 구조를 파악하고, 명령을 실행하고, 코드를 수정하는 과정을 직접 볼 수 있기 때문입니다.
@@ -85,6 +95,11 @@ npm run dev
 이후 브라우저에서 로컬 개발 서버를 열어 앱을 확인할 수 있습니다. API key가 설정되어 있으면 Claude를 통한 UI 생성 기능을 테스트할 수 있고, 설정하지 않았다면 static fake code 생성 흐름으로 앱 구조를 살펴볼 수 있습니다.
 
 ## Context 추가하기
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🎒 쉽게 말하면</span>
+  <p>여행 가방을 싸는 것과 같습니다. 짐을 <b>많이</b> 넣는 것이 아니라 이번 여행에 <b>맞는</b> 짐을 넣어야 합니다. 필요 없는 짐이 많으면 정작 필요한 물건을 찾기 어렵습니다.</p>
+</div>
 
 Claude Code를 잘 쓰려면 "많은 context"가 아니라 **맞는 context**를 주는 것이 중요합니다. 프로젝트에 파일이 수십, 수백 개 있더라도 Claude가 지금 작업에 필요한 파일과 규칙을 빠르게 찾을 수 있어야 합니다. 관련 없는 context가 너무 많으면 오히려 성능이 떨어질 수 있습니다.
 
@@ -172,10 +187,12 @@ Claude Code에 screenshot을 붙여 넣을 때는 macOS에서도 `Cmd+V`가 아�
 
 Planning Mode에서 Claude는 바로 코드를 수정하지 않고 다음을 먼저 수행합니다.
 
-- 프로젝트 파일을 더 넓게 읽음
-- 구현 계획을 자세히 작성
-- 어떤 파일을 어떻게 바꿀지 보여줌
-- 사용자 승인을 기다림
+<ol class="oa-flow">
+  <li><strong>넓게 읽기</strong>프로젝트 파일을 더 넓게 읽음</li>
+  <li><strong>계획 작성</strong>구현 계획을 자세히 작성</li>
+  <li><strong>변경 예고</strong>어떤 파일을 어떻게 바꿀지 보여줌</li>
+  <li><strong>승인 대기</strong>사용자 승인을 기다림</li>
+</ol>
 
 계획을 검토할 때 `Ctrl+G`를 누르면 text editor에서 계획을 열 수 있습니다. 필요한 부분을 직접 고쳐 제출하면 Claude는 수정된 계획을 기준으로 구현합니다.
 
@@ -253,10 +270,12 @@ Claude가 현재 작업과 프로젝트에 대해 많이 배웠고, 이어지는
 
 정리하면:
 
-- 관련 작업을 계속한다 → `/compact`
-- 다른 작업으로 전환한다 → `/clear`
-- 최근 흐름만 되돌린다 → `/rewind`
-- Claude가 잘못 가고 있다 → `Escape`
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🗜️</span><span class="oa-card__title"><code>/compact</code></span>관련 작업을 계속한다</div>
+  <div class="oa-card"><span class="oa-card__icon">🧽</span><span class="oa-card__title"><code>/clear</code></span>다른 작업으로 전환한다</div>
+  <div class="oa-card"><span class="oa-card__icon">⏪</span><span class="oa-card__title"><code>/rewind</code></span>최근 흐름만 되돌린다</div>
+  <div class="oa-card"><span class="oa-card__icon">✋</span><span class="oa-card__title"><code>Escape</code></span>Claude가 잘못 가고 있다</div>
+</div>
 
 ## Custom commands
 
@@ -460,6 +479,28 @@ GitHub integration은 Claude를 로컬 assistant에서 자동화된 팀원에 �
 - GitHub integration
 
 즉, 이번 레슨은 Claude Code가 작업할 playground를 준비하는 단계입니다. 이후 레슨에서는 이 코드베이스를 대상으로 context를 추가하고, 변경을 만들고, Claude Code의 동작을 더 세밀하게 제어하는 방법을 다룹니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 여러 파일에 걸친 다단계 구현을 시작하려 합니다. Planning Mode와 높은 <code>/effort</code> 중 무엇이 더 맞습니까?</summary>
+  <p><b>정답: Planning Mode.</b> 코드베이스 전반 이해와 여러 파일 변경에 맞습니다. 높은 <code>/effort</code>는 복잡한 로직이나 어려운 디버깅처럼 깊은 추론이 필요할 때 씁니다. 둘 다 필요하면 함께 쓸 수 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. Claude가 프로젝트를 많이 파악한 상태에서 이어지는 관련 작업을 계속하려 합니다. <code>/compact</code>와 <code>/clear</code> 중 무엇을 씁니까?</summary>
+  <p><b>정답: <code>/compact</code>.</b> 긴 대화의 핵심을 보존하면서 context를 줄입니다. 완전히 다른 작업으로 넘어갈 때는 <code>/clear</code>입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. <code>/clear</code>로 지운 대화는 영영 사라집니까?</summary>
+  <p><b>정답: 아닙니다.</b> fresh context로 새 대화를 시작할 뿐이고, 이전 대화는 <code>/resume</code>으로 돌아갈 수 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. <code>ultrathink</code>는 세션의 effort level을 바꿉니까?</summary>
+  <p><b>정답: 아닙니다.</b> 해당 turn에서만 더 깊게 reasoning하라는 신호입니다. 세션 전체는 <code>/effort</code>로 조절합니다.</p>
+</details>
 
 ## 정리
 
