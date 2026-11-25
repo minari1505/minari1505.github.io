@@ -11,6 +11,14 @@ lesson: 5
 - 각 방법의 동작 방식과 주의점(신뢰, 네임스페이스) 이해하기
 - 외부 skill을 설치할 때의 보안 체크포인트 익히기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>Project skills</strong>같은 저장소의 팀원 — git 커밋</li>
+  <li><strong>Plugins</strong>여러 팀·여러 저장소 — 마켓플레이스</li>
+  <li><strong>Managed settings</strong>조직 전체 — 강제 배포</li>
+</ol>
+
 ## 배포 범위에 따른 3가지 방법
 
 | 방법 | 대상 | 하는 법 |
@@ -54,12 +62,36 @@ Enterprise 환경에서는 관리자가 **managed settings**로 조직 구성원
 
 ## 🔒 보안: 설치 전 체크리스트
 
+<div class="oa-eli">
+  <span class="oa-eli__head">📱 쉽게 말하면</span>
+  <p>skill 설치는 <b>앱 설치</b>와 같습니다. 출처를 모르는 앱은 설치하지 않고, 설치할 때는 "이 앱이 왜 연락처 권한을 요구하지?"를 확인합니다. skill도 지시 내용, 코드, 네트워크 접속, 도구 권한을 봅니다.</p>
+</div>
+
 Skill은 지시문 + 코드로 에이전트에 새 능력을 부여하는 만큼, 잠재적 취약점이 될 수 있습니다. **신뢰할 수 있는 출처의 skill만 설치**하고, 설치 전에 확인하세요.
 
-1. `SKILL.md`와 부속 파일의 **지시 내용** — 이상한 행동을 유도하지 않는지
-2. 번들 **스크립트 코드와 의존성**
-3. **외부 네트워크 접속**을 지시하는 부분이 있는지
-4. `allowed-tools`가 필요 이상으로 넓지 않은지
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📄</span><span class="oa-card__title">지시 내용</span><code>SKILL.md</code>와 부속 파일이 이상한 행동을 유도하지 않는지</div>
+  <div class="oa-card"><span class="oa-card__icon">🧩</span><span class="oa-card__title">코드와 의존성</span>번들 스크립트 코드와 의존성</div>
+  <div class="oa-card"><span class="oa-card__icon">🌐</span><span class="oa-card__title">네트워크</span>외부 네트워크 접속을 지시하는 부분이 있는지</div>
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">🔑</span><span class="oa-card__title">도구 권한</span><code>allowed-tools</code>가 필요 이상으로 넓지 않은지</div>
+</div>
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 같은 저장소를 쓰는 팀원과 skill을 공유하는 가장 간단한 방법은 무엇입니까?</summary>
+  <p><b>정답: <code>.claude/skills/</code>를 git에 커밋합니다.</b> 저장소를 clone한 팀원 모두에게 적용되고, 코드처럼 리뷰·버전 관리·롤백이 됩니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 플러그인 skill이 개인·프로젝트 skill과 이름이 충돌하지 않는 이유는 무엇입니까?</summary>
+  <p><b>정답: <code>plugin-name:skill-name</code> 네임스페이스를 쓰기 때문입니다.</b></p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 프로젝트 skill의 <code>allowed-tools</code>는 언제부터 효력이 있습니까?</summary>
+  <p><b>정답: 워크스페이스 신뢰(trust) 승인 후.</b> skill이 스스로 넓은 도구 권한을 줄 수 있으므로, 저장소를 신뢰하기 전에 skill을 검토합니다.</p>
+</details>
 
 ## 정리
 

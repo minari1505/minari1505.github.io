@@ -11,14 +11,26 @@ lesson: 6
 - description 컨텍스트 예산과 잘림 문제 이해하기
 - "트리거됐다 ≠ 잘 동작한다" — skill을 제대로 평가하는 방법 배우기
 
+## 한눈에 보는 증상과 처방
+
+| 증상 | 먼저 볼 것 |
+|---|---|
+| 트리거되지 않음 | description 키워드 → 목록 확인 → 바꿔 말하기 → `/이름` 직접 호출 |
+| 너무 자주 트리거됨 | description 좁히기 또는 `disable-model-invocation: true` |
+| description이 잘림 | `/doctor`로 확인, 핵심을 맨 앞에 |
+| 도중에 지시를 안 따름 | 지시 다듬기, 꼭 지켜야 하면 hook, 컴팩션 뒤 재호출 |
+| 잘 동작하는지 모르겠음 | 트리거 정확도와 출력 품질을 따로 측정 |
+
 ## Skill이 트리거되지 않을 때
 
 순서대로 확인하세요.
 
-1. description에 사용자가 **자연스럽게 말할 키워드**가 들어있는지 확인
-2. `What skills are available?`라고 물어서 skill이 목록에 있는지 확인
-3. description에 가깝게 **요청을 바꿔 말해보기**
-4. user-invocable이라면 `/skill-name`으로 직접 호출해보기
+<ol class="oa-flow">
+  <li><strong>키워드 확인</strong>description에 사용자가 <b>자연스럽게 말할 키워드</b>가 들어있는지</li>
+  <li><strong>목록 확인</strong><code>What skills are available?</code>라고 물어 보기</li>
+  <li><strong>바꿔 말하기</strong>description에 가깝게 요청을 바꿔 말해보기</li>
+  <li><strong>직접 호출</strong>user-invocable이라면 <code>/skill-name</code></li>
+</ol>
 
 > ⚠️ frontmatter YAML이 깨져 있으면 본문은 빈 메타데이터로 로드됩니다. `/skill-name` 직접 호출은 되는데 자동 매칭이 안 된다면 이 경우일 수 있어요. `claude --debug`로 파싱 에러를 확인하세요.
 
@@ -45,10 +57,28 @@ Skill 내용은 세션 내내 컨텍스트에 남지만, 모델이 다른 접근
 
 ## 평가: 트리거 ≠ 품질
 
+<div class="oa-eli">
+  <span class="oa-eli__head">🔔 쉽게 말하면</span>
+  <p>초인종이 울렸다고 <b>반가운 손님</b>이라는 뜻은 아니에요. "제때 울렸는가"(트리거 정확도)와 "들어온 사람이 일을 잘했는가"(출력 품질)는 따로 확인해야 해요.</p>
+</div>
+
 Skill이 트리거되는 걸 봤다는 건 "Claude가 찾았다"는 뜻이지, "의도대로 동작했다"는 뜻이 아닙니다. 두 가지를 **따로** 측정하세요.
 
-1. **트리거 정확도**: 원하는 프롬프트에서 호출되는가? (+ 원치 않는 프롬프트에서 호출되지 않는가?)
-2. **출력 품질**: 호출됐을 때 결과물이 기대에 맞는가?
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">① 트리거 정확도</span>
+    <ul>
+      <li>원하는 프롬프트에서 호출되는가?</li>
+      <li>원치 않는 프롬프트에서 호출되지 않는가?</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">② 출력 품질</span>
+    <ul>
+      <li>호출됐을 때 결과물이 기대에 맞는가?</li>
+    </ul>
+  </div>
+</div>
 
 측정 방법은 **베이스라인 비교**입니다. 현실적인 프롬프트 몇 개를 skill이 있는 세션 / 비활성화한 세션에서 각각 **새 세션으로** 돌려 결과를 비교하세요. (새 세션이어야 skill 작성 중 남은 컨텍스트가 결과를 왜곡하지 않아요.)
 
@@ -65,6 +95,28 @@ Skill이 트리거되는 걸 봤다는 건 "Claude가 찾았다"는 뜻이지, "
 - **채점 + 벤치마크**: skill 있음/없음의 통과율·시간·토큰을 비교
 - **버전 A/B 비교**: 수정이 정말 개선인지 블라인드 비교로 확인
 - **Description 튜닝**: 트리거돼야 할/되지 말아야 할 프롬프트를 생성해 적중률을 재고 description 수정안 제안
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. <code>/skill-name</code> 직접 호출은 되는데 자동 매칭이 안 돼요. 무엇을 의심하나요?</summary>
+  <p><b>정답: frontmatter YAML이 깨진 경우.</b> 본문은 빈 메타데이터로 로드돼요. <code>claude --debug</code>로 파싱 에러를 확인해요.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. skill이 많아져 description이 잘리는지 확인하려면 무엇을 쓰나요?</summary>
+  <p><b>정답: <code>/doctor</code>.</b> 예산이 넘치면 가장 적게 쓰는 skill부터 드롭돼요. 핵심 사용 사례를 description 맨 앞에 쓰는 것이 예방책이에요.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. skill의 효과를 베이스라인과 비교할 때 왜 새 세션에서 돌려야 하나요?</summary>
+  <p><b>정답: skill 작성 중 남은 컨텍스트가 결과를 왜곡하지 않게 하기 위해서예요.</b> skill이 있는 세션과 비활성화한 세션을 각각 새로 시작해 비교해요.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. skill이 반드시 지켜야 하는 동작을 가끔 건너뛰어요. 가장 확실한 방법은 무엇인가요?</summary>
+  <p><b>정답: hook으로 결정론적으로 강제해요.</b> skill 내용이 컨텍스트에 있어도 모델이 다른 접근을 선택할 수 있어요.</p>
+</details>
 
 ## 정리
 

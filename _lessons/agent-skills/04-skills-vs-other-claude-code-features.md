@@ -11,6 +11,16 @@ lesson: 4
 - "어떤 상황에 뭘 쓸까"를 판단하는 기준 세우기
 - Skill과 subagent를 결합하는 두 가지 방향 이해하기
 
+## 한눈에 보는 선택
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📌</span><span class="oa-card__title">CLAUDE.md</span>"우리 팀은 이래" — 사실</div>
+  <div class="oa-card"><span class="oa-card__icon">📒</span><span class="oa-card__title">Skill</span>"이 작업은 이렇게 해" — 절차</div>
+  <div class="oa-card"><span class="oa-card__icon">⛓️</span><span class="oa-card__title">Hook</span>"무조건 이렇게 돼야 해" — 강제</div>
+  <div class="oa-card"><span class="oa-card__icon">🔌</span><span class="oa-card__title">MCP</span>외부 시스템 연동</div>
+  <div class="oa-card"><span class="oa-card__icon">🧬</span><span class="oa-card__title">Subagent</span>컨텍스트 격리</div>
+</div>
+
 ## 한눈에 비교
 
 | 기능 | 성격 | 로드/실행 방식 | 이럴 때 |
@@ -39,6 +49,11 @@ lesson: 4
 
 ## Skill 컨텍스트 생명주기
 
+<div class="oa-eli">
+  <span class="oa-eli__head">📎 쉽게 말하면</span>
+  <p>skill을 호출하는 것은 회의 자료를 <b>책상에 올려놓는 것</b>과 같습니다. 한 번 올려놓으면 회의가 끝날 때까지 책상을 차지합니다. 그래서 자료는 얇을수록 좋습니다.</p>
+</div>
+
 Skill이 호출되면 렌더링된 `SKILL.md` 내용이 대화에 **하나의 메시지로 들어가 세션 내내 유지**됩니다.
 
 - 이후 턴에서 파일을 다시 읽지 않으므로, 작업 내내 적용될 지침은 "일회성 단계"가 아니라 **상시 지침**으로 써야 해요.
@@ -59,11 +74,35 @@ Skill이 호출되면 렌더링된 `SKILL.md` 내용이 대화에 **하나의 �
 
 상황별로 정리하면:
 
-- 프로젝트의 **불변 사실** → CLAUDE.md
-- **반복 절차**, 긴 참고 자료 → Skill
-- **예외 없이 강제**할 규칙 → Hook
-- 외부 서비스 **연동** → MCP (+ 그 사용법은 Skill로)
-- 컨텍스트 **격리**가 필요한 큰 작업 → Subagent (+ Skill로 지식 주입)
+| 상황 | 선택 |
+|---|---|
+| 프로젝트의 **불변 사실** | CLAUDE.md |
+| **반복 절차**, 긴 참고 자료 | Skill |
+| **예외 없이 강제**할 규칙 | Hook |
+| 외부 서비스 **연동** | MCP (+ 그 사용법은 Skill로) |
+| 컨텍스트 **격리**가 필요한 큰 작업 | Subagent (+ Skill로 지식 주입) |
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. "파일을 저장할 때마다 반드시 lint를 돌린다"를 보장하려면 무엇을 씁니까?</summary>
+  <p><b>정답: Hook.</b> LLM 판단에 맡기지 않고 도구 이벤트마다 결정론적으로 실행됩니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. <code>.claude/commands/deploy.md</code>와 <code>.claude/skills/deploy/SKILL.md</code>가 둘 다 있으면 어느 쪽이 우선합니까?</summary>
+  <p><b>정답: skill.</b> 같은 이름이 겹치면 skill이 command보다 우선합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 호출된 skill 본문은 언제까지 컨텍스트에 남습니까?</summary>
+  <p><b>정답: 세션 내내.</b> 하나의 메시지로 들어가 유지되므로 모든 줄이 매 턴 토큰 비용이 됩니다. 그래서 간결하게 씁니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 서브에이전트의 <code>skills</code> 필드에 적은 skill은 일반 세션과 무엇이 다르게 로드됩니까?</summary>
+  <p><b>정답: 시작 시 skill 전체 내용이 미리 주입됩니다.</b> 일반 세션에서는 description만 상시 로드됩니다.</p>
+</details>
 
 ## 정리
 
