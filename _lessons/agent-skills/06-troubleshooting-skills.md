@@ -59,7 +59,7 @@ Skill 내용은 세션 내내 컨텍스트에 남지만, 모델이 다른 접근
 
 <div class="oa-eli">
   <span class="oa-eli__head">🔔 쉽게 말하면</span>
-  <p>초인종이 울렸다고 <b>반가운 손님</b>이라는 뜻은 아닙니다. "제때 울렸는가"(트리거 정확도)와 "들어온 사람이 일을 잘했는가"(출력 품질)는 따로 확인해야 합니다.</p>
+  <p>초인종이 울렸다고 <b>반가운 손님</b>이라는 뜻은 아니에요. "제때 울렸는가"(트리거 정확도)와 "들어온 사람이 일을 잘했는가"(출력 품질)는 따로 확인해야 해요.</p>
 </div>
 
 Skill이 트리거되는 걸 봤다는 건 "Claude가 찾았다"는 뜻이지, "의도대로 동작했다"는 뜻이 아닙니다. 두 가지를 **따로** 측정하세요.
@@ -99,23 +99,23 @@ Skill이 트리거되는 걸 봤다는 건 "Claude가 찾았다"는 뜻이지, "
 ## 확인 문제
 
 <details class="oa-quiz">
-  <summary>Q1. <code>/skill-name</code> 직접 호출은 되는데 자동 매칭이 안 됩니다. 무엇을 의심합니까?</summary>
-  <p><b>정답: frontmatter YAML이 깨진 경우.</b> 본문은 빈 메타데이터로 로드됩니다. <code>claude --debug</code>로 파싱 에러를 확인합니다.</p>
+  <summary>Q1. <code>/skill-name</code> 직접 호출은 되는데 자동 매칭이 안 돼요. 무엇을 의심하나요?</summary>
+  <p><b>정답: frontmatter YAML이 깨진 경우.</b> 본문은 빈 메타데이터로 로드돼요. <code>claude --debug</code>로 파싱 에러를 확인해요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q2. skill이 많아져 description이 잘리는지 확인하려면 무엇을 씁니까?</summary>
-  <p><b>정답: <code>/doctor</code>.</b> 예산이 넘치면 가장 적게 쓰는 skill부터 드롭됩니다. 핵심 사용 사례를 description 맨 앞에 쓰는 것이 예방책입니다.</p>
+  <summary>Q2. skill이 많아져 description이 잘리는지 확인하려면 무엇을 쓰나요?</summary>
+  <p><b>정답: <code>/doctor</code>.</b> 예산이 넘치면 가장 적게 쓰는 skill부터 드롭돼요. 핵심 사용 사례를 description 맨 앞에 쓰는 것이 예방책이에요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q3. skill의 효과를 베이스라인과 비교할 때 왜 새 세션에서 돌려야 합니까?</summary>
-  <p><b>정답: skill 작성 중 남은 컨텍스트가 결과를 왜곡하지 않게 하기 위해서입니다.</b> skill이 있는 세션과 비활성화한 세션을 각각 새로 시작해 비교합니다.</p>
+  <summary>Q3. skill의 효과를 베이스라인과 비교할 때 왜 새 세션에서 돌려야 하나요?</summary>
+  <p><b>정답: skill 작성 중 남은 컨텍스트가 결과를 왜곡하지 않게 하기 위해서예요.</b> skill이 있는 세션과 비활성화한 세션을 각각 새로 시작해 비교해요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q4. skill이 반드시 지켜야 하는 동작을 가끔 건너뜁니다. 가장 확실한 방법은 무엇입니까?</summary>
-  <p><b>정답: hook으로 결정론적으로 강제합니다.</b> skill 내용이 컨텍스트에 있어도 모델이 다른 접근을 선택할 수 있습니다.</p>
+  <summary>Q4. skill이 반드시 지켜야 하는 동작을 가끔 건너뛰어요. 가장 확실한 방법은 무엇인가요?</summary>
+  <p><b>정답: hook으로 결정론적으로 강제해요.</b> skill 내용이 컨텍스트에 있어도 모델이 다른 접근을 선택할 수 있어요.</p>
 </details>
 
 ## 정리
