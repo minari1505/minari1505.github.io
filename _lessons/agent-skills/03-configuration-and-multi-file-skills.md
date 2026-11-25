@@ -23,7 +23,7 @@ lesson: 3
 
 ## Frontmatter 주요 필드
 
-모든 필드는 선택 사항이고, `description`만 강력 권장입니다.
+모든 필드는 선택 사항이고, `description`만 강력 권장이에요.
 
 | 필드 | 역할 |
 |---|---|
@@ -40,7 +40,7 @@ lesson: 3
 
 ## 누가 호출할 수 있는지 제어하기
 
-기본값은 "사용자도, Claude도 호출 가능"입니다. 두 필드로 제한할 수 있어요.
+기본값은 "사용자도, Claude도 호출 가능"이에요. 두 필드로 제한할 수 있어요.
 
 | Frontmatter | 사용자 호출 | Claude 호출 | 컨텍스트 로드 |
 |---|---|---|---|
@@ -67,11 +67,11 @@ lesson: 3
 
 ## 도구 권한: allowed-tools
 
-`allowed-tools`에 적은 도구는 skill이 활성화된 동안 **매번 허가를 묻지 않고** 사용됩니다.
+`allowed-tools`에 적은 도구는 skill이 활성화된 동안 **매번 허가를 묻지 않고** 사용돼요.
 
 <div class="oa-eli">
   <span class="oa-eli__head">🎫 쉽게 말하면</span>
-  <p><code>allowed-tools</code>는 출입 금지 목록이 아니라 <b>프리패스</b>입니다. 목록에 있는 도구는 묻지 않고 통과시키고, 목록에 없는 도구는 평소처럼 입구에서 허가를 받습니다.</p>
+  <p><code>allowed-tools</code>는 출입 금지 목록이 아니라 <b>프리패스</b>예요. 목록에 있는 도구는 묻지 않고 통과시키고, 목록에 없는 도구는 평소처럼 입구에서 허가를 받아요.</p>
 </div>
 
 ```markdown
@@ -83,7 +83,7 @@ allowed-tools: Bash(git add *) Bash(git commit *) Bash(git status *)
 ---
 ```
 
-- 도구를 *제한*하는 게 아니라 *사전 승인*하는 필드예요. 목록에 없는 도구는 평소 권한 설정을 따릅니다.
+- 도구를 *제한*하는 게 아니라 *사전 승인*하는 필드예요. 목록에 없는 도구는 평소 권한 설정을 따라요.
 - 반대로 도구를 빼고 싶으면 `disallowed-tools`를 쓰세요.
 
 ## 인자 전달
@@ -97,13 +97,13 @@ description: Fix a GitHub issue
 Fix GitHub issue $ARGUMENTS following our coding standards.
 ```
 
-- `/fix-issue 123` → `$ARGUMENTS`가 `123`으로 치환됩니다.
+- `/fix-issue 123` → `$ARGUMENTS`가 `123`으로 치환돼요.
 - 위치별 접근: `$ARGUMENTS[0]` 또는 축약형 `$0`, `$1` — `/migrate-component SearchBar React Vue`처럼 여러 인자를 받을 때 유용해요.
 - 그 외 변수: `${CLAUDE_SKILL_DIR}` (skill 폴더 경로 — 번들 스크립트 참조용), `${CLAUDE_SESSION_ID}`, `${CLAUDE_PROJECT_DIR}` 등.
 
 ## 동적 컨텍스트 주입
 
-`` !`command` `` 문법을 쓰면 skill 내용이 Claude에게 전달되기 **전에** 셸 명령이 실행되고, 그 출력이 자리를 대신합니다.
+`` !`command` `` 문법을 쓰면 skill 내용이 Claude에게 전달되기 **전에** 셸 명령이 실행되고, 그 출력이 자리를 대신해요.
 
 ```markdown
 ---
@@ -123,7 +123,7 @@ allowed-tools: Bash(gh *)
 Summarize this pull request...
 ```
 
-실행 순서는 다음과 같습니다.
+실행 순서는 다음과 같아요.
 
 <ol class="oa-flow">
   <li><strong>명령 실행</strong>각 <code>!`command`</code>를 즉시 실행</li>
@@ -131,11 +131,11 @@ Summarize this pull request...
   <li><strong>전달</strong>Claude는 실제 데이터가 채워진 완성본을 받음</li>
 </ol>
 
-**Claude가 실행하는 게 아니라 전처리**라는 점이 핵심입니다. 추측이 아닌 실데이터 기반 응답을 보장해요.
+**Claude가 실행하는 게 아니라 전처리**라는 점이 핵심이에요. 추측이 아닌 실데이터 기반 응답을 보장해요.
 
 ## 멀티 파일 skill
 
-`SKILL.md`는 개요와 내비게이션만 담고, 상세 자료는 별도 파일로 분리합니다.
+`SKILL.md`는 개요와 내비게이션만 담고, 상세 자료는 별도 파일로 분리해요.
 
 ```text
 my-skill/
@@ -155,12 +155,12 @@ my-skill/
 
 - 💡 **`SKILL.md`는 500줄 이하**로 유지하고, 상세 참고 자료는 분리하세요.
 - 부속 파일은 SKILL.md에서 링크로 언급해 "언제 뭘 열어볼지" Claude에게 알려주세요.
-- 스크립트는 **컨텍스트를 쓰지 않고 실행**되는 게 큰 장점 — 대용량 데이터 처리, 결정론적 작업에 적합합니다.
-- 서로 배타적인 상황의 자료(예: 폼 채우기 vs 텍스트 추출)는 별도 파일로 나눠야 토큰이 절약됩니다.
+- 스크립트는 **컨텍스트를 쓰지 않고 실행**되는 게 큰 장점 — 대용량 데이터 처리, 결정론적 작업에 적합해요.
+- 서로 배타적인 상황의 자료(예: 폼 채우기 vs 텍스트 추출)는 별도 파일로 나눠야 토큰이 절약돼요.
 
 ## 서브에이전트에서 실행: context: fork
 
-`context: fork`를 붙이면 skill이 **격리된 컨텍스트**에서 실행됩니다. skill 본문이 서브에이전트의 프롬프트가 되고, 대화 히스토리에는 접근하지 못해요.
+`context: fork`를 붙이면 skill이 **격리된 컨텍스트**에서 실행돼요. skill 본문이 서브에이전트의 프롬프트가 되고, 대화 히스토리에는 접근하지 못해요.
 
 ```markdown
 ---
@@ -177,28 +177,28 @@ Research $ARGUMENTS thoroughly:
 3. Summarize findings with specific file references
 ```
 
-⚠️ `context: fork`는 **명시적인 작업 지시가 있는 skill**에만 의미가 있습니다. "이 컨벤션을 따르라" 같은 가이드라인만 있으면 서브에이전트가 할 일이 없어 빈손으로 돌아와요.
+⚠️ `context: fork`는 **명시적인 작업 지시가 있는 skill**에만 의미가 있어요. "이 컨벤션을 따르라" 같은 가이드라인만 있으면 서브에이전트가 할 일이 없어 빈손으로 돌아와요.
 
 ## 확인 문제
 
 <details class="oa-quiz">
-  <summary>Q1. <code>/deploy</code> skill을 Claude가 스스로 실행하지 못하게 하려면 어떤 필드를 씁니까?</summary>
-  <p><b>정답: <code>disable-model-invocation: true</code>.</b> 부수효과가 있는 작업은 사용자만 <code>/이름</code>으로 실행하게 합니다.</p>
+  <summary>Q1. <code>/deploy</code> skill을 Claude가 스스로 실행하지 못하게 하려면 어떤 필드를 쓰나요?</summary>
+  <p><b>정답: <code>disable-model-invocation: true</code>.</b> 부수효과가 있는 작업은 사용자만 <code>/이름</code>으로 실행하게 해요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q2. <code>allowed-tools</code>에 없는 도구는 skill 실행 중 쓸 수 없습니까?</summary>
-  <p><b>정답: 쓸 수 있습니다.</b> 이 필드는 도구를 제한하는 것이 아니라 사전 승인합니다. 목록에 없는 도구는 평소 권한 설정을 따릅니다. 빼고 싶으면 <code>disallowed-tools</code>를 씁니다.</p>
+  <summary>Q2. <code>allowed-tools</code>에 없는 도구는 skill 실행 중 쓸 수 없나요?</summary>
+  <p><b>정답: 쓸 수 있어요.</b> 이 필드는 도구를 제한하는 것이 아니라 사전 승인해요. 목록에 없는 도구는 평소 권한 설정을 따라요. 빼고 싶으면 <code>disallowed-tools</code>를 써요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q3. "이 컨벤션을 따르라"는 가이드라인만 담긴 skill에 <code>context: fork</code>를 붙이면 어떻게 됩니까?</summary>
-  <p><b>정답: 서브에이전트가 할 일이 없어 빈손으로 돌아옵니다.</b> <code>context: fork</code>는 명시적인 작업 지시가 있는 skill에만 의미가 있습니다.</p>
+  <summary>Q3. "이 컨벤션을 따르라"는 가이드라인만 담긴 skill에 <code>context: fork</code>를 붙이면 어떻게 되나요?</summary>
+  <p><b>정답: 서브에이전트가 할 일이 없어 빈손으로 돌아와요.</b> <code>context: fork</code>는 명시적인 작업 지시가 있는 skill에만 의미가 있어요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q4. 번들 스크립트(<code>scripts/helper.py</code>)의 장점은 무엇입니까?</summary>
-  <p><b>정답: 컨텍스트를 쓰지 않고 실행됩니다.</b> 대용량 데이터 처리나 결정론적 작업에 적합합니다.</p>
+  <summary>Q4. 번들 스크립트(<code>scripts/helper.py</code>)의 장점은 무엇인가요?</summary>
+  <p><b>정답: 컨텍스트를 쓰지 않고 실행돼요.</b> 대용량 데이터 처리나 결정론적 작업에 적합해요.</p>
 </details>
 
 ## 정리

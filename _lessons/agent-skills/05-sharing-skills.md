@@ -29,7 +29,7 @@ lesson: 5
 
 ## 1. Project skills — git으로 팀과 공유
 
-가장 간단한 방법입니다. `.claude/skills/`를 버전 관리에 커밋하면, 저장소를 clone한 팀원 모두에게 자동 적용됩니다.
+가장 간단한 방법이에요. `.claude/skills/`를 버전 관리에 커밋하면, 저장소를 clone한 팀원 모두에게 자동 적용돼요.
 
 ```text
 my-repo/
@@ -41,33 +41,33 @@ my-repo/
             └── SKILL.md
 ```
 
-- skill도 코드처럼 **리뷰·버전 관리·롤백**이 가능해집니다.
+- skill도 코드처럼 **리뷰·버전 관리·롤백**이 가능해져요.
 - 프로젝트 skill의 `allowed-tools`는 **워크스페이스 신뢰(trust) 승인 후**에만 발효돼요. skill이 스스로에게 광범위한 도구 권한을 줄 수 있으니, 저장소를 신뢰하기 전에 skill을 검토하세요.
-- 모노레포라면 하위 패키지의 `.claude/skills/`도 인식됩니다. 이름이 겹치면 `apps/web:deploy`처럼 디렉토리 경로로 구분돼요.
+- 모노레포라면 하위 패키지의 `.claude/skills/`도 인식돼요. 이름이 겹치면 `apps/web:deploy`처럼 디렉토리 경로로 구분돼요.
 
 ## 2. Plugins — 여러 저장소·팀에 배포
 
-저장소 하나를 넘어 배포하려면 **플러그인**에 skill을 담습니다.
+저장소 하나를 넘어 배포하려면 **플러그인**에 skill을 담아요.
 
-- 플러그인의 `skills/` 디렉토리에 skill을 넣고, 마켓플레이스를 통해 설치하게 합니다.
+- 플러그인의 `skills/` 디렉토리에 skill을 넣고, 마켓플레이스를 통해 설치하게 해요.
 - 플러그인 skill은 `plugin-name:skill-name` **네임스페이스**를 사용하므로 개인/프로젝트 skill과 충돌하지 않아요.
-- skill 외에 agents, hooks, MCP 서버까지 한 패키지로 묶을 수 있습니다.
+- skill 외에 agents, hooks, MCP 서버까지 한 패키지로 묶을 수 있어요.
 
 ## 3. Managed settings — 조직 전체 강제 배포
 
-Enterprise 환경에서는 관리자가 **managed settings**로 조직 구성원 전체에게 skill을 배포할 수 있습니다.
+Enterprise 환경에서는 관리자가 **managed settings**로 조직 구성원 전체에게 skill을 배포할 수 있어요.
 
-- 같은 이름의 skill이 있으면 **Enterprise > Personal > Project** 순으로 우선 적용됩니다.
+- 같은 이름의 skill이 있으면 **Enterprise > Personal > Project** 순으로 우선 적용돼요.
 - 관리자는 `disableSkillShellExecution` 같은 정책 설정으로 사용자 skill의 셸 실행(`` !`cmd` ``)을 조직 차원에서 비활성화할 수도 있어요.
 
 ## 🔒 보안: 설치 전 체크리스트
 
 <div class="oa-eli">
   <span class="oa-eli__head">📱 쉽게 말하면</span>
-  <p>skill 설치는 <b>앱 설치</b>와 같습니다. 출처를 모르는 앱은 설치하지 않고, 설치할 때는 "이 앱이 왜 연락처 권한을 요구하지?"를 확인합니다. skill도 지시 내용, 코드, 네트워크 접속, 도구 권한을 봅니다.</p>
+  <p>skill 설치는 <b>앱 설치</b>와 같아요. 출처를 모르는 앱은 설치하지 않고, 설치할 때는 "이 앱이 왜 연락처 권한을 요구하지?"를 확인해요. skill도 지시 내용, 코드, 네트워크 접속, 도구 권한을 봐요.</p>
 </div>
 
-Skill은 지시문 + 코드로 에이전트에 새 능력을 부여하는 만큼, 잠재적 취약점이 될 수 있습니다. **신뢰할 수 있는 출처의 skill만 설치**하고, 설치 전에 확인하세요.
+Skill은 지시문 + 코드로 에이전트에 새 능력을 부여하는 만큼, 잠재적 취약점이 될 수 있어요. **신뢰할 수 있는 출처의 skill만 설치**하고, 설치 전에 확인하세요.
 
 <div class="oa-cards">
   <div class="oa-card"><span class="oa-card__icon">📄</span><span class="oa-card__title">지시 내용</span><code>SKILL.md</code>와 부속 파일이 이상한 행동을 유도하지 않는지</div>
@@ -79,18 +79,18 @@ Skill은 지시문 + 코드로 에이전트에 새 능력을 부여하는 만큼
 ## 확인 문제
 
 <details class="oa-quiz">
-  <summary>Q1. 같은 저장소를 쓰는 팀원과 skill을 공유하는 가장 간단한 방법은 무엇입니까?</summary>
-  <p><b>정답: <code>.claude/skills/</code>를 git에 커밋합니다.</b> 저장소를 clone한 팀원 모두에게 적용되고, 코드처럼 리뷰·버전 관리·롤백이 됩니다.</p>
+  <summary>Q1. 같은 저장소를 쓰는 팀원과 skill을 공유하는 가장 간단한 방법은 무엇인가요?</summary>
+  <p><b>정답: <code>.claude/skills/</code>를 git에 커밋해요.</b> 저장소를 clone한 팀원 모두에게 적용되고, 코드처럼 리뷰·버전 관리·롤백이 돼요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q2. 플러그인 skill이 개인·프로젝트 skill과 이름이 충돌하지 않는 이유는 무엇입니까?</summary>
-  <p><b>정답: <code>plugin-name:skill-name</code> 네임스페이스를 쓰기 때문입니다.</b></p>
+  <summary>Q2. 플러그인 skill이 개인·프로젝트 skill과 이름이 충돌하지 않는 이유는 무엇인가요?</summary>
+  <p><b>정답: <code>plugin-name:skill-name</code> 네임스페이스를 쓰기 때문이에요.</b></p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q3. 프로젝트 skill의 <code>allowed-tools</code>는 언제부터 효력이 있습니까?</summary>
-  <p><b>정답: 워크스페이스 신뢰(trust) 승인 후.</b> skill이 스스로 넓은 도구 권한을 줄 수 있으므로, 저장소를 신뢰하기 전에 skill을 검토합니다.</p>
+  <summary>Q3. 프로젝트 skill의 <code>allowed-tools</code>는 언제부터 효력이 있나요?</summary>
+  <p><b>정답: 워크스페이스 신뢰(trust) 승인 후.</b> skill이 스스로 넓은 도구 권한을 줄 수 있으므로, 저장소를 신뢰하기 전에 skill을 검토해요.</p>
 </details>
 
 ## 정리
