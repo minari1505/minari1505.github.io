@@ -40,25 +40,25 @@ lesson: 4
 
 ## Slash command는 skill로 통합됐어요
 
-**Custom slash commands는 skill과 하나로 합쳐졌습니다.**
+**Custom slash commands는 skill과 하나로 합쳐졌어요.**
 
-- `.claude/commands/deploy.md`와 `.claude/skills/deploy/SKILL.md`는 둘 다 `/deploy`를 만들고 동일하게 동작합니다.
+- `.claude/commands/deploy.md`와 `.claude/skills/deploy/SKILL.md`는 둘 다 `/deploy`를 만들고 동일하게 동작해요.
 - 기존 `.claude/commands/` 파일도 계속 작동하고 같은 frontmatter를 지원해요.
-- 다만 skill 쪽이 추가 기능이 있어 권장됩니다: **부속 파일 디렉토리**, **호출 제어**(누가 부를 수 있는지), **관련 상황에서의 자동 로드**.
-- 같은 이름이 겹치면 skill이 command보다 우선합니다.
+- 다만 skill 쪽이 추가 기능이 있어 권장돼요: **부속 파일 디렉토리**, **호출 제어**(누가 부를 수 있는지), **관련 상황에서의 자동 로드**.
+- 같은 이름이 겹치면 skill이 command보다 우선해요.
 
 ## Skill 컨텍스트 생명주기
 
 <div class="oa-eli">
   <span class="oa-eli__head">📎 쉽게 말하면</span>
-  <p>skill을 호출하는 것은 회의 자료를 <b>책상에 올려놓는 것</b>과 같습니다. 한 번 올려놓으면 회의가 끝날 때까지 책상을 차지합니다. 그래서 자료는 얇을수록 좋습니다.</p>
+  <p>skill을 호출하는 것은 회의 자료를 <b>책상에 올려놓는 것</b>과 같아요. 한 번 올려놓으면 회의가 끝날 때까지 책상을 차지해요. 그래서 자료는 얇을수록 좋아요.</p>
 </div>
 
-Skill이 호출되면 렌더링된 `SKILL.md` 내용이 대화에 **하나의 메시지로 들어가 세션 내내 유지**됩니다.
+Skill이 호출되면 렌더링된 `SKILL.md` 내용이 대화에 **하나의 메시지로 들어가 세션 내내 유지**돼요.
 
 - 이후 턴에서 파일을 다시 읽지 않으므로, 작업 내내 적용될 지침은 "일회성 단계"가 아니라 **상시 지침**으로 써야 해요.
-- 본문은 간결하게! 로드된 skill의 모든 줄은 **매 턴 반복되는 토큰 비용**입니다.
-- 자동 컴팩션 시에는 최근 호출된 skill들이 일정 토큰 예산 안에서 요약 뒤에 다시 붙습니다. 오래된 skill은 밀려날 수 있으니, 중요한 skill은 컴팩션 후 재호출하세요.
+- 본문은 간결하게! 로드된 skill의 모든 줄은 **매 턴 반복되는 토큰 비용**이에요.
+- 자동 컴팩션 시에는 최근 호출된 skill들이 일정 토큰 예산 안에서 요약 뒤에 다시 붙어요. 오래된 skill은 밀려날 수 있으니, 중요한 skill은 컴팩션 후 재호출하세요.
 
 ## Skill + Subagent: 두 방향의 결합
 
@@ -67,8 +67,8 @@ Skill이 호출되면 렌더링된 `SKILL.md` 내용이 대화에 **하나의 �
 | Skill에 `context: fork` | 에이전트 타입에서 | **SKILL.md 내용** | CLAUDE.md (Explore/Plan 제외) |
 | Subagent에 `skills` 필드 | 서브에이전트 본문 | Claude의 위임 메시지 | **미리 로드된 skill** + CLAUDE.md |
 
-1. **Skill → Subagent** (`context: fork`): skill 본문이 서브에이전트를 움직이는 프롬프트가 됩니다. `agent` 필드로 실행 환경(Explore, Plan, general-purpose, 커스텀)을 고르세요.
-2. **Subagent → Skill** (`skills` 필드): 서브에이전트 시작 시 skill **전체 내용**이 미리 주입됩니다. 일반 세션에서 description만 로드되는 것과 다른 점!
+1. **Skill → Subagent** (`context: fork`): skill 본문이 서브에이전트를 움직이는 프롬프트가 돼요. `agent` 필드로 실행 환경(Explore, Plan, general-purpose, 커스텀)을 고르세요.
+2. **Subagent → Skill** (`skills` 필드): 서브에이전트 시작 시 skill **전체 내용**이 미리 주입돼요. 일반 세션에서 description만 로드되는 것과 다른 점!
 
 ## 선택 가이드 요약
 
@@ -85,23 +85,23 @@ Skill이 호출되면 렌더링된 `SKILL.md` 내용이 대화에 **하나의 �
 ## 확인 문제
 
 <details class="oa-quiz">
-  <summary>Q1. "파일을 저장할 때마다 반드시 lint를 돌린다"를 보장하려면 무엇을 씁니까?</summary>
-  <p><b>정답: Hook.</b> LLM 판단에 맡기지 않고 도구 이벤트마다 결정론적으로 실행됩니다.</p>
+  <summary>Q1. "파일을 저장할 때마다 반드시 lint를 돌린다"를 보장하려면 무엇을 쓰나요?</summary>
+  <p><b>정답: Hook.</b> LLM 판단에 맡기지 않고 도구 이벤트마다 결정론적으로 실행돼요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q2. <code>.claude/commands/deploy.md</code>와 <code>.claude/skills/deploy/SKILL.md</code>가 둘 다 있으면 어느 쪽이 우선합니까?</summary>
-  <p><b>정답: skill.</b> 같은 이름이 겹치면 skill이 command보다 우선합니다.</p>
+  <summary>Q2. <code>.claude/commands/deploy.md</code>와 <code>.claude/skills/deploy/SKILL.md</code>가 둘 다 있으면 어느 쪽이 우선하나요?</summary>
+  <p><b>정답: skill.</b> 같은 이름이 겹치면 skill이 command보다 우선해요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q3. 호출된 skill 본문은 언제까지 컨텍스트에 남습니까?</summary>
-  <p><b>정답: 세션 내내.</b> 하나의 메시지로 들어가 유지되므로 모든 줄이 매 턴 토큰 비용이 됩니다. 그래서 간결하게 씁니다.</p>
+  <summary>Q3. 호출된 skill 본문은 언제까지 컨텍스트에 남나요?</summary>
+  <p><b>정답: 세션 내내.</b> 하나의 메시지로 들어가 유지되므로 모든 줄이 매 턴 토큰 비용이 돼요. 그래서 간결하게 써요.</p>
 </details>
 
 <details class="oa-quiz">
-  <summary>Q4. 서브에이전트의 <code>skills</code> 필드에 적은 skill은 일반 세션과 무엇이 다르게 로드됩니까?</summary>
-  <p><b>정답: 시작 시 skill 전체 내용이 미리 주입됩니다.</b> 일반 세션에서는 description만 상시 로드됩니다.</p>
+  <summary>Q4. 서브에이전트의 <code>skills</code> 필드에 적은 skill은 일반 세션과 무엇이 다르게 로드되나요?</summary>
+  <p><b>정답: 시작 시 skill 전체 내용이 미리 주입돼요.</b> 일반 세션에서는 description만 상시 로드돼요.</p>
 </details>
 
 ## 정리
