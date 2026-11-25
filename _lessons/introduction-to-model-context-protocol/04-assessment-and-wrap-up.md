@@ -12,6 +12,16 @@ lesson: 4
 - 어떤 상황에서 어떤 primitive를 선택해야 하는지 판단 기준 만들기
 - MCP를 실제 애플리케이션 구조 안에서 어떻게 바라봐야 하는지 마무리하기
 
+## 한눈에 보는 세 가지 primitive
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🤖</span><span class="oa-card__title">Tools — 모델이 제어</span>Claude가 필요하다고 판단하면 호출하는 실행 기능</div>
+  <div class="oa-card"><span class="oa-card__icon">🖥️</span><span class="oa-card__title">Resources — 앱이 제어</span>앱이 데이터를 가져와 UI나 prompt context에 넣는 정보</div>
+  <div class="oa-card"><span class="oa-card__icon">🙋</span><span class="oa-card__title">Prompts — 사용자가 제어</span>사용자가 직접 실행하는 사전 정의 workflow</div>
+</div>
+
+구분하는 질문은 하나입니다: **누가 언제 사용할지 결정하는가?**
+
 ## MCP server의 세 가지 핵심 primitive
 
 이번 강의에서 MCP server는 세 가지 핵심 primitive를 제공할 수 있다고 배웠습니다.
@@ -25,6 +35,11 @@ lesson: 4
 | **Prompts** | 사용자가 제어 | 사용자가 직접 실행하는 사전 정의 workflow |
 
 핵심은 세 primitive가 모두 "Claude에게 뭔가를 제공한다"는 점에서는 비슷하지만, **누가 언제 사용할지 결정하는가**가 다르다는 것입니다.
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🍽️ 쉽게 말하면</span>
+  <p>식당에 비유하면 이렇습니다. <b>Tool</b>은 요리사(모델)가 필요할 때 스스로 집어 드는 조리 도구입니다. <b>Resource</b>는 매니저(앱)가 미리 주방에 들여놓는 재료입니다. <b>Prompt</b>는 손님(사용자)이 메뉴판에서 고르는 세트 메뉴입니다.</p>
+</div>
 
 ## Tools: 모델이 제어하는 기능
 
@@ -126,20 +141,24 @@ Claude가 workflow 수행
 
 조금 더 실전적으로 보면 다음과 같습니다.
 
-- Claude에게 새로운 능력을 주고 싶다 → tool
-- 앱 화면에 보여줄 데이터가 필요하다 → resource
-- 사용자가 선택할 수 있는 고정 workflow를 만들고 싶다 → prompt
-- 문서를 수정하거나 외부 API를 호출해야 한다 → tool
-- 문서 내용을 처음부터 context에 넣고 싶다 → resource
-- "문서 포맷팅", "보고서 생성" 같은 command를 제공하고 싶다 → prompt
+| 하고 싶은 일 | 선택 |
+|---|---|
+| Claude에게 새로운 능력을 주고 싶다 | tool |
+| 문서를 수정하거나 외부 API를 호출해야 한다 | tool |
+| 앱 화면에 보여줄 데이터가 필요하다 | resource |
+| 문서 내용을 처음부터 context에 넣고 싶다 | resource |
+| 사용자가 선택할 수 있는 고정 workflow를 만들고 싶다 | prompt |
+| "문서 포맷팅", "보고서 생성" 같은 command를 제공하고 싶다 | prompt |
 
 ## Claude 인터페이스에서 보는 예시
 
 Claude의 공식 인터페이스에서도 세 primitive의 개념을 볼 수 있습니다.
 
-- 채팅 입력창 아래의 workflow 버튼들: prompts에 가까운 개념
-- Google Drive 같은 문서 연결 기능: resources에 가까운 개념
-- 코드 실행, 계산, 외부 기능 호출: tools에 가까운 개념
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🔘</span><span class="oa-card__title">Prompts에 가까운 것</span>채팅 입력창 아래의 workflow 버튼들</div>
+  <div class="oa-card"><span class="oa-card__icon">📂</span><span class="oa-card__title">Resources에 가까운 것</span>Google Drive 같은 문서 연결 기능</div>
+  <div class="oa-card"><span class="oa-card__icon">🧮</span><span class="oa-card__title">Tools에 가까운 것</span>코드 실행, 계산, 외부 기능 호출</div>
+</div>
 
 물론 실제 내부 구현은 제품마다 다를 수 있지만, 애플리케이션을 설계할 때 이 구분은 유용합니다.
 
@@ -147,12 +166,36 @@ Claude의 공식 인터페이스에서도 세 primitive의 개념을 볼 수 있
 
 이번 MCP 입문 강의에서는 다음 흐름을 살펴봤습니다.
 
-1. MCP가 외부 서비스 통합 부담을 줄이는 표준 통신 계층이라는 점
-2. MCP server가 tools, resources, prompts를 제공한다는 점
-3. Python SDK의 `FastMCP`와 decorator로 server를 쉽게 만들 수 있다는 점
-4. MCP Inspector로 server 기능을 독립적으로 테스트할 수 있다는 점
-5. MCP client가 `list_tools`, `call_tool`, `read_resource`, `get_prompt`로 server 기능을 앱에 연결한다는 점
-6. tools, resources, prompts는 각각 모델, 앱, 사용자가 제어한다는 점
+<ol class="oa-flow">
+  <li><strong>MCP의 역할</strong>외부 서비스 통합 부담을 줄이는 표준 통신 계층</li>
+  <li><strong>server가 주는 것</strong>tools, resources, prompts</li>
+  <li><strong>server 만들기</strong><code>FastMCP</code>와 decorator</li>
+  <li><strong>독립 테스트</strong>MCP Inspector</li>
+  <li><strong>client 연결</strong><code>list_tools</code>, <code>call_tool</code>, <code>read_resource</code>, <code>get_prompt</code></li>
+  <li><strong>제어 주체</strong>모델, 앱, 사용자</li>
+</ol>
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 사용자가 메뉴에서 골라 실행하는 "보고서 생성" 기능을 제공하려 합니다. 어떤 primitive입니까?</summary>
+  <p><b>정답: Prompt.</b> 사용자가 명시적으로 시작하는 workflow이기 때문입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. Claude가 대화 중 필요하다고 판단하면 스스로 외부 API를 호출해야 합니다. 어떤 primitive입니까?</summary>
+  <p><b>정답: Tool.</b> 모델이 제어하는 실행 기능입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 앱이 문서 내용을 처음부터 context에 넣어 두려 합니다. 어떤 primitive입니까?</summary>
+  <p><b>정답: Resource.</b> 애플리케이션이 제어해 UI나 prompt context에 넣는 정보입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 세 primitive 중 무엇을 쓸지 헷갈릴 때 먼저 던질 질문은 무엇입니까?</summary>
+  <p><b>정답: "누가 제어해야 하는가?"</b> 모델이면 tool, 앱이면 resource, 사용자면 prompt입니다.</p>
+</details>
 
 ## 핵심 정리
 

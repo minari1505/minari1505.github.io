@@ -12,14 +12,35 @@ lesson: 3
 - MCP resources를 prompt context로 직접 포함하는 방식 이해하기
 - MCP prompts를 서버에서 정의하고 client에서 가져와 쓰는 흐름 파악하기
 
+## 한눈에 보는 client 기능
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📋</span><span class="oa-card__title">list_tools()</span>server가 제공하는 tool 목록을 가져옵니다.</div>
+  <div class="oa-card"><span class="oa-card__icon">⚙️</span><span class="oa-card__title">call_tool()</span>Claude가 요청한 tool을 server에서 실행합니다.</div>
+  <div class="oa-card"><span class="oa-card__icon">📄</span><span class="oa-card__title">read_resource()</span>resource를 읽어 prompt context에 넣습니다.</div>
+  <div class="oa-card"><span class="oa-card__icon">💬</span><span class="oa-card__title">list_prompts() / get_prompt()</span>재사용 가능한 prompt template을 가져옵니다.</div>
+</div>
+
 ## MCP client를 구현하는 이유
 
 앞에서 MCP server를 만들고 Inspector로 tool을 테스트했습니다. 이제 필요한 것은 애플리케이션 코드가 그 MCP server와 통신할 수 있게 만드는 client입니다.
 
 대부분의 실제 프로젝트에서는 MCP client와 MCP server를 둘 다 만들기보다 둘 중 하나를 구현하는 경우가 많습니다.
 
-- 특정 서비스를 Claude에 노출하고 싶다면 MCP server를 만듭니다.
-- 기존 MCP server를 내 앱에서 쓰고 싶다면 MCP client를 붙입니다.
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">MCP server를 만드는 경우</span>
+    <ul>
+      <li>특정 서비스를 Claude에 노출하고 싶을 때</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">MCP client를 붙이는 경우</span>
+    <ul>
+      <li>기존 MCP server를 내 앱에서 쓰고 싶을 때</li>
+    </ul>
+  </div>
+</div>
 
 이번 실습에서는 양쪽이 어떻게 맞물리는지 보기 위해 client와 server를 모두 구현합니다.
 
@@ -143,25 +164,25 @@ What is the contents of the report.pdf document?
 
 ## MCP Resources란?
 
+<div class="oa-eli">
+  <span class="oa-eli__head">📎 쉽게 말하면</span>
+  <p>tool은 Claude가 필요할 때 <b>직접 전화를 걸어</b> 물어보는 것이고, resource는 회의 전에 <b>자료를 미리 책상에 올려 두는 것</b>입니다. 자료가 이미 있으니 Claude는 전화(tool call)를 걸 필요 없이 바로 답합니다.</p>
+</div>
+
 Tool은 Claude가 필요할 때 호출하는 실행 단위입니다. 반면 **resource**는 server가 노출하는 정보를 prompt에 직접 포함할 수 있게 해주는 방식입니다.
 
 ![MCP resource 접근 흐름](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1749849281%2F09_-_008_-_Accessing_Resources_00.1749849281584.png)
 
 예를 들어 사용자가 `@report.pdf`처럼 resource를 언급하면, 애플리케이션은 이를 resource 요청으로 인식할 수 있습니다.
 
-```text
-사용자 입력: @report.pdf 내용 요약해줘
-  ↓
-앱이 resource URI 인식
-  ↓
-MCP client가 ReadResourceRequest 전송
-  ↓
-MCP server가 ReadResourceResult 반환
-  ↓
-앱이 resource 내용을 prompt에 직접 포함
-  ↓
-Claude가 별도 tool call 없이 바로 응답
-```
+<ol class="oa-flow">
+  <li><strong>사용자 입력</strong><code>@report.pdf</code> 내용 요약해줘</li>
+  <li><strong>URI 인식</strong>앱이 resource URI 인식</li>
+  <li><strong>요청</strong>client가 ReadResourceRequest 전송</li>
+  <li><strong>반환</strong>server가 ReadResourceResult 반환</li>
+  <li><strong>prompt에 포함</strong>앱이 resource 내용을 직접 넣음</li>
+  <li><strong>응답</strong>Claude가 별도 tool call 없이 바로 응답</li>
+</ol>
 
 Resource는 "Claude가 읽어야 할 컨텍스트를 미리 prompt에 넣는 방식"에 가깝습니다.
 
@@ -218,10 +239,12 @@ Prompt는 client가 가져다 쓸 수 있는 잘 만들어진 메시지 템플�
 
 예를 들어 문서 관리 MCP server라면 다음과 같은 prompt를 제공할 수 있습니다.
 
-- 문서를 Markdown으로 재포맷하기
-- 문서 요약하기
-- 문서에서 action item 추출하기
-- 기술 명세를 표로 정리하기
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📝</span><span class="oa-card__title">재포맷</span>문서를 Markdown으로 재포맷하기</div>
+  <div class="oa-card"><span class="oa-card__icon">📑</span><span class="oa-card__title">요약</span>문서 요약하기</div>
+  <div class="oa-card"><span class="oa-card__icon">✅</span><span class="oa-card__title">추출</span>문서에서 action item 추출하기</div>
+  <div class="oa-card"><span class="oa-card__icon">📊</span><span class="oa-card__title">정리</span>기술 명세를 표로 정리하기</div>
+</div>
 
 사용자는 "report.pdf를 markdown으로 다시 써줘"라고 직접 입력할 수도 있습니다. 하지만 server author가 미리 잘 설계한 `/format` prompt를 제공하면 더 일관된 결과를 얻을 수 있습니다.
 
@@ -304,6 +327,28 @@ CLI에서는 `/`를 입력하면 사용 가능한 prompt가 command처럼 표시
 ![MCP prompt 사용 흐름](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1751999841%2F011_-_Prompts_in_the_Client_17.1751999841663.png)
 
 이 방식은 복잡한 작업을 안정적인 명령처럼 제공할 때 유용합니다. 사용자에게 긴 지시문을 쓰게 하는 대신, MCP server가 검증된 prompt를 제공하고 client가 이를 불러와 실행합니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 문서 본문을 그대로 읽어 Claude에게 주기만 하면 됩니다. tool과 resource 중 무엇이 자연스럽습니까?</summary>
+  <p><b>정답: resource.</b> 별도 tool round-trip 없이 context를 빠르게 제공합니다. 문서를 수정하거나 조건에 따라 외부 API를 호출해야 하면 tool이 맞습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 애플리케이션이 <code>ClientSession</code>을 직접 다루지 않고 별도 client class로 감싸는 이유는 무엇입니까?</summary>
+  <p><b>정답: 연결과 종료(cleanup)를 일관되게 관리하기 위해서입니다.</b> <code>ClientSession</code>은 server와 연결을 유지하므로 resource cleanup이 필요합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 사용자가 직접 "markdown으로 다시 써줘"라고 입력하는 대신 server의 <code>/format</code> prompt를 쓰면 좋은 점은 무엇입니까?</summary>
+  <p><b>정답: 더 일관된 결과를 얻습니다.</b> server 작성자가 테스트하고 다듬은 instruction을 재사용하기 때문입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 기존 MCP server를 내 앱에서 쓰고 싶습니다. 무엇을 구현해야 합니까?</summary>
+  <p><b>정답: MCP client.</b> 특정 서비스를 Claude에 노출하고 싶을 때는 MCP server를 만듭니다.</p>
+</details>
 
 ## 핵심 정리
 
