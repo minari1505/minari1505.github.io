@@ -11,6 +11,17 @@ lesson: 7
 - extended thinking, 이미지·PDF 입력, 인용, 프롬프트 캐싱, 코드 실행을 이해하기
 - 각 기능의 API 메시지 구조와 비용/지연/호환성 trade-off 파악하기
 
+## 한눈에 보는 기능
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🧠</span><span class="oa-card__title">Extended Thinking</span>어려운 문제에 reasoning budget을 부여</div>
+  <div class="oa-card"><span class="oa-card__icon">🖼️</span><span class="oa-card__title">이미지 입력</span>멀티모달 입력</div>
+  <div class="oa-card"><span class="oa-card__icon">📄</span><span class="oa-card__title">PDF 입력</span>문서를 그대로 입력</div>
+  <div class="oa-card"><span class="oa-card__icon">🔖</span><span class="oa-card__title">인용</span>답변의 출처를 함께 받음</div>
+  <div class="oa-card"><span class="oa-card__icon">💾</span><span class="oa-card__title">프롬프트 캐싱</span>반복되는 큰 컨텍스트를 절약</div>
+  <div class="oa-card"><span class="oa-card__icon">⚙️</span><span class="oa-card__title">코드 실행 & Files API</span>샌드박스에서 Python 실행</div>
+</div>
+
 ## 1. Extended Thinking (확장 사고)
 
 Extended thinking은 Claude가 최종 답을 생성하기 전에 복잡한 문제를 더 깊게 검토할 수 있게 하는 고급 추론 기능입니다. 일종의 "scratch paper"처럼, 모델이 답에 도달하기 전의 reasoning 과정을 별도 블록으로 다룹니다.
@@ -252,6 +263,11 @@ UI에서는 citation marker에 hover하면 원문 일부, 문서 제목, 페이�
 
 ## 5. 프롬프트 캐싱 (Prompt Caching)
 
+<div class="oa-eli">
+  <span class="oa-eli__head">📚 쉽게 말하면</span>
+  <p>두꺼운 책을 놓고 질문을 여러 번 받는 상황입니다. 캐싱이 없으면 질문마다 <b>책을 처음부터 다시 읽습니다</b>. 캐싱은 한 번 읽은 내용을 <b>기억해 두는 것</b>입니다. 단, 책 앞부분이 바뀌면 처음부터 다시 읽어야 합니다.</p>
+</div>
+
 Prompt caching은 이전 요청에서 Claude가 이미 처리한 입력의 계산 결과를 재사용해 응답 속도를 높이고 비용을 줄이는 기능입니다.
 
 일반 요청에서는 Claude가 응답을 생성하기 전에 입력을 먼저 많이 처리합니다.
@@ -265,17 +281,24 @@ Prompt caching은 이전 요청에서 Claude가 이미 처리한 입력의 계�
 
 Prompt caching은 이 계산 결과를 cache에 저장해둡니다. 이후 같은 prefix가 다시 들어오면 Claude는 이미 처리한 부분을 다시 계산하지 않고 cache에서 읽습니다.
 
-장점:
-
-- 반복 요청이 더 빨라짐
-- cache hit 구간의 비용 감소
-- 긴 문서 분석, 반복 편집, 고정 시스템 프롬프트 재사용에 유리
-
-한계:
-
-- cache는 영구 저장이 아니라 제한된 시간만 유지됨
-- 같은 content가 반복될 때만 효과가 있음
-- 요청마다 바뀌는 내용이 앞쪽에 들어가면 cache hit가 깨짐
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">한계</span>
+    <ul>
+      <li>cache는 영구 저장이 아니라 제한된 시간만 유지됨</li>
+      <li>같은 content가 반복될 때만 효과가 있음</li>
+      <li>요청마다 바뀌는 내용이 앞쪽에 들어가면 cache hit가 깨짐</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">장점</span>
+    <ul>
+      <li>반복 요청이 더 빨라짐</li>
+      <li>cache hit 구간의 비용 감소</li>
+      <li>긴 문서 분석, 반복 편집, 고정 시스템 프롬프트 재사용에 유리</li>
+    </ul>
+  </div>
+</div>
 
 예를 들어 같은 긴 문서를 두고 "요약해줘", "더 짧게", "표로 바꿔줘"처럼 여러 번 요청하는 워크플로우에 잘 맞습니다.
 
@@ -454,6 +477,23 @@ download_file("file_id_from_response")
 - 차트, 표, 리포트 생성
 
 핵심은 Claude가 단순히 코드 제안을 하는 것이 아니라, 실제로 코드를 실행하고 결과를 보고 다시 판단할 수 있다는 점입니다. Files API는 그 실행 환경과 내 애플리케이션 사이의 입력/출력 통로 역할을 합니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 프롬프트 맨 앞에 요청 시각을 넣었더니 캐시가 전혀 맞지 않습니다. 왜 그렇습니까?</summary>
+  <p><b>정답: 요청마다 바뀌는 내용이 앞쪽에 있으면 cache hit가 깨지기 때문입니다.</b> 캐시는 같은 prefix가 반복될 때만 효과가 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 프롬프트 캐싱이 잘 맞는 워크플로우는 무엇입니까?</summary>
+  <p><b>정답: 같은 긴 문서를 두고 "요약해줘", "더 짧게", "표로 바꿔줘"처럼 여러 번 요청하는 경우.</b> 고정 시스템 프롬프트 재사용에도 유리합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 문서 기반 답변에서 어느 부분을 근거로 했는지 함께 받으려면 어떤 기능을 씁니까?</summary>
+  <p><b>정답: 인용(Citations).</b> 답변의 출처를 함께 받아 투명성을 확보합니다.</p>
+</details>
 
 ## 정리
 

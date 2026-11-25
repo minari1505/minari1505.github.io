@@ -11,7 +11,24 @@ lesson: 5
 - 도구 스키마와 메시지 블록을 다루기
 - 여러 도구·멀티턴·서버 측 도구(웹 검색, 텍스트 편집)를 활용하기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>요청</strong>tools 목록을 함께 보냄</li>
+  <li><strong>tool_use</strong>Claude가 "이 도구 써줘"라고 응답</li>
+  <li><strong>실행</strong>내 코드가 도구를 실행</li>
+  <li><strong>tool_result</strong>결과를 되돌려 보냄</li>
+  <li><strong>최종 답변</strong>Claude가 결과를 반영</li>
+</ol>
+
+이 레슨을 관통하는 한 문장: **Claude는 요청하고, 실행은 내 코드가 합니다.**
+
 ## 도구 사용이란?
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🍽️ 쉽게 말하면</span>
+  <p>Claude는 <b>주문을 받는 직원</b>이고 내 코드는 <b>주방</b>입니다. 직원은 "3번 테이블, 파스타 하나"라고 주문서(tool_use)를 써서 넘길 뿐 직접 요리하지 않습니다. 주방이 요리해서 내주면(tool_result) 직원이 손님에게 가져다줍니다.</p>
+</div>
 
 Claude는 텍스트만 생성해요. **도구(tool)**를 주면 "이 도구를 이 인자로 써줘"라고 **요청**할 수 있어요. 실제 실행은 **여러분의 코드**가 해요. 이걸로 Claude가 날씨 조회, DB 검색, 계산 등 외부 능력을 쓸 수 있게 돼요.
 
@@ -51,10 +68,12 @@ Claude가 날씨를 설명하는 능력은 있어도, 지금 이 순간의 날�
 
 도구 사용의 장점은 명확해요.
 
-- **실시간 정보**: 학습 시점 이후의 최신 데이터 사용
-- **외부 시스템 연결**: API, 데이터베이스, 내부 서비스와 연동
-- **동적 응답**: 매 요청마다 최신 상태를 반영
-- **구조화된 상호작용**: Claude가 어떤 정보가 필요한지 명확한 인자로 요청
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">⏱️</span><span class="oa-card__title">실시간 정보</span>학습 시점 이후의 최신 데이터 사용</div>
+  <div class="oa-card"><span class="oa-card__icon">🔗</span><span class="oa-card__title">외부 시스템 연결</span>API, 데이터베이스, 내부 서비스와 연동</div>
+  <div class="oa-card"><span class="oa-card__icon">🔄</span><span class="oa-card__title">동적 응답</span>매 요청마다 최신 상태를 반영</div>
+  <div class="oa-card"><span class="oa-card__icon">🧱</span><span class="oa-card__title">구조화된 상호작용</span>Claude가 어떤 정보가 필요한지 명확한 인자로 요청</div>
+</div>
 
 ## 프로젝트 개요: 리마인더 설정하기
 
@@ -739,6 +758,28 @@ web_search_schema = {
 - 근거가 필요한 리서치 작업
 
 정리하면, text editor tool은 built-in schema를 쓰지만 실제 파일 조작은 내 코드가 실행하는 도구이고, web search tool은 선언만 하면 Anthropic이 검색 실행과 결과 처리를 맡는 서버 측 도구입니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. Claude가 도구를 쓰기로 하면 실제 함수는 누가 실행합니까?</summary>
+  <p><b>정답: 내 코드(애플리케이션 서버).</b> Claude는 <code>tool_use</code> 블록으로 요청만 하고, 내 코드가 실행한 뒤 <code>tool_result</code>로 결과를 돌려보냅니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 도구 결과를 돌려보낼 때 어떤 요청에 대한 결과인지는 무엇으로 연결합니까?</summary>
+  <p><b>정답: <code>tool_use_id</code>.</b> 요청과 결과의 id를 맞춥니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. Claude가 한 응답에서 도구 두 개를 요청했습니다. 결과는 어떻게 보냅니까?</summary>
+  <p><b>정답: 한 메시지에 모아서 보냅니다.</b></p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. text editor tool과 web search tool은 실행 주체가 어떻게 다릅니까?</summary>
+  <p><b>정답: text editor tool은 내 앱이 실제 파일 작업을 구현하고, web search tool은 Anthropic이 검색을 실행합니다.</b></p>
+</details>
 
 ## 정리
 

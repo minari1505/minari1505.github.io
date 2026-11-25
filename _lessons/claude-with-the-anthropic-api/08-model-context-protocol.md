@@ -12,6 +12,15 @@ lesson: 8
 - 클라이언트-서버 구조와 연결 방식 파악하기
 - 로컬/원격 MCP 서버와 Claude API의 MCP connector 관계 이해하기
 
+## 한눈에 보는 구조
+
+<ol class="oa-flow">
+  <li><strong>Host</strong>사용자가 쓰는 AI 애플리케이션</li>
+  <li><strong>MCP Client</strong>Host 안에서 서버와 1:1 연결</li>
+  <li><strong>MCP Server</strong>도구·자원·프롬프트 제공</li>
+  <li><strong>외부 시스템</strong>파일시스템, GitHub, DB</li>
+</ol>
+
 ## MCP란?
 
 **Model Context Protocol(MCP)**은 LLM 애플리케이션이 외부 시스템의 **도구·데이터·프롬프트**에 연결하는 **표준 프로토콜**이에요. "AI를 위한 USB-C 포트"라고 생각하면 돼요 — 서비스마다 제각각 통합하는 대신, MCP라는 공통 규격으로 연결해요.
@@ -47,9 +56,11 @@ MCP 서버들
 
 MCP 문서에서는 보통 세 역할을 구분합니다.
 
-- **Host**: 사용자가 실제로 쓰는 AI 애플리케이션. 예: Claude Desktop, IDE, 내 챗앱
-- **MCP Client**: 특정 MCP 서버와 1:1 연결을 유지하는 구성요소. Host 안에 들어 있음
-- **MCP Server**: 도구·자원·프롬프트를 제공하는 프로그램
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🖥️</span><span class="oa-card__title">Host</span>사용자가 실제로 쓰는 AI 애플리케이션. 예: Claude Desktop, IDE, 내 챗앱</div>
+  <div class="oa-card"><span class="oa-card__icon">🔌</span><span class="oa-card__title">MCP Client</span>특정 MCP 서버와 1:1 연결을 유지하는 구성요소. Host 안에 들어 있음</div>
+  <div class="oa-card"><span class="oa-card__icon">🗄️</span><span class="oa-card__title">MCP Server</span>도구·자원·프롬프트를 제공하는 프로그램</div>
+</div>
 
 하나의 host는 여러 MCP server에 연결될 수 있고, 보통 서버마다 별도의 MCP client 연결이 생깁니다.
 
@@ -62,8 +73,24 @@ Claude Desktop / IDE / 내 앱 (Host)
 
 MCP server는 실행 위치에 따라 크게 두 종류로 볼 수 있습니다.
 
-- **Local MCP server**: 내 컴퓨터에서 실행. 보통 `stdio` transport 사용. 예: 로컬 파일시스템 서버
-- **Remote MCP server**: 외부 서비스에서 실행. 보통 HTTP 기반 transport 사용. 예: Sentry, GitHub, 사내 API 서버
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">Local MCP server</span>
+    <ul>
+      <li>내 컴퓨터에서 실행</li>
+      <li>보통 <code>stdio</code> transport 사용</li>
+      <li>예: 로컬 파일시스템 서버</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">Remote MCP server</span>
+    <ul>
+      <li>외부 서비스에서 실행</li>
+      <li>보통 HTTP 기반 transport 사용</li>
+      <li>예: Sentry, GitHub, 사내 API 서버</li>
+    </ul>
+  </div>
+</div>
 
 이 구분은 보안과 배포 방식에 중요합니다. 로컬 서버는 내 머신 자원에 접근하기 쉽고, 원격 서버는 인증·권한·네트워크 노출을 더 신경 써야 합니다.
 
@@ -509,6 +536,23 @@ response = client.beta.messages.create(
 단, Claude API의 MCP connector는 MCP 전체 기능 중 tool call 중심으로 제공됩니다. local `stdio` 서버를 API에 직접 붙이는 방식이 아니라, HTTP로 노출된 remote MCP server를 연결하는 구조라고 이해하면 됩니다.
 
 로컬 MCP 서버나 더 세밀한 제어가 필요하면 SDK의 MCP client/helper로 직접 연결하는 방식이 더 적합합니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. Host 하나가 MCP server 세 개에 연결되면 MCP client는 보통 몇 개 생깁니까?</summary>
+  <p><b>정답: 세 개.</b> client는 특정 서버와 1:1 연결을 유지하므로 서버마다 별도의 연결이 생깁니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. MCP server가 제공하는 세 가지는 무엇입니까?</summary>
+  <p><b>정답: Tools(실행), Resources(데이터), Prompts(템플릿).</b> 서버는 셋을 모두 제공할 수도, 하나만 제공할 수도 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 로컬 MCP server와 원격 MCP server는 보통 어떤 transport를 씁니까?</summary>
+  <p><b>정답: 로컬은 <code>stdio</code>, 원격은 HTTP 기반 transport.</b> 원격 서버는 인증·권한·네트워크 노출을 더 신경 써야 합니다.</p>
+</details>
 
 ## 정리
 

@@ -20,6 +20,27 @@ lesson: 9
 2. Computer Use: Claude가 화면을 보고 마우스/키보드를 조작하는 도구 묶음
 3. Agents: 두 사례를 통해 에이전트가 성공적으로 동작하기 위한 조건 이해
 
+## 한눈에 보는 두 사례
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">Claude Code</span>
+    <ul>
+      <li>터미널 기반 에이전틱 코딩 assistant</li>
+      <li>파일, 셸, 테스트, git 작업</li>
+      <li>MCP client 내장</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">Computer Use</span>
+    <ul>
+      <li>화면을 보고 마우스와 키보드로 GUI 조작</li>
+      <li>API가 없는 환경을 자동화</li>
+      <li>sandbox와 확인 절차가 중요</li>
+    </ul>
+  </div>
+</div>
+
 ## Claude Code
 
 **Claude Code**는 터미널에서 실행되는 코딩 assistant입니다. 프로젝트 폴더 안에서 `claude`를 실행하면, Claude가 코드베이스를 읽고 파일을 수정하고 명령을 실행하며 개발 작업을 도와줍니다.
@@ -178,11 +199,20 @@ MCP 생태계에는 개발 워크플로우에 붙이기 좋은 서버들이 많�
 
 ## Computer Use (컴퓨터 사용)
 
+<div class="oa-eli">
+  <span class="oa-eli__head">🚙 쉽게 말하면</span>
+  <p>운전 연수와 같습니다. 강사(Claude)가 앞을 보며 "오른쪽 깜빡이, 천천히 우회전"이라고 말하고, 실제 핸들은 <b>내 환경</b>이 돌립니다. 그래서 연습은 연습장(sandbox)에서 하고, 위험한 구간에서는 멈추는 장치가 필요합니다.</p>
+</div>
+
 **Computer Use**는 Claude가 화면을 보고 마우스와 키보드를 조작해 GUI 애플리케이션을 다루는 도구 묶음입니다. 텍스트 API나 전용 SDK가 없는 웹사이트·데스크톱 앱도, 사람이 쓰는 것처럼 화면을 보며 단계적으로 조작할 수 있게 합니다.
 
-```
-스크린샷 촬영 → Claude가 화면 파악 → 클릭/입력 좌표 지시 → 내 환경이 실행 → 다시 스크린샷 → 반복
-```
+<ol class="oa-flow">
+  <li><strong>스크린샷 촬영</strong></li>
+  <li><strong>화면 파악</strong>Claude가 화면을 해석</li>
+  <li><strong>행동 지시</strong>클릭/입력 좌표</li>
+  <li><strong>실행</strong>내 환경이 실행</li>
+  <li><strong>다시 스크린샷</strong>반복</li>
+</ol>
 
 Computer Use가 할 수 있는 일은 다음과 같습니다.
 
@@ -195,12 +225,31 @@ Computer Use가 할 수 있는 일은 다음과 같습니다.
 
 따라서 운영 환경에서는 다음을 신경 써야 합니다.
 
-- 격리된 가상 데스크톱이나 sandbox 사용
-- 민감한 작업 전 사용자 확인 단계 추가
-- 로그인 세션, 결제, 삭제 같은 위험 작업 제한
-- 실패했을 때 중단할 수 있는 명확한 guardrail 마련
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📦</span><span class="oa-card__title">격리</span>격리된 가상 데스크톱이나 sandbox 사용</div>
+  <div class="oa-card"><span class="oa-card__icon">🙋</span><span class="oa-card__title">확인</span>민감한 작업 전 사용자 확인 단계 추가</div>
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">⛔</span><span class="oa-card__title">제한</span>로그인 세션, 결제, 삭제 같은 위험 작업 제한</div>
+  <div class="oa-card"><span class="oa-card__icon">🛑</span><span class="oa-card__title">중단</span>실패했을 때 중단할 수 있는 명확한 guardrail 마련</div>
+</div>
 
 Computer Use는 Claude Code와 마찬가지로 에이전트의 핵심 요소를 잘 보여줍니다. 모델이 환경을 관찰하고, 다음 행동을 선택하고, 실행 결과를 다시 관찰하면서 여러 단계의 작업을 이어갑니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. Computer Use에서 실제 마우스 클릭과 키보드 입력은 누가 실행합니까?</summary>
+  <p><b>정답: 애플리케이션 개발자가 제공하는 실행 환경.</b> Claude는 스크린샷을 해석하고 다음 행동을 제안할 뿐입니다. sandbox 구성도 클라이언트 쪽 책임입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. Claude Code에 외부 도구를 연결하려면 무엇을 씁니까?</summary>
+  <p><b>정답: <code>claude mcp add ...</code>.</b> Claude Code는 MCP client를 내장하고 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. Claude Code로 TDD 방식으로 작업하면 좋은 점은 무엇입니까?</summary>
+  <p><b>정답: 성공 조건이 명확해집니다.</b> 좋은 워크플로우는 context 제공 → 계획 수립 → 구현 → 테스트 반복입니다.</p>
+</details>
 
 ## 정리
 

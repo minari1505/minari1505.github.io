@@ -12,7 +12,22 @@ lesson: 6
 - 의미 검색과 BM25 어휘 검색의 강점/약점 구분하기
 - 하이브리드 검색과 에이전틱 검색이 필요한 상황 이해하기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>청킹</strong>문서를 조각으로 나눔</li>
+  <li><strong>임베딩</strong>조각을 벡터로 바꿔 저장</li>
+  <li><strong>검색</strong>질문과 가까운 조각을 찾음</li>
+  <li><strong>프롬프트 구성</strong>질문 + 검색된 조각</li>
+  <li><strong>답변</strong>Claude가 근거를 바탕으로 답함</li>
+</ol>
+
 ## RAG란? (Retrieval Augmented Generation)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">📖 쉽게 말하면</span>
+  <p><b>오픈북 시험</b>과 같습니다. 교과서 800쪽을 통째로 책상에 펼쳐 놓는 것이 아니라, 문제와 관련된 <b>몇 쪽만 찾아</b> 펼쳐 놓고 답을 씁니다. 어느 쪽을 펼칠지 잘 찾는 것이 점수를 좌우합니다.</p>
+</div>
 
 Claude는 학습 시점 이후의 정보나 **내 사설 데이터**(사내 문서, 보고서, DB)를 기본적으로 모릅니다. RAG는 사용자의 질문과 관련된 문서를 먼저 검색하고, 검색된 조각을 프롬프트에 넣어 Claude가 근거를 보고 답하게 하는 기법입니다.
 
@@ -466,15 +481,57 @@ Section 2는 두 인덱스 모두에서 좋은 순위를 받았기 때문에 1�
 
 에이전틱 검색은 여기서 한 단계 더 나아갑니다. Claude에게 검색을 도구로 주고, Claude가 스스로 다음을 판단하게 합니다.
 
-- 어떤 검색어를 만들지
-- 의미 검색과 BM25 중 무엇을 쓸지
-- 검색을 한 번 더 해야 하는지
-- 검색 결과가 충분한지
-- 질문을 여러 하위 질문으로 나눠야 하는지
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🔤</span><span class="oa-card__title">검색어</span>어떤 검색어를 만들지</div>
+  <div class="oa-card"><span class="oa-card__icon">⚖️</span><span class="oa-card__title">검색 방식</span>의미 검색과 BM25 중 무엇을 쓸지</div>
+  <div class="oa-card"><span class="oa-card__icon">🔁</span><span class="oa-card__title">반복</span>검색을 한 번 더 해야 하는지</div>
+  <div class="oa-card"><span class="oa-card__icon">✅</span><span class="oa-card__title">충분성</span>검색 결과가 충분한지</div>
+  <div class="oa-card"><span class="oa-card__icon">✂️</span><span class="oa-card__title">분해</span>질문을 여러 하위 질문으로 나눠야 하는지</div>
+</div>
 
 앞에서 배운 tool use와 연결하면, 검색도 하나의 도구가 됩니다. 복잡한 질문은 한 번의 검색으로 충분하지 않을 수 있으므로 Claude가 여러 번 검색하고 중간 결과를 바탕으로 다음 검색을 계획하게 할 수 있습니다.
 
 다만 에이전틱 검색은 더 강력한 만큼 비용과 복잡도가 증가합니다. 단순 FAQ나 문서 Q&A라면 고정 RAG가 충분하고, 여러 문서와 여러 단계의 추론이 필요한 리서치형 질문에서는 에이전틱 검색이 더 적합합니다.
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">고정 RAG 파이프라인</span>
+    <ul>
+      <li>정해진 방식으로 검색하고 결과를 넣습니다.</li>
+      <li>단순 FAQ나 문서 Q&amp;A에 충분합니다.</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">에이전틱 검색</span>
+    <ul>
+      <li>Claude가 검색을 도구로 쓰며 스스로 판단합니다.</li>
+      <li>여러 문서와 여러 단계의 추론이 필요한 리서치형 질문에 맞습니다.</li>
+      <li>비용과 복잡도가 늘어납니다.</li>
+    </ul>
+  </div>
+</div>
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 제품 코드 <code>ERR-4012</code>처럼 정확한 ID로 문서를 찾아야 합니다. 의미 검색과 BM25 중 무엇이 강합니까?</summary>
+  <p><b>정답: BM25.</b> 정확한 키워드, ID, 코드, 고유명사 검색에 강합니다. 실전에서는 의미 검색과 결합한 하이브리드가 더 견고합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 800쪽 문서를 통째로 프롬프트에 넣지 않고 RAG를 쓰는 이유는 무엇입니까?</summary>
+  <p><b>정답: 지금 질문에 필요한 조각만 찾아 넣기 위해서입니다.</b> 모든 문서를 다 넣는 것이 아니라 관련 chunk만 검색해 넣습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 벡터 DB에 embedding만 저장하면 무엇이 문제입니까?</summary>
+  <p><b>정답: 검색된 결과를 프롬프트에 넣을 원문이 없습니다.</b> 원문 chunk나 참조를 함께 저장해야 합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 단순 FAQ 챗봇에 에이전틱 검색을 쓰는 것이 좋습니까?</summary>
+  <p><b>정답: 고정 RAG로 충분합니다.</b> 에이전틱 검색은 강력한 만큼 비용과 복잡도가 늘어납니다.</p>
+</details>
 
 ## 정리
 
