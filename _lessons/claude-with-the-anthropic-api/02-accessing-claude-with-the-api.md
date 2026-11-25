@@ -15,6 +15,18 @@ lesson: 2
 
 ---
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>클라이언트</strong>웹/모바일 앱 → 내 서버</li>
+  <li><strong>내 서버</strong>보관된 키로 Anthropic API 호출</li>
+  <li><strong>모델 처리</strong>토큰화 → 확률 계산 → 토큰 선택</li>
+  <li><strong>API 응답</strong>내 서버로 돌아옴</li>
+  <li><strong>UI 표시</strong>내 서버 → 클라이언트</li>
+</ol>
+
+이 레슨을 관통하는 한 문장: **키는 서버에만 두고, 대화 기록은 매번 전부 다시 보냅니다.**
+
 ## 1. Accessing the API — 요청의 전체 생명주기
 
 Claude로 애플리케이션을 만들 때, **요청이 어디를 거쳐 어떻게 처리되는지** 알면 아키텍처 결정과 디버깅이 훨씬 쉬워져요. 사용자가 채팅창에서 "전송"을 누른 순간부터 따라가 봅시다.
@@ -32,6 +44,11 @@ Claude로 애플리케이션을 만들 때, **요청이 어디를 거쳐 어떻�
 5. 내 서버 → 클라이언트로 응답 전달 → UI에 표시
 
 ### 왜 반드시 서버를 거칠까? 🔒
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🔑 쉽게 말하면</span>
+  <p>API 키는 <b>집 열쇠</b>입니다. 클라이언트 코드에 키를 넣는 것은 열쇠를 현관 매트 밑에 두는 것과 같아서, 찾으려는 사람은 누구나 찾습니다. 열쇠는 관리실(내 서버)에 맡기고, 방문자는 관리실을 통해서만 들어오게 합니다.</p>
+</div>
 
 **클라이언트 코드에서 Anthropic API를 직접 호출하면 절대 안 돼요.**
 
@@ -195,6 +212,11 @@ print(message.content[0].text)    # 응답 객체에서 텍스트만 추출
 ---
 
 ## 4. 멀티턴 대화 (Multi-Turn conversations)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🧠 쉽게 말하면</span>
+  <p>API는 <b>기억이 없는 상담원</b>입니다. 전화를 걸 때마다 처음 보는 사람처럼 받습니다. 그래서 매번 "지난번에 이런 이야기를 했고…"라며 지금까지의 대화 전체를 다시 들려줘야 합니다.</p>
+</div>
 
 **Claude는 대화 기록을 전혀 저장하지 않아요.** 각 요청은 완전히 독립적이고, 이전 교환의 기억이 없어요(stateless).
 
@@ -392,6 +414,28 @@ JSON뿐 아니라 Python 코드, 리스트 등 **모든 구조화 출력**에 �
 > ✏️ 이 뒤엔 **Structured data exercise**와 이 모듈 전체를 확인하는 **Quiz**가 이어져요.
 
 ---
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 브라우저의 JavaScript에서 Anthropic API를 직접 호출하면 왜 안 됩니까?</summary>
+  <p><b>정답: 비밀 API 키가 클라이언트 코드에 노출되기 때문입니다.</b> 누구나 추출해 무단 요청을 할 수 있습니다. 앱은 내 서버에 요청하고, 서버가 보관된 키로 API와 통신합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 두 번째 질문을 보냈더니 Claude가 첫 번째 대화를 기억하지 못합니다. 원인은 무엇입니까?</summary>
+  <p><b>정답: API가 stateless이기 때문입니다.</b> 멀티턴 대화는 기록을 쌓아 두고 매번 전체를 다시 보내야 합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 데이터 추출처럼 일관된 결과가 필요한 작업에는 temperature를 어떻게 둡니까?</summary>
+  <p><b>정답: 0에 가깝게.</b> 항상 최고 확률 토큰을 고릅니다. 브레인스토밍이나 창작은 1에 가깝게 둡니다. 최신 모델에서는 이 파라미터가 제거되어 프롬프트로 유도합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 긴 응답을 사용자가 기다리지 않고 바로 보게 하려면 무엇을 씁니까?</summary>
+  <p><b>정답: 스트리밍.</b> 텍스트 조각은 <code>content_block_delta</code> 이벤트로 옵니다.</p>
+</details>
 
 ## 정리
 

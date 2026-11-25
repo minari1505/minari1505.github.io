@@ -15,13 +15,15 @@ lesson: 1
 
 **Claude API로 실제 애플리케이션을 만드는 법**을 처음부터 끝까지 다루는 개발자용 강의예요. 큰 흐름은 이렇게 흘러가요.
 
-1. API로 Claude에 요청 보내기 (기초)
-2. 프롬프트를 **평가(eval)**하고 **엔지니어링**하기
-3. **도구 사용(tool use)**으로 Claude에게 능력 부여하기
-4. **RAG**로 외부 지식 연결하기
-5. Claude의 고급 **기능들** (thinking, 이미지·PDF, 인용, 캐싱, 코드 실행)
-6. **MCP**로 도구/자원/프롬프트 표준화하기
-7. **에이전트와 워크플로우** 설계하기
+<ol class="oa-flow">
+  <li><strong>요청 보내기</strong>API로 Claude에 요청 (기초)</li>
+  <li><strong>평가·엔지니어링</strong>프롬프트를 eval하고 다듬기</li>
+  <li><strong>도구 사용</strong>tool use로 능력 부여</li>
+  <li><strong>RAG</strong>외부 지식 연결</li>
+  <li><strong>고급 기능</strong>thinking, 이미지·PDF, 인용, 캐싱, 코드 실행</li>
+  <li><strong>MCP</strong>도구/자원/프롬프트 표준화</li>
+  <li><strong>에이전트·워크플로우</strong>설계하기</li>
+</ol>
 
 ## Anthropic과 Claude
 
@@ -30,6 +32,11 @@ lesson: 1
 - 모든 상호작용은 하나의 엔드포인트 **`POST /v1/messages`** (Messages API)로 이뤄져요. 도구 사용, 구조화 출력 같은 기능도 전부 이 엔드포인트의 옵션이에요 — 별도 API가 아니라는 게 포인트!
 
 ## Claude 모델 라인업
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🚚 쉽게 말하면</span>
+  <p>배송 수단을 고르는 것과 같습니다. <b>Opus</b>는 무겁고 까다로운 짐을 맡기는 특수 운송, <b>Sonnet</b>은 대부분의 짐에 쓰는 일반 택배, <b>Haiku</b>는 작은 물건을 빠르고 싸게 보내는 퀵서비스입니다. 모든 짐을 특수 운송으로 보낼 필요는 없습니다.</p>
+</div>
 
 모델은 **지능 ↔ 속도 ↔ 비용**의 트레이드오프로 나뉘어요. 작업에 맞는 모델을 고르는 게 핵심이에요.
 
@@ -44,6 +51,23 @@ lesson: 1
 - 비용은 **입력/출력 토큰 100만 개당 달러**로 매겨지고, 출력이 입력보다 비싸요.
 
 > 💡 이 강의의 코드 예시는 대부분 **Python SDK**(`anthropic` 패키지)를 씁니다. TypeScript 등 다른 SDK도 동일한 개념이에요.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. 도구 사용이나 구조화 출력을 쓰려면 Messages API와 다른 별도 API를 호출해야 합니까?</summary>
+  <p><b>정답: 아닙니다.</b> 모든 상호작용은 <code>POST /v1/messages</code> 하나로 이뤄지고, 이런 기능은 그 엔드포인트의 옵션입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 대량의 단순 분류 작업에서 지연과 비용이 중요합니다. 어느 계열이 맞습니까?</summary>
+  <p><b>정답: Haiku.</b> 가장 빠르고 저렴합니다. 복잡한 추론은 Opus, 대부분의 프로덕션 워크로드는 Sonnet입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 모델 ID를 기억나는 대로 적어 요청했더니 404가 났습니다. 어떻게 확인합니까?</summary>
+  <p><b>정답: 정확한 모델 ID 문자열을 써야 합니다.</b> Models API(<code>GET /v1/models</code>)로 조회할 수 있습니다.</p>
+</details>
 
 ## 정리
 
