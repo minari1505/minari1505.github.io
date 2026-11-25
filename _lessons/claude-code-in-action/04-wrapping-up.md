@@ -17,19 +17,14 @@ Claude Code의 핵심은 "모델이 코드를 써준다"가 아니라, 모델이
 
 언어 모델만으로는 파일을 읽거나 명령을 실행하거나 브라우저를 조작할 수 없습니다. Claude Code는 `Read`, `Edit`, `Bash`, MCP tool 같은 외부 도구를 연결해 이 한계를 넘습니다.
 
-```text
-사용자 요청
-  ↓
-Claude가 필요한 맥락 수집
-  ↓
-계획 또는 다음 행동 결정
-  ↓
-도구 실행
-  ↓
-실행 결과 관찰
-  ↓
-수정, 검증, 최종 응답
-```
+<ol class="oa-flow">
+  <li><strong>사용자 요청</strong></li>
+  <li><strong>맥락 수집</strong>Claude가 필요한 맥락 수집</li>
+  <li><strong>결정</strong>계획 또는 다음 행동 결정</li>
+  <li><strong>도구 실행</strong></li>
+  <li><strong>관찰</strong>실행 결과 관찰</li>
+  <li><strong>마무리</strong>수정, 검증, 최종 응답</li>
+</ol>
 
 따라서 Claude Code를 잘 쓰려면 "좋은 프롬프트"만 생각하면 부족합니다. 어떤 맥락을 주고, 어떤 도구를 허용하며, 어떤 검증 루프를 붙일지까지 함께 설계해야 합니다.
 
@@ -86,20 +81,46 @@ Agent SDK는 Claude Code의 agent loop를 코드에서 직접 실행하게 해�
 
 Claude Code를 프로젝트에 도입할 때는 다음 순서로 시작하면 좋습니다.
 
-1. `CLAUDE.md`에 설치, 실행, 테스트, 코드 스타일을 적는다.
-2. 자주 하는 작업을 custom command로 만든다.
-3. 브라우저 확인이 필요한 프로젝트라면 Playwright MCP를 붙인다.
-4. 반드시 지켜야 하는 규칙은 hook이나 permission으로 강제한다.
-5. 파일 수정 후 자동으로 실행할 test, linter, type checker를 정한다.
-6. GitHub integration은 작은 repo나 단순 task부터 시험한다.
+| 순서 | 할 일 | 축 |
+|---|---|---|
+| 1 | `CLAUDE.md`에 설치, 실행, 테스트, 코드 스타일을 적는다. | 맥락 |
+| 2 | 자주 하는 작업을 custom command로 만든다. | 맥락 |
+| 3 | 브라우저 확인이 필요한 프로젝트라면 Playwright MCP를 붙인다. | 도구 |
+| 4 | 반드시 지켜야 하는 규칙은 hook이나 permission으로 강제한다. | 검증 |
+| 5 | 파일 수정 후 자동으로 실행할 test, linter, type checker를 정한다. | 검증 |
+| 6 | GitHub integration은 작은 repo나 단순 task부터 시험한다. | 도구 |
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🚗 쉽게 말하면</span>
+  <p>좋은 엔진(모델)만으로는 목적지에 가지 못합니다. <b>지도</b>(맥락), <b>핸들과 페달</b>(도구), <b>계기판</b>(검증)이 함께 있어야 합니다. 셋 중 하나가 빠지면 빠른 엔진이 오히려 위험해집니다.</p>
+</div>
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. Claude Code의 생산성을 정하는 세 가지 축은 무엇입니까?</summary>
+  <p><b>정답: 맥락, 도구, 검증.</b> 모델 성능만으로 결정되지 않습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. "반드시 지켜야 하는 규칙"은 CLAUDE.md에 적는 것으로 충분합니까?</summary>
+  <p><b>정답: 충분하지 않습니다.</b> 반드시 지켜야 하면 hook이나 permission으로 강제합니다. CLAUDE.md는 맥락을 주는 곳입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. GitHub integration을 처음 도입할 때 권장되는 시작 방법은 무엇입니까?</summary>
+  <p><b>정답: 작은 repo나 단순 task부터 시험합니다.</b></p>
+</details>
 
 ## 핵심 정리
 
 Claude Code의 생산성은 모델 성능만으로 결정되지 않습니다. 실제로는 다음 세 가지가 함께 맞아야 합니다.
 
-- **맥락**: Claude가 프로젝트를 제대로 이해할 수 있는가?
-- **도구**: 필요한 파일, 명령, 브라우저, 외부 시스템에 접근할 수 있는가?
-- **검증**: Claude가 한 작업이 맞는지 확인할 수 있는가?
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🧭</span><span class="oa-card__title">맥락</span>Claude가 프로젝트를 제대로 이해할 수 있는가?</div>
+  <div class="oa-card"><span class="oa-card__icon">🧰</span><span class="oa-card__title">도구</span>필요한 파일, 명령, 브라우저, 외부 시스템에 접근할 수 있는가?</div>
+  <div class="oa-card"><span class="oa-card__icon">✅</span><span class="oa-card__title">검증</span>Claude가 한 작업이 맞는지 확인할 수 있는가?</div>
+</div>
 
 이 세 가지를 설계하면 Claude Code는 단순한 채팅형 코딩 도구를 넘어, 프로젝트 안에서 반복 작업을 처리하고, 변경을 검증하고, 개발 흐름에 자연스럽게 들어오는 assistant가 됩니다.
 

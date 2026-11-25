@@ -13,9 +13,24 @@ lesson: 3
 - hook 입력 JSON 구조와 exit code 규칙을 이해하기
 - Agent SDK로 Claude Code의 agent loop를 스크립트에서 실행하는 방법 파악하기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>tool call 결정</strong>Claude가 도구를 쓰기로 함</li>
+  <li><strong>PreToolUse hook</strong>실행 전 — 차단 가능 (exit 2)</li>
+  <li><strong>tool 실행</strong>Claude Code가 실행</li>
+  <li><strong>PostToolUse hook</strong>실행 후 — 포맷, 테스트, 피드백</li>
+  <li><strong>결과 반환</strong>Claude에게 전달</li>
+</ol>
+
 ## Hook이란?
 
 Hook은 Claude Code가 tool을 실행하기 **직전** 또는 **직후**에 내가 지정한 command를 자동으로 실행하는 기능입니다.
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🛂 쉽게 말하면</span>
+  <p>공항에 비유하면 <b>PreToolUse는 출국 심사대</b>입니다. 문제가 있으면 탑승 자체를 막을 수 있습니다. <b>PostToolUse는 도착 후 세관</b>입니다. 이미 도착한 뒤라 되돌릴 수는 없지만, 짐을 검사하고 "이건 신고하세요"라고 알려 줄 수 있습니다.</p>
+</div>
 
 기본 흐름은 다음과 같습니다.
 
@@ -43,12 +58,14 @@ PostToolUse hook 실행
 
 대표적인 용도는 다음과 같습니다.
 
-- 파일 수정 후 formatter 실행
-- 파일 변경 후 test, linter, type checker 실행
-- `.env` 같은 민감 파일 접근 차단
-- Claude가 수정한 파일 목록 로깅
-- 특정 디렉터리에 대한 코드 품질 검증
-- naming convention, architecture rule 검사
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🎨</span><span class="oa-card__title">포맷</span>파일 수정 후 formatter 실행</div>
+  <div class="oa-card"><span class="oa-card__icon">🧪</span><span class="oa-card__title">검사</span>파일 변경 후 test, linter, type checker 실행</div>
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">🚫</span><span class="oa-card__title">차단</span><code>.env</code> 같은 민감 파일 접근 차단</div>
+  <div class="oa-card"><span class="oa-card__icon">📝</span><span class="oa-card__title">로깅</span>Claude가 수정한 파일 목록 로깅</div>
+  <div class="oa-card"><span class="oa-card__icon">✅</span><span class="oa-card__title">품질 검증</span>특정 디렉터리에 대한 코드 품질 검증</div>
+  <div class="oa-card"><span class="oa-card__icon">📐</span><span class="oa-card__title">규칙 검사</span>naming convention, architecture rule 검사</div>
+</div>
 
 핵심은 `PreToolUse` hook은 실행 전에 개입해 tool call을 막을 수 있고, `PostToolUse` hook은 실행 이후에 후속 작업과 피드백을 줄 수 있다는 점입니다.
 
@@ -69,6 +86,23 @@ Hook은 Claude Code settings 파일에 정의합니다.
 ![Hook 설정 구조](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1752618159%2F010_-_Introducing_Hooks_10.1752618159645.png)
 
 ## PreToolUse와 PostToolUse
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">PreToolUse — 실행 전</span>
+    <ul>
+      <li>tool call을 <b>막을 수 있습니다</b> (exit code 2).</li>
+      <li>예: 민감 파일 접근 차단</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">PostToolUse — 실행 후</span>
+    <ul>
+      <li>이미 실행됐으므로 막을 수 없습니다.</li>
+      <li>예: formatting, testing, feedback</li>
+    </ul>
+  </div>
+</div>
 
 ### PreToolUse
 
@@ -431,6 +465,28 @@ for await (const message of query({
 이는 CLI의 `--allowedTools` flag에 해당합니다.
 
 Agent SDK는 custom system prompt, MCP server, hooks, subagent, session resumption 같은 Claude Code 기능도 지원합니다. 따라서 hook 안에서 별도 Claude instance를 실행하거나, 프로젝트 전용 자동화 script를 만드는 기반으로 사용할 수 있습니다.
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. tool call을 실행 전에 막으려면 어떤 hook에서 어떤 exit code를 씁니까?</summary>
+  <p><b>정답: <code>PreToolUse</code> hook에서 exit code <code>2</code>.</b> 이때 <code>stderr</code>에 쓴 메시지는 Claude에게 feedback으로 전달됩니다. exit code 2는 <code>PreToolUse</code>에서만 의미가 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. <code>Read</code>의 <code>file_path</code>만 검사하는 hook으로 <code>.env</code>를 막았습니다. 아직 남은 구멍은 무엇입니까?</summary>
+  <p><b>정답: <code>cat .env</code> 같은 Bash command와 Grep.</b> tool마다 입력 구조가 다르기 때문입니다. tool별 hook을 따로 쓰거나 <code>permissions.deny</code> 규칙을 병행합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. 파일을 수정할 때마다 type checker를 돌리고 결과를 Claude에게 알려 주려 합니다. 어떤 hook이 맞습니까?</summary>
+  <p><b>정답: <code>PostToolUse</code>.</b> 실행 후 hook이라 후속 작업과 피드백에 적합합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. 새 hook을 쓰기 전에 입력 payload 구조를 확인하는 좋은 방법은 무엇입니까?</summary>
+  <p><b>정답: <code>jq . &gt; post-log.json</code> 같은 logging hook으로 실제 payload를 먼저 기록해 봅니다.</b> 입력 구조는 hook 종류와 tool마다 다릅니다.</p>
+</details>
 
 ## 정리
 
