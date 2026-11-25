@@ -12,11 +12,28 @@ lesson: 1
 - MCP가 tool use와 어떻게 다르고, 어떻게 함께 쓰이는지 정리하기
 - tool discovery와 tool execution이 실제 요청 흐름에서 어떻게 연결되는지 파악하기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>도구 목록 조회</strong>client가 server에 ListTools 요청</li>
+  <li><strong>Claude에 전달</strong>질문과 함께 도구 목록을 보냄</li>
+  <li><strong>Claude가 선택</strong>tool use로 호출할 도구를 정함</li>
+  <li><strong>도구 실행</strong>client가 server에 CallTool 요청</li>
+  <li><strong>최종 답변</strong>결과를 받아 Claude가 응답</li>
+</ol>
+
+이 레슨을 관통하는 한 문장: **통합 코드를 내 서버에 쌓지 않고, 전문화된 MCP server에 맡깁니다.**
+
 ## MCP란?
 
 **Model Context Protocol(MCP)**은 Claude 같은 모델 기반 애플리케이션이 외부 서비스의 **맥락(context), 도구(tools), 프롬프트(prompts), 자원(resources)**을 표준 방식으로 연결할 수 있게 해주는 통신 계층입니다.
 
 한 문장으로 줄이면, MCP는 외부 시스템 통합 부담을 내 서버에서 덜어내고, 전문화된 **MCP server** 쪽으로 옮기는 방식입니다.
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🔌 쉽게 말하면</span>
+  <p>MCP는 <b>USB 규격</b>과 같습니다. 예전에는 프린터, 카메라, 키보드마다 케이블과 드라이버가 달랐습니다. USB가 생긴 뒤로는 규격에 맞춘 기기를 꽂기만 하면 됩니다. MCP server는 "USB에 맞춘 기기"이고, MCP client는 내 앱에 달린 "USB 포트"입니다.</p>
+</div>
 
 ![MCP 기본 구조](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2Fa46l9irobhg0f5webscixp0bs%2Fpublic%2F1749849216%2F09_-_001_-_Introducing_MCP_01.1749849216723.png)
 
@@ -44,11 +61,13 @@ Claude가 이 질문에 답하려면 GitHub API에 접근할 수 있어야 합�
 
 문제는 GitHub 같은 서비스의 기능 범위가 매우 넓다는 점입니다.
 
-- 저장소 목록 조회
-- pull request 조회
-- issue 생성/수정
-- branch, commit, review, project 조회
-- 권한, 인증, pagination, rate limit 처리
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">📁</span><span class="oa-card__title">저장소</span>목록 조회</div>
+  <div class="oa-card"><span class="oa-card__icon">🔀</span><span class="oa-card__title">Pull request</span>조회</div>
+  <div class="oa-card"><span class="oa-card__icon">🐞</span><span class="oa-card__title">Issue</span>생성/수정</div>
+  <div class="oa-card"><span class="oa-card__icon">🌿</span><span class="oa-card__title">그 밖의 기능</span>branch, commit, review, project 조회</div>
+  <div class="oa-card oa-card--warn"><span class="oa-card__icon">🔐</span><span class="oa-card__title">공통 처리</span>권한, 인증, pagination, rate limit</div>
+</div>
 
 이 모든 기능에 대해 tool schema와 실행 함수를 직접 만들고 테스트하고 유지보수하면 통합 코드가 빠르게 커집니다.
 
@@ -92,6 +111,23 @@ Tool use만 사용하면 보통 우리 애플리케이션 코드 안에 tool sch
 MCP를 사용하면 그 tool schema와 실행 구현이 MCP server 쪽에 있습니다. 내 애플리케이션은 MCP client를 통해 "어떤 도구가 있는지" 묻고, Claude가 호출한 도구를 MCP server에 실행 요청합니다.
 
 즉, tool use는 **Claude가 도구를 사용하는 방식**이고, MCP는 **도구를 어디서 어떻게 공급받고 실행할지에 대한 표준 연결 방식**입니다.
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">Tool use만 쓸 때</span>
+    <ul>
+      <li>tool schema와 실행 함수가 <b>내 애플리케이션 코드 안</b>에 있습니다.</li>
+      <li>서비스가 늘 때마다 직접 만들고 유지보수합니다.</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">MCP를 함께 쓸 때</span>
+    <ul>
+      <li>tool schema와 실행 구현이 <b>MCP server 쪽</b>에 있습니다.</li>
+      <li>내 앱은 client로 목록을 묻고 실행을 요청합니다.</li>
+    </ul>
+  </div>
+</div>
 
 ## MCP Client의 역할
 
@@ -156,6 +192,28 @@ MCP Server → MCP Client: 실행 결과 반환
 - MCP client: MCP server와의 통신 담당
 - MCP server: 외부 서비스별 도구 정의와 실행 담당
 - Claude: 어떤 도구를 쓸지 판단하고 최종 응답 생성
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. MCP는 tool use를 대체합니까?</summary>
+  <p><b>정답: 아닙니다.</b> tool use는 Claude가 도구를 사용하는 방식이고, MCP는 그 도구를 어디서 어떻게 공급받고 실행할지에 대한 표준 연결 방식입니다. 둘은 함께 쓰입니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 내 애플리케이션이 Claude에게 도구 목록을 알려 주기 전에 MCP server와 주고받는 메시지는 무엇입니까?</summary>
+  <p><b>정답: ListToolsRequest / ListToolsResult.</b> 먼저 server가 어떤 도구를 제공하는지 알아야 Claude에게 전달할 수 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. Claude가 특정 도구를 호출하겠다고 판단한 뒤, 실제 실행은 누가 요청하고 누가 수행합니까?</summary>
+  <p><b>정답: 내 서버가 MCP client를 통해 CallToolRequest를 보내고, MCP server가 외부 서비스를 호출해 결과를 돌려줍니다.</b></p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. MCP client와 server는 반드시 HTTP로 통신해야 합니까?</summary>
+  <p><b>정답: 아닙니다.</b> MCP는 특정 transport에 묶이지 않습니다. 같은 머신에서는 <code>stdio</code>가 흔하고, 상황에 따라 HTTP나 WebSocket도 씁니다.</p>
+</details>
 
 ## 핵심 정리
 

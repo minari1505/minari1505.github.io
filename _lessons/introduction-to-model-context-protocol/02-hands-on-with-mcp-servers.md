@@ -12,6 +12,16 @@ lesson: 2
 - `Field` 설명과 type hint가 tool schema 생성에 어떻게 쓰이는지 파악하기
 - MCP Inspector로 server tool을 직접 테스트하는 개발 흐름 정리하기
 
+## 한눈에 보는 흐름
+
+<ol class="oa-flow">
+  <li><strong>FastMCP 초기화</strong>server 객체 만들기</li>
+  <li><strong>@mcp.tool</strong>Python 함수를 tool로 등록</li>
+  <li><strong>schema 자동 생성</strong>type hint와 Field 설명 사용</li>
+  <li><strong>Inspector 실행</strong>mcp dev로 browser에서 확인</li>
+  <li><strong>테스트·수정</strong>정상 입력과 edge case</li>
+</ol>
+
 ## MCP server를 직접 만들어보기
 
 MCP server를 직접 구현한다고 하면 처음에는 복잡해 보입니다. Claude가 이해할 tool schema를 만들고, tool call을 받아 실행하고, 결과를 다시 돌려줘야 하기 때문입니다.
@@ -117,14 +127,30 @@ def edit_document(
 
 ## SDK 방식의 장점
 
+<div class="oa-eli">
+  <span class="oa-eli__head">🏷️ 쉽게 말하면</span>
+  <p>상품에 <b>가격표를 직접 붙이는 것</b>과 같습니다. 가격 목록을 별도 장부에 따로 적으면 상품과 장부가 어긋나기 쉽습니다. 함수에 type hint와 설명을 바로 붙이면 schema(가격표)가 구현(상품) 옆에 있어서 어긋날 일이 줄어듭니다.</p>
+</div>
+
 Python MCP SDK를 쓰면 다음 작업을 직접 구현하지 않아도 됩니다.
 
-- tool schema를 JSON으로 손수 작성
-- parameter type과 설명을 별도 schema로 중복 관리
-- MCP protocol message를 직접 파싱
-- tool 등록과 목록 제공 로직 구현
-
-대신 Python 함수 하나에 type hint와 설명을 붙이면 됩니다.
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">SDK 없이 직접 해야 하는 일</span>
+    <ul>
+      <li>tool schema를 JSON으로 손수 작성</li>
+      <li>parameter type과 설명을 별도 schema로 중복 관리</li>
+      <li>MCP protocol message를 직접 파싱</li>
+      <li>tool 등록과 목록 제공 로직 구현</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">SDK를 쓰면</span>
+    <ul>
+      <li>Python 함수 하나에 type hint와 설명을 붙이면 됩니다.</li>
+    </ul>
+  </div>
+</div>
 
 ```text
 Python 함수
@@ -189,17 +215,13 @@ Inspector는 단일 tool만 확인하는 용도가 아닙니다. server 상태�
 
 MCP server를 만들 때는 다음 루프가 효율적입니다.
 
-```text
-tool 함수 작성
-  ↓
-mcp dev mcp_server.py 실행
-  ↓
-Inspector에서 List Tools 확인
-  ↓
-정상 입력과 edge case 테스트
-  ↓
-필요하면 함수와 설명 수정
-```
+<ol class="oa-flow">
+  <li><strong>tool 함수 작성</strong></li>
+  <li><strong><code>mcp dev mcp_server.py</code> 실행</strong></li>
+  <li><strong>Inspector에서 List Tools 확인</strong></li>
+  <li><strong>정상 입력과 edge case 테스트</strong></li>
+  <li><strong>필요하면 함수와 설명 수정</strong></li>
+</ol>
 
 특히 다음을 Inspector에서 먼저 확인하는 것이 좋습니다.
 
@@ -208,6 +230,28 @@ Inspector에서 List Tools 확인
 - 수정 tool이 실제로 상태를 바꾸는가?
 - `old_str`가 정확히 일치하지 않을 때 어떻게 동작하는가?
 - tool 설명과 parameter 설명이 Claude가 이해하기 충분한가?
+
+## 확인 문제
+
+<details class="oa-quiz">
+  <summary>Q1. Python 함수를 MCP tool로 등록할 때 쓰는 것은 무엇입니까?</summary>
+  <p><b>정답: <code>@mcp.tool</code> decorator.</b> <code>FastMCP</code>로 초기화한 server 객체에 함수를 등록합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. SDK는 tool schema를 무엇으로부터 만듭니까?</summary>
+  <p><b>정답: 함수의 type hint와 <code>Field</code> 설명.</b> schema와 코드가 한곳에 있어 서로 어긋날 가능성이 줄어듭니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q3. MCP server를 Claude나 전체 앱에 붙이기 전에 따로 테스트하려면 무엇을 씁니까?</summary>
+  <p><b>정답: MCP Inspector.</b> <code>mcp dev</code>로 실행하면 browser에서 tool 목록을 확인하고 직접 호출해 볼 수 있습니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q4. Inspector에서 정상 입력 말고 무엇을 더 확인해야 합니까?</summary>
+  <p><b>정답: edge case.</b> 없는 문서 ID에 명확한 error가 나는지, 수정 tool이 실제로 상태를 바꾸는지, 설명이 Claude가 이해하기 충분한지 확인합니다.</p>
+</details>
 
 ## 핵심 정리
 
