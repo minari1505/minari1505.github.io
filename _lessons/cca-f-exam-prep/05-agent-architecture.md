@@ -160,6 +160,203 @@ system 프롬프트에 "반드시 잔액을 확인한 다음 송금해"라고 �
 
 "원본을 깨뜨리지 않고 여러 분기를 병렬로 시도" → fork. SDK에서는 `resume="<세션 ID>", fork_session=True`처럼 어느 세션에서 가지를 칠지를 한 쌍으로 지정합니다.
 
+## 공식 가이드 v1.1로 보완하기
+
+여기부터는 교재에 없거나 짧게만 나온 내용을 공식 시험 가이드 v1.1(2026년 11월)의 과제 설명(Task Statement 1.1~1.7)에 맞춰 채운 부분입니다. 예시 속 숫자와 도구 이름은 이해를 돕기 위한 가정입니다.
+
+### 1. 루프는 `stop_reason`으로 돈다 (1.1)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">🍳 쉽게 말하면</span>
+  <p>주방장이 "재료 더 가져와"라고 하면 보조가 가져다주고 다시 묻습니다. 주방장이 "다 됐어"라고 할 때까지 반복합니다. 보조는 주방장의 <b>표정을 읽어서</b> 끝났는지 추측하지 않습니다. <code>stop_reason</code>이 바로 그 "더 가져와 / 다 됐어" 신호입니다.</p>
+</div>
+
+<div class="oa-svg">
+<svg viewBox="0 0 720 230" role="img" aria-label="stop_reason 기반 에이전트 루프">
+  <defs>
+    <style>.d1b{fill:#fffdf5;stroke:#f1e4b8;stroke-width:1.5}.d1g{fill:#f4fbf3;stroke:#cfe8c9;stroke-width:1.5}.d1t{font-size:14px;fill:#4a4a4a;font-weight:bold}.d1s{font-size:11.5px;fill:#8a8a8a}.d1l{stroke:#c99400;stroke-width:1.8;fill:none}.d1a{font-size:12px;fill:#c99400;font-weight:bold}</style>
+    <marker id="d1m" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#c99400"/></marker>
+  </defs>
+  <rect x="20" y="30" width="150" height="64" rx="10" class="d1b"/><text x="95" y="57" text-anchor="middle" class="d1t">① 요청 보내기</text><text x="95" y="77" text-anchor="middle" class="d1s">messages + tools</text>
+  <rect x="230" y="30" width="170" height="64" rx="10" class="d1b"/><text x="315" y="57" text-anchor="middle" class="d1t">② stop_reason 확인</text><text x="315" y="77" text-anchor="middle" class="d1s">응답의 종료 사유</text>
+  <rect x="470" y="30" width="230" height="64" rx="10" class="d1g"/><text x="585" y="57" text-anchor="middle" class="d1t">끝: 최종 답 반환</text><text x="585" y="77" text-anchor="middle" class="d1s">"end_turn"</text>
+  <rect x="230" y="150" width="170" height="64" rx="10" class="d1b"/><text x="315" y="177" text-anchor="middle" class="d1t">③ 도구 실행</text><text x="315" y="197" text-anchor="middle" class="d1s">"tool_use"일 때</text>
+  <rect x="20" y="150" width="150" height="64" rx="10" class="d1b"/><text x="95" y="177" text-anchor="middle" class="d1t">④ 결과 추가</text><text x="95" y="197" text-anchor="middle" class="d1s">대화 기록에 붙이기</text>
+  <path d="M170,62 L226,62" class="d1l" marker-end="url(#d1m)"/>
+  <path d="M400,62 L466,62" class="d1l" marker-end="url(#d1m)"/><text x="433" y="52" text-anchor="middle" class="d1a">end_turn</text>
+  <path d="M315,94 L315,146" class="d1l" marker-end="url(#d1m)"/><text x="358" y="125" text-anchor="middle" class="d1a">tool_use</text>
+  <path d="M230,182 L174,182" class="d1l" marker-end="url(#d1m)"/>
+  <path d="M95,150 L95,98" class="d1l" marker-end="url(#d1m)"/>
+</svg>
+</div>
+
+```python
+while True:
+    resp = client.messages.create(model=MODEL, messages=messages, tools=tools, max_tokens=2048)
+    messages.append({"role": "assistant", "content": resp.content})
+    if resp.stop_reason == "end_turn":      # 모델이 끝났다고 알림
+        break
+    if resp.stop_reason == "tool_use":      # 도구를 실행하고 결과를 돌려줌
+        results = run_tools(resp.content)
+        messages.append({"role": "user", "content": results})
+```
+
+가이드가 꼽는 안티패턴 세 가지입니다.
+
+| 안티패턴 | 왜 틀렸나 |
+|---|---|
+| 응답 문장을 파싱해 "완료", "done" 같은 말을 찾는다 | 문장은 매번 달라집니다. 신호는 `stop_reason`에 이미 있습니다 |
+| 반복 횟수 상한을 **주된** 종료 조건으로 쓴다 | 일이 끝났는지와 무관하게 끊깁니다. 상한은 안전망일 뿐입니다 |
+| 어시스턴트가 텍스트를 내면 끝난 것으로 본다 | 텍스트와 도구 호출이 한 응답에 같이 올 수 있습니다 |
+
+위 "종료 조건" 절의 `max_iterations` 안전망은 이와 충돌하지 않습니다. 안전망으로 두는 것은 맞고, 그것을 정상 종료 수단으로 쓰는 것이 오답입니다.
+
+### 2. 서브에이전트는 아무것도 물려받지 않는다 (1.2, 1.3)
+
+Task 도구로 띄운 서브에이전트는 코디네이터의 대화 기록을 보지 못합니다. 필요한 내용은 프롬프트에 직접 넣어야 합니다.
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 컨텍스트가 빠진 위임</span>
+    <ul>
+      <li>"위에서 찾은 내용을 정리해서 보고서로 써 줘."</li>
+      <li>서브에이전트에게는 "위"가 없습니다. 추측으로 채웁니다.</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 명시적으로 넘긴 위임</span>
+    <ul>
+      <li>발견 내용 전문을 프롬프트에 넣습니다.</li>
+      <li>내용과 메타데이터를 나눕니다: <code>claim</code>, <code>source_url</code>, <code>document</code>, <code>page</code></li>
+      <li>목표와 품질 기준을 적습니다. 절차를 하나하나 지시하지 않습니다.</li>
+    </ul>
+  </div>
+</div>
+
+서브에이전트를 띄우려면 코디네이터의 `allowedTools`에 `"Task"`가 들어 있어야 합니다. 빠져 있으면 코디네이터는 위임 자체를 못 합니다.
+
+```python
+options = ClaudeAgentOptions(
+    allowed_tools=["Task", "Read", "Grep"],          # "Task"가 있어야 위임 가능
+    agents={
+        "web-researcher": AgentDefinition(
+            description="웹에서 최신 자료를 찾는다",
+            prompt="검색 결과를 claim / source_url / date 구조로 보고한다",
+            tools=["WebSearch", "WebFetch"],            # 역할에 필요한 도구만
+        ),
+    },
+)
+```
+
+**병렬 실행**: 코디네이터가 **한 응답 안에서** Task를 여러 번 호출하면 서브에이전트가 동시에 돕니다. 턴마다 하나씩 부르면 순차 실행입니다.
+
+<div class="oa-bars">
+  <div class="oa-bar"><span>순차: 턴마다 Task 1개</span><span class="oa-bar__track"><span class="oa-bar__fill oa-bar__fill--low" style="width:100%"></span><span class="oa-bar__val">20초 + 20초 + 20초 = 60초</span></span></div>
+  <div class="oa-bar"><span>병렬: 한 응답에 Task 3개</span><span class="oa-bar__track"><span class="oa-bar__fill" style="width:34%"></span><span class="oa-bar__val">약 20초</span></span></div>
+  <div class="oa-bars__caption">서브에이전트 하나가 20초 걸린다고 가정한 예시입니다.</div>
+</div>
+
+### 3. 분해가 좁으면 주제가 통째로 빠진다 (1.3)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">📋 예시: "AI가 창작 산업에 미치는 영향" 보고서</span>
+  <p>코디네이터가 주제를 "디지털 아트", "그래픽 디자인", "사진"으로만 나눴습니다. 서브에이전트는 각자 맡은 일을 잘 해냈지만 보고서에는 음악, 글쓰기, 영화가 없습니다. 원인은 서브에이전트가 아니라 <b>코디네이터의 분해</b>입니다. 검색 도구를 바꾸거나 서브에이전트 프롬프트를 고치는 선택지는 오답입니다.</p>
+</div>
+
+코디네이터는 한 번 위임하고 끝내지 않습니다.
+
+<ol class="oa-flow">
+  <li><strong>분해·위임</strong>범위가 겹치지 않게 나눔</li>
+  <li><strong>종합</strong>결과를 합침</li>
+  <li><strong>빈틈 평가</strong>빠진 영역이 있나</li>
+  <li><strong>재위임</strong>빈틈을 겨냥한 질의</li>
+  <li><strong>재종합</strong>보강해서 마무리</li>
+</ol>
+
+단순한 질의에 서브에이전트를 전부 돌릴 필요는 없습니다. 질의 복잡도에 따라 어떤 서브에이전트를 부를지도 코디네이터가 정합니다.
+
+### 4. 훅 두 가지: 결과 정규화와 호출 차단 (1.4, 1.5)
+
+| 훅 | 시점 | 하는 일 | 예시 |
+|---|---|---|---|
+| PostToolUse | 도구 실행 **뒤**, 모델이 결과를 보기 전 | 결과를 일관된 형식으로 변환 | 유닉스 타임스탬프와 ISO 8601 날짜를 한 형식으로, 숫자 상태 코드를 이름으로 |
+| 가로채기(실행 전) | 도구 호출이 나가기 **전** | 정책 위반 호출을 막고 대안으로 돌림 | 한도 초과 환불을 막고 사람에게 에스컬레이션 |
+
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">정규화 전: 도구마다 형식이 다름</span>
+    <ul>
+      <li><code>created: 1794000000</code></li>
+      <li><code>shipped: "2026-11-09T10:30:00Z"</code></li>
+      <li><code>status: 3</code></li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">PostToolUse 훅을 거친 뒤</span>
+    <ul>
+      <li><code>created: "2026-11-06"</code></li>
+      <li><code>shipped: "2026-11-09"</code></li>
+      <li><code>status: "shipped"</code></li>
+    </ul>
+  </div>
+</div>
+
+차단 훅의 예입니다. 환불 한도를 500달러로 가정하면, 프롬프트에 "500달러 넘는 환불은 하지 마"라고 적는 대신 훅이 호출을 막고 `escalate_to_human`으로 돌립니다.
+
+판단 기준은 레슨 1과 같습니다. **반드시 지켜져야 하면 훅, 권장 수준이면 프롬프트**입니다. 프롬프트 지시는 실패율이 0이 아닙니다.
+
+**사람에게 넘길 때**는 상담원이 대화 기록을 못 볼 수 있다고 가정하고 구조화해서 넘깁니다.
+
+```json
+{
+  "customer": {"id": "C-1042", "name": "김OO", "tier": "gold"},
+  "issue": "주문 #8831 이중 결제",
+  "root_cause": "결제 재시도 중 중복 승인",
+  "actions_taken": ["get_customer 확인", "lookup_order 확인"],
+  "recommended_action": "중복 승인분 89,000원 환불",
+  "reason_for_escalation": "환불 금액이 자동 처리 한도 초과"
+}
+```
+
+한 메시지에 요청이 여러 개(환불 + 주소 변경 + 배송 문의)면 요청별로 나눠 병렬로 조사한 뒤 하나의 답으로 합칩니다.
+
+### 5. 프롬프트 체이닝 vs 동적 분해 (1.6)
+
+| | 프롬프트 체이닝 | 동적 분해 |
+|---|---|---|
+| 방식 | 미리 정한 단계를 순서대로 | 발견한 내용에 따라 다음 단계를 정함 |
+| 맞는 일 | 절차가 예측 가능한 검토 | 끝이 열린 조사 |
+| 예시 | 코드 리뷰: 파일별 검사 → 통합 검사 | 레거시 코드에 테스트 추가 |
+
+**큰 코드 리뷰**는 한 번에 다 보게 하면 주의가 분산되어 놓치는 것이 생깁니다. 두 종류의 패스로 나눕니다.
+
+<ol class="oa-flow">
+  <li><strong>파일별 패스</strong>파일 하나씩 로컬 문제 검사</li>
+  <li><strong>통합 패스</strong>파일 사이 데이터 흐름·인터페이스 검사</li>
+  <li><strong>결과 병합</strong>중복과 모순 정리</li>
+</ol>
+
+**열린 작업**(레거시 코드에 테스트 추가)은 구조 파악 → 영향 큰 영역 식별 → 우선순위 → 의존성이 드러나면 계획 수정 순서로 갑니다.
+
+### 6. 세션: 이어갈까, 새로 시작할까 (1.7)
+
+| 상황 | 선택 | 이유 |
+|---|---|---|
+| 어제 분석이 대체로 유효하다 | `claude --resume <세션 이름>` | 이름 붙인 세션을 그대로 이어감 |
+| 같은 전제에서 두 가지 접근을 비교하고 싶다 | `fork_session` | 원본을 두고 독립된 가지를 만듦 |
+| 도구 결과가 낡았다(파일이 많이 바뀜) | 새 세션 + 구조화 요약 | 낡은 결과를 믿고 추론하는 것을 막음 |
+| 파일 몇 개만 바뀌었다 | 재개 + **무엇이 바뀌었는지 알려 줌** | 바뀐 부분만 다시 분석 |
+
+<details class="oa-quiz">
+  <summary>Q1. 에이전트가 가끔 고객 확인 없이 환불을 처리합니다. 가장 효과적인 수정은?</summary>
+  <p><b>정답: <code>get_customer</code>가 검증된 ID를 돌려주기 전에는 <code>process_refund</code>를 막는 프로그래밍 방식 게이트.</b> 시스템 프롬프트 강조, few-shot 추가는 실패율을 줄일 뿐 0으로 만들지 못합니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 리서치 보고서에 특정 분야가 통째로 빠졌습니다. 서브에이전트 출력은 각각 정확합니다. 원인은?</summary>
+  <p><b>정답: 코디네이터의 과제 분해가 너무 좁았다.</b> 서브에이전트는 맡은 범위를 잘 수행했으므로 서브에이전트나 검색 도구를 고치는 선택지는 오답입니다.</p>
+</details>
+
 ## 설계 리뷰 문제 대비
 
 "다음 구현의 문제 5가지"의 단골 정답 세트입니다.
@@ -179,3 +376,4 @@ system 프롬프트에 "반드시 잔액을 확인한 다음 송금해"라고 �
 - Hub & Spoke가 최빈출. 허브는 위임·통합만(Opus), 서브는 전문 영역만(Sonnet/Haiku), 보고는 구조화 객체, 서브끼리 직접 호출 금지.
 - 정규 용어: Task 툴, AgentDefinition, allowedTools.
 - 되돌릴 수 없는 작업은 코드 게이트. 이어서 하기는 `--resume`, 복제해서 분기는 `fork_session`.
+- 가이드 보완: 루프는 `stop_reason`으로 끝낸다. 서브에이전트에는 컨텍스트를 명시적으로 넘기고 `allowedTools`에 `"Task"`를 넣는다. 반드시 지킬 규칙은 훅으로 강제하고, 큰 리뷰는 파일별 패스와 통합 패스로 나눈다.

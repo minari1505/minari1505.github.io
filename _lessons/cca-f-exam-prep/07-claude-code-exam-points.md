@@ -190,6 +190,180 @@ fi
 - 감사 로그는 PII 마스킹 + 규제에 맞는 보관 기간(국내는 개인정보보호법상 접속기록 최소 1년, 고유식별정보·민감정보 처리 시 2년).
 - 서브에이전트 권한 분리: `tools: Read, Grep, Glob, Bash(git diff *)`만 가진 읽기 전용 리뷰어와 쓰기 가능한 구현 에이전트를 나눕니다.
 
+## 공식 가이드 v1.1로 보완하기
+
+교재에 없거나 짧게만 나온 내용을 공식 시험 가이드 v1.1(2026년 11월)의 과제 설명(Task Statement 3.1~3.6)에 맞춰 채운 부분입니다.
+
+### 1. "새 팀원에게만 규칙이 안 먹는다" (3.1)
+
+<div class="oa-eli">
+  <span class="oa-eli__head">📌 쉽게 말하면</span>
+  <p>사무실 게시판에 붙인 공지는 모두가 봅니다. 내 책상 포스트잇에 적은 메모는 나만 봅니다. 팀 규칙을 포스트잇에 적어 두면 새로 온 사람은 그 규칙을 모릅니다.</p>
+</div>
+
+| 위치 | 범위 | git으로 공유 |
+|---|---|---|
+| `~/.claude/CLAUDE.md` | 내 모든 프로젝트 | ❌ 내 컴퓨터에만 있음 |
+| `./CLAUDE.md` 또는 `.claude/CLAUDE.md` | 이 프로젝트 전체 | ✅ |
+| 하위 디렉터리의 `CLAUDE.md` | 그 디렉터리 | ✅ |
+
+시험 문제 "기존 팀원에게는 코딩 규칙이 적용되는데 새 팀원에게는 안 된다" → 규칙이 **사용자 수준**에 있어서입니다. 프로젝트 수준으로 옮기는 것이 답입니다.
+
+**`@import`로 쪼개기**: CLAUDE.md 하나에 다 적는 대신 패키지별 표준 파일을 끌어옵니다.
+
+```markdown
+# CLAUDE.md
+공통 규칙은 여기에 적습니다.
+
+@docs/standards/api-conventions.md
+@packages/web/STYLE.md
+```
+
+**`/memory`로 확인하기**: 동작이 일관되지 않으면 `/memory`를 실행해 지금 세션에 어떤 메모리 파일이 로드됐는지부터 확인합니다. 기대한 파일이 목록에 없으면 위치나 경로 규칙이 원인입니다.
+
+### 2. 명령과 스킬은 어디에 두나 (3.2)
+
+| | 팀과 공유 | 나만 사용 |
+|---|---|---|
+| 슬래시 명령 | `.claude/commands/` | `~/.claude/commands/` |
+| 스킬 | `.claude/skills/<이름>/SKILL.md` | `~/.claude/skills/<이름>/SKILL.md` |
+
+팀 스킬을 내 방식으로 바꿔 쓰고 싶으면 `~/.claude/skills/`에 **다른 이름**으로 만듭니다. 같은 이름으로 프로젝트 파일을 고치면 팀원 모두에게 영향이 갑니다.
+
+스킬 프론트매터에서 시험에 나오는 세 가지입니다.
+
+```yaml
+---
+name: review-pr
+description: PR 번호를 받아 변경 사항을 리뷰한다
+context: fork               # 격리된 서브에이전트에서 실행
+allowed-tools: Read, Grep, Glob   # 리뷰 중 파일을 고치지 못하게 제한
+argument-hint: "[PR 번호]"   # 인자를 빠뜨리지 않게 안내
+---
+```
+
+| 키 | 효과 | 쓰는 이유 |
+|---|---|---|
+| `context: fork` | 스킬을 별도 서브에이전트 컨텍스트에서 실행 | 로그 분석처럼 출력이 긴 작업이 메인 대화를 채우지 않게 함 |
+| `allowed-tools` | 스킬 실행 중 쓸 수 있는 도구를 제한 | 읽기 전용 리뷰가 실수로 파일을 고치지 않게 함 |
+| `argument-hint` | 필요한 인자를 사용자에게 보여 줌 | 인자 없이 호출해서 생기는 헛돌이를 막음 |
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">스킬에 넣을 것</span>
+    <ul>
+      <li>필요할 때만 쓰는 작업별 절차</li>
+      <li>예: 릴리스 노트 작성, DB 마이그레이션 점검</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">CLAUDE.md에 넣을 것</span>
+    <ul>
+      <li>항상 적용되는 공통 표준</li>
+      <li>예: 테스트 명령, 커밋 규칙, 디렉터리 구조</li>
+    </ul>
+  </div>
+</div>
+
+### 3. 흩어진 파일에는 경로 규칙 (3.3)
+
+테스트 파일이 여러 디렉터리에 흩어져 있다고 해 봅시다.
+
+```text
+src/
+  components/Button.test.tsx
+  hooks/useCart.test.tsx
+  pages/checkout/Checkout.test.tsx
+```
+
+디렉터리마다 `CLAUDE.md`를 두면 세 곳에 같은 내용을 복사해야 합니다. 디렉터리 `CLAUDE.md`는 한 위치에만 묶이기 때문입니다. 대신 `.claude/rules/`에 glob 패턴으로 한 번만 적습니다.
+
+```markdown
+---
+paths:
+  - "**/*.test.tsx"
+---
+테스트는 React Testing Library를 쓰고, 구현 세부가 아니라 사용자 동작을 검증한다.
+```
+
+이 규칙은 일치하는 파일을 다룰 때만 로드되므로, 관련 없는 작업에서는 컨텍스트를 차지하지 않습니다. 인프라 규칙이라면 `paths: ["terraform/**/*"]`처럼 씁니다.
+
+### 4. 플랜 모드인가, 바로 실행인가 (3.4)
+
+| 작업 | 선택 | 이유 |
+|---|---|---|
+| 모놀리스를 마이크로서비스로 분리 | 플랜 모드 | 접근법이 여러 개이고 되돌리기 비쌈 |
+| 45개 넘는 파일에 걸친 라이브러리 교체 | 플랜 모드 | 여러 파일에 걸친 변경 |
+| 함수 하나의 null 체크 버그 수정 | 바로 실행 | 범위가 분명한 단일 파일 변경 |
+| 입력 검증 한 줄 추가 | 바로 실행 | 계획할 것이 없음 |
+
+플랜 모드는 파일을 바꾸기 전에 안전하게 탐색할 수 있어서 잘못된 방향으로 구현했다가 다시 하는 비용을 막습니다. 반대로 단순 수정에 플랜 모드를 쓰는 것도 오답입니다.
+
+**Explore 서브에이전트**는 "이 기능과 관련된 파일을 다 찾아 줘" 같은 장황한 탐색을 따로 수행하고 요약만 돌려줍니다. 메인 컨텍스트가 탐색 로그로 차지 않습니다.
+
+두 모드는 섞어 씁니다. 조사와 설계는 플랜 모드로 하고, 방향이 정해지면 바로 실행으로 구현합니다.
+
+### 5. 결과가 흔들릴 때 쓰는 세 가지 방법 (3.5)
+
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">🧪</span><span class="oa-card__title">입출력 예시 2~3개</span>말로 설명해도 형식이 매번 다르면 "입력 A → 출력 B" 예시를 줍니다.</div>
+  <div class="oa-card"><span class="oa-card__icon">✅</span><span class="oa-card__title">테스트 먼저</span>동작, 경계 사례, 성능 기준을 테스트로 쓰고 실패를 하나씩 고치게 합니다.</div>
+  <div class="oa-card"><span class="oa-card__icon">🎤</span><span class="oa-card__title">인터뷰 패턴</span>구현 전에 Claude가 질문하게 합니다. 캐시 무효화, 실패 시 동작처럼 놓친 고려 사항이 드러납니다.</div>
+</div>
+
+수정 요청을 묶는 기준도 나옵니다.
+
+<div class="oa-vs">
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">한 메시지에 같이 보냄</span>
+    <ul>
+      <li>서로 영향을 주는 문제</li>
+      <li>예: API 응답 형식 변경 + 그 응답을 쓰는 화면 수정</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">하나씩 순서대로 보냄</span>
+    <ul>
+      <li>서로 독립적인 문제</li>
+      <li>예: 로그인 버그 → 그다음 푸터 오타</li>
+    </ul>
+  </div>
+</div>
+
+### 6. CI에서 쓰는 플래그와 리뷰 구조 (3.6)
+
+```bash
+claude -p "변경된 파일을 리뷰하고 버그만 보고해" \
+  --output-format json \
+  --json-schema '{"type":"object","properties":{"findings":{"type":"array"}},"required":["findings"]}'
+```
+
+| 플래그 | 하는 일 | 없으면 |
+|---|---|---|
+| `-p` (`--print`) | 비대화형으로 한 번 실행하고 끝냄 | 입력을 기다리며 CI 작업이 멈춤 |
+| `--output-format json` | 결과를 JSON으로 출력 | 사람이 읽는 텍스트라 파싱이 불안정 |
+| `--json-schema` | 출력이 따를 스키마를 지정 | 필드 이름과 구조가 실행마다 달라질 수 있음 |
+
+CI에서 필요한 맥락(테스트 표준, 픽스처 규칙, 리뷰 기준)은 프로젝트 `CLAUDE.md`에 적어 둡니다.
+
+**코드를 만든 세션에게 리뷰를 맡기지 않습니다.** 자기가 내린 판단을 그대로 갖고 있어서 같은 가정을 다시 통과시킵니다.
+
+<ol class="oa-flow">
+  <li><strong>세션 A</strong>코드 생성</li>
+  <li><strong>세션 B (새 인스턴스)</strong>A의 추론 없이 코드만 보고 리뷰</li>
+  <li><strong>결과</strong>PR 코멘트로 게시</li>
+</ol>
+
+<details class="oa-quiz">
+  <summary>Q1. 파이프라인에서 Claude Code 단계가 끝나지 않고 타임아웃이 납니다. 가장 먼저 확인할 것은?</summary>
+  <p><b>정답: <code>-p</code> 플래그.</b> 대화형 모드로 떠서 입력을 기다리고 있을 가능성이 큽니다.</p>
+</details>
+
+<details class="oa-quiz">
+  <summary>Q2. 코드베이스 곳곳에 있는 테스트 파일에 같은 규칙을 적용하려 합니다. 가장 알맞은 방법은?</summary>
+  <p><b>정답: <code>.claude/rules/</code>에 <code>paths</code> glob을 가진 규칙 파일.</b> 디렉터리별 CLAUDE.md는 위치마다 복사해야 하고, 루트 CLAUDE.md에 넣으면 관련 없는 작업에도 항상 로드됩니다.</p>
+</details>
+
 ## 핵심 정리
 
 - 비대화식은 `claude -p`, 계획 리뷰는 plan 모드.
@@ -200,3 +374,4 @@ fi
 - 자동 지식은 스킬, 사용자 호출은 커맨드, 독립 컨텍스트는 서브에이전트, 결정론적 실행은 훅.
 - 확실히 막아야 하면 PreToolUse 훅(exit 2 또는 permissionDecision deny). 훅은 harness가 실행한다.
 - CI는 `claude -p --output-format json`, 키는 Secrets, 텔레메트리는 OTel 환경 변수.
+- 가이드 보완: 팀 규칙은 프로젝트 수준에 둔다(사용자 수준은 공유 안 됨). 로드 확인은 `/memory`, 흩어진 파일은 `paths` 규칙, 스킬은 `context: fork`·`allowed-tools`·`argument-hint`, CI는 `-p --output-format json --json-schema`, 리뷰는 별도 인스턴스.
