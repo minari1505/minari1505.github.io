@@ -1030,3 +1030,12 @@ $home-accent-soft: #fff4cf;
     transform: translateX(50%);
   }
 }
+
+/* 논문 정리 글(_posts) 본문 그림: 폭 통일 + 가운데 정렬 */
+.layout--single .page__content img {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 1.2rem auto;
+}
