@@ -78,6 +78,7 @@ defaults:
       share: true
       related: true
       show_date: true
+      permalink: /papers/:title/   # 카테고리를 바꿔도 주소가 유지되도록 고정
   # _pages — 모든 페이지
   - scope:
       path: "_pages"
