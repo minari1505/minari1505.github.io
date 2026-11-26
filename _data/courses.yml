@@ -136,7 +136,7 @@ courses:
     track: anthropic
     num: "03"
     title: "Claude Code in Action"
-    description: "Claude Code의 동작 원리와 실제 사용법 — 코딩 assistant의 tool use, 내장 도구, 실습 워크플로우, hooks와 SDK까지."
+    description: "Claude Code의 동작 원리와 실제 사용법 — tool use, 내장 도구, hooks와 SDK(1~4), 그리고 개편된 강의의 긴 세션 조종, CLAUDE.md, 권한 모드, headless, GitHub Actions, plugin(5~13)까지."
     source: https://anthropic.skilljar.com/claude-code-in-action
     done: true
     lessons:
@@ -156,6 +156,42 @@ courses:
         slug: wrapping-up
         title: "Wrapping up"
         ko: "마무리 & 정리"
+      - num: "05"
+        slug: steering-long-sessions
+        title: "Steering Long Sessions"
+        ko: "긴 세션 조종하기"
+      - num: "06"
+        slug: a-claude-md-that-follows
+        title: "A CLAUDE.md That Follows"
+        ko: "지켜지는 CLAUDE.md 만들기"
+      - num: "07"
+        slug: verification-skills
+        title: "Verification Skills"
+        ko: "검증 skill"
+      - num: "08"
+        slug: permission-modes
+        title: "Permission Modes"
+        ko: "권한 모드"
+      - num: "09"
+        slug: hooks-deep-dive
+        title: "Hooks"
+        ko: "Hooks 심화 — 결정 JSON과 exit code"
+      - num: "10"
+        slug: scheduled-tasks-and-headless
+        title: "Scheduled tasks and headless"
+        ko: "예약 작업과 headless 모드"
+      - num: "11"
+        slug: github-actions-and-code-review
+        title: "GitHub Actions and Code Review"
+        ko: "GitHub Actions와 Code Review"
+      - num: "12"
+        slug: verifying-unsupervised-runs
+        title: "Trust It: Verifying Unsupervised Runs"
+        ko: "지켜보지 않은 실행 검증하기"
+      - num: "13"
+        slug: plugins
+        title: "Plugins"
+        ko: "Plugin — 설정을 팀에 배포하기"
 
   - slug: introduction-to-model-context-protocol
     track: anthropic

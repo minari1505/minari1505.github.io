@@ -194,6 +194,8 @@ Hook command는 exit code로 Claude Code에 결과를 전달합니다.
 | `0` | 문제 없음. tool call 진행 |
 | `2` | tool call 차단. `PreToolUse` hook에서만 의미 있음 |
 
+> 개편된 강의는 exit code와 결정 JSON을 더 자세히 다룹니다. exit `1`은 막지 않는다는 점, exit `2`가 `Stop`도 막을 수 있다는 점은 [레슨 9](../09-hooks-deep-dive/)를 보세요.
+
 `PreToolUse` hook에서 exit code `2`로 종료하면 tool call은 실행되지 않습니다. 이때 `stderr`에 쓴 메시지는 Claude에게 feedback으로 전달됩니다.
 
 ## 예제: `.env` 읽기 차단
@@ -470,7 +472,7 @@ Agent SDK는 custom system prompt, MCP server, hooks, subagent, session resumpti
 
 <details class="oa-quiz">
   <summary>Q1. tool call을 실행 전에 막으려면 어떤 hook에서 어떤 exit code를 씁니까?</summary>
-  <p><b>정답: <code>PreToolUse</code> hook에서 exit code <code>2</code>.</b> 이때 <code>stderr</code>에 쓴 메시지는 Claude에게 feedback으로 전달됩니다. exit code 2는 <code>PreToolUse</code>에서만 의미가 있습니다.</p>
+  <p><b>정답: <code>PreToolUse</code> hook에서 exit code <code>2</code>.</b> 이때 <code>stderr</code>에 쓴 메시지는 Claude에게 feedback으로 전달됩니다. 개편된 강의(레슨 9)에 따르면 exit code 2는 <code>Stop</code> 같은 다른 이벤트도 막을 수 있습니다.</p>
 </details>
 
 <details class="oa-quiz">
