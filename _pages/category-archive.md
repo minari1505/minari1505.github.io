@@ -19,5 +19,7 @@ author_profile: true
 | 2025 | LLM Agent | [LLM-Agent-Controller: A Universal Multi-Agent Large Language Model System as a Control Engineer]({{ site.baseurl }}{% post_url 2025-08-11-llm-agent-controller %}) | — |
 | 2025 | LLM 기법 | [LFM(Liquid Foundation Model)]({{ site.baseurl }}{% post_url 2025-08-19-lfm-hyena-edge %}) | [arXiv](https://arxiv.org/abs/2302.10866) |
 | 2026 | LLM 기법 | [HyPE]({{ site.baseurl }}{% post_url 2026-06-15-hype %}) | [IEEE Xplore](https://ieeexplore.ieee.org/document/11080443/) |
+| 2026 | LLM 기법 | [Anthropic Contextual Retrieval]({{ site.baseurl }}{% post_url 2026-06-18-anthropic-contextual-retrieval %}) | [Anthropic](https://www.engineering.fyi/article/introducing-contextual-retrieval) |
+| 2026 | LLM 기법 | [Vector + BM25 하이브리드]({{ site.baseurl }}{% post_url 2026-06-18-vector-bm25-hybrid %}) | — |
 
 ## 카테고리별
