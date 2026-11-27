@@ -92,7 +92,7 @@ tags:
 
 스케일 점수에 대해 조금 더 적어 둘게요. 모의고사를 풀 때는 43/60(약 72%)을 자가 채점 기준으로 쓰되, 실전에서는 특정 도메인만 잘 보고 나머지를 버리는 전략이 통하지 않는다고 생각하면 돼요.
 
-> **커뮤니티 가이드와 다른 점 두 가지.** 아래 "함께 보면 좋은 자료"의 커뮤니티 학습 가이드는 문제 유형을 "객관식(4개 중 정답 1개)"로만 적고 있고, 시나리오는 "가능한 8개 중 4개(무작위 선택)"라고 적고 있어요. 이 노트의 표(복수 응답 문항 포함, 6개 중 4개)와 달라요. 어느 쪽이 맞는지는 응시 직전에 공식 시험 가이드 최신판으로 확인하세요. 어느 쪽이든 준비 방법은 같아요. 문항마다 고를 개수를 확인하고, 시나리오는 가려서 준비하지 않아요.
+> **커뮤니티 가이드와 다른 점 두 가지.** 아래 "함께 보면 좋은 자료"의 커뮤니티 학습 가이드는 문제 유형을 "객관식(4개 중 정답 1개)"로만 적고 있고, 시나리오는 "가능한 8개 중 4개(무작위 선택)"라고 적고 있어요. 이 노트의 표(복수 응답 문항 포함, 6개 중 4개)와 달라요. 반면 합격자 LLM Wiki와 CertSafari(공식 가이드 v1.0 인용)는 이 노트와 같이 "6개 중 4개", "객관식과 복수 응답 문항"이라고 적고 있어요. 어느 쪽이 맞는지는 응시 직전에 공식 시험 가이드 최신판으로 확인하세요. 어느 쪽이든 준비 방법은 같아요. 문항마다 고를 개수를 확인하고, 시나리오는 가려서 준비하지 않아요.
 
 ## 3. 5개 도메인과 배점
 
@@ -260,12 +260,17 @@ tags:
 
 가장 낮은 도메인이 배점 15%짜리 도메인 5라도 그 장으로 돌아가는 것이 맞아요. 배점 높은 도메인 1만 복습하고 응시하는 것은 오답 선택지예요.
 
+> 시간이 2주 남짓이라면 위 12주 모델 대신 [레슨 8의 2주 플랜 모델](/courses/cca-f-exam-prep/08-two-week-pass-strategy/)을 보세요. 합격 후기를 분석해 평일 2시간 · 주말 4시간 기준으로 다시 짠 계획이에요.
+
 ## 함께 보면 좋은 자료
 
 - 공식 시험 가이드 PDF: 출제 범위와 샘플 문제
 - Anthropic Academy 코스: 이 사이트의 다른 강의 정리가 그 내용이에요
 - [커뮤니티 학습 가이드 (한국어)](https://github.com/paullarionov/claude-certified-architect/blob/main/guide_ko.md): 공식 시험 가이드를 바탕으로 커뮤니티가 정리한 학습 가이드. 이론 정리와 해설이 붙은 연습 문제가 있어요. 공식 자료가 아니라서 이 노트와 숫자가 다른 곳이 있어요(위 2·4번 섹션 참고)
 - claudecertifications.com: 무료 연습문제 25문항
+- [합격자 LLM Wiki](https://github.com/hong-chu/claude-certified-architect-foundations-llm-wiki): 843점으로 합격한 사람이 만든 학습 위키(CC BY 4.0). 도메인별 개념과 "X vs Y" 판단 페이지, 오답 패턴 정리가 있어요
+- [2주 합격 후기 (Medium)](https://medium.com/@yeesun.chu/how-i-passed-the-claude-certified-architect-foundations-cca-f-exam-in-2-weeks-6b967e6effb4): 같은 저자의 공부 방법과 점수 변화. 분석은 [레슨 8](/courses/cca-f-exam-prep/08-two-week-pass-strategy/)에 정리했어요
+- 무료 모의고사: [CyberSkill](https://practice.cyberskill.world/practice/ccaf)(60문항 120분 실전 모드), [CertSafari](https://www.certsafari.com/anthropic/claude-certified-architect-foundations)(435문항, 도메인별 퀴즈). 사이트별 특징과 푸는 순서는 레슨 8의 6번 섹션 참고
 - MCP 공식 사양: [modelcontextprotocol.io](https://modelcontextprotocol.io/)
 
 커뮤니티 가이드가 꼽은 공식 문서를 기술별로 묶으면 이래요. 레슨을 읽다가 원문이 필요할 때 찾아가는 용도예요.

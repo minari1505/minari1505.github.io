@@ -648,6 +648,10 @@ courses:
         slug: claude-code-exam-points
         title: "Claude Code Exam Points"
         ko: "Claude Code 시험 포인트 (도메인 3)"
+      - num: "08"
+        slug: two-week-pass-strategy
+        title: "The Two-Week Pass Strategy"
+        ko: "2주 합격 전략 — 합격 후기 분석과 모의고사 플랜"
 
   - slug: docker-fundamentals-and-production
     track: software-engineering
