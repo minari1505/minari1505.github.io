@@ -7,156 +7,147 @@ lesson: 9
 
 ## 학습 목표
 
-- Research가 단순 검색이 아니라 체계적인 multi-source investigation이라는 점 이해하기
-- 언제 Research를 쓰고, 언제 web search나 extended thinking, Enterprise Search를 써야 하는지 구분하기
-- Research가 extended thinking과 함께 어떻게 깊이 있는 report를 만드는지 파악하기
-- 복잡한 조사 작업에 적합한 Research prompt 작성 방법 익히기
+- **Research**가 단순 검색이 아니라 체계적인 multi-source investigation이라는 점 설명하기
+- 언제 Research를 쓰고, 언제 web search · Thinking · Enterprise Search를 쓸지 구분하기
+- Research가 **Thinking**과 함께 조사 계획을 세우고 깊이 있는 report를 만드는 과정 파악하기
+- 복잡한 조사에 맞는 **Research prompt** 작성법 익히기
 
-## Research란?
+## 한눈에 보는 흐름
 
-**Research**는 Claude를 단순 대화형 assistant에서 체계적인 조사자로 확장하는 기능입니다. Research를 켜면 Claude는 질문에 바로 답하는 대신, 여러 각도에서 정보를 찾고, web과 connected integrations를 탐색하고, 결과를 종합해 report를 만듭니다.
+<ol class="oa-flow">
+  <li><strong>무엇인가</strong>여러 검색을 이어 가는 agentic 조사</li>
+  <li><strong>언제 쓰나</strong>빠른 답보다 깊은 이해가 필요할 때</li>
+  <li><strong>어떻게 작동하나</strong>계획 → 여러 검색 → 종합 → citation</li>
+  <li><strong>어떻게 켜나</strong><code>+</code> → <code>Research</code> (web search 필요)</li>
+  <li><strong>잘 쓰는 법</strong>목표 · 구조 · 제약을 담은 prompt</li>
+</ol>
 
-단일 web search와 다르게 Research는 agentic하게 작동합니다.
+이 레슨을 한 문장으로 줄이면: **Research는 Claude가 스스로 계획을 세워 여러 source를 조사하고, 출처가 달린 report로 정리해 주는 기능이에요.**
 
-```text
-질문 이해
-  ↓
-조사 계획 수립
-  ↓
-여러 검색 수행
-  ↓
-찾은 정보 기반으로 다음 검색 결정
-  ↓
-자료 종합
-  ↓
-citation 포함 report 작성
-```
+## 1. Research란?
 
-숙련된 research assistant가 몇 시간 동안 할 일을 Claude가 몇 분 안에 수행하는 경험에 가깝습니다.
+<div class="oa-eli">
+  <span class="oa-eli__head">🕵️ 쉽게 말하면</span>
+  <p>일반 검색은 <b>도서관 안내 데스크에 질문 하나</b> 던지는 거예요. Research는 <b>조사원에게 과제를 맡기는 것</b>이에요. 조사원은 책을 한 권 찾고 끝내지 않고, 읽다가 생긴 궁금증을 따라 다른 서가도 뒤진 뒤, 출처를 단 보고서를 들고 와요. 그동안 나는 내 일을 하면 돼요.</p>
+</div>
 
-## Research의 핵심 특징
+**Research**는 Claude를 대화형 assistant에서 **체계적인 조사자**로 확장하는 기능이에요. Research를 켜면 Claude는 질문에 바로 답하는 대신, 여러 각도에서 정보를 찾고, web과 connected integrations를 탐색하고, 결과를 종합해 report를 만들어요.
 
-### 여러 검색이 서로 이어짐
+| | 단일 web search | Research |
+|---|---|---|
+| **검색 방식** | 한 번 검색하고 답해요 | 여러 검색이 **서로 이어져요**. 찾은 내용을 보고 다음에 무엇을 찾을지 정해요 |
+| **범위** | 한두 source면 충분한 질문 | 다른 각도를 자동으로 탐색하고 빈틈을 채워요 |
+| **결과물** | 빠른 답 | citation이 달린 report |
 
-Research는 한 번 검색하고 끝내지 않습니다. 찾은 정보를 바탕으로 다음에 무엇을 찾아야 할지 결정합니다. 질문의 다른 각도를 자동으로 탐색하고, 빈틈을 채우며, open question을 체계적으로 좁혀갑니다.
+### Research의 핵심 특징
 
-### 수분 안에 포괄적인 답변 생성
+<div class="oa-cards">
+  <div class="oa-card oa-card--hl"><span class="oa-card__icon">🔗</span><span class="oa-card__title">여러 검색이 서로 이어져요</span>한 번 검색하고 끝내지 않아요. 찾은 정보를 바탕으로 다음 조사 대상을 정하고, open question을 체계적으로 좁혀 가요.</div>
+  <div class="oa-card"><span class="oa-card__icon">⏱️</span><span class="oa-card__title">시간이 더 걸려요</span>평소 검색보다 오래 걸려요. 질문에 따라 몇 분 또는 그 이상이에요. 한 번의 조회가 아니라 많은 검색을 동시에 보내고, 때로는 수백 개 source에서 찾은 내용을 하나의 답으로 모으기 때문이에요.</div>
+  <div class="oa-card"><span class="oa-card__icon">🧠</span><span class="oa-card__title">Thinking과 함께 작동해요</span>검색 전에 접근 방식을 먼저 계획해요. 복잡한 요청을 다룰 수 있는 조각으로 나누고, 조각마다 필요한 정보를 모아요.</div>
+  <div class="oa-card"><span class="oa-card__icon">📎</span><span class="oa-card__title">Citation으로 검증해요</span>report에 확인하기 쉬운 source citation이 붙어요. findings를 신뢰하되, 필요하면 원문으로 돌아가 직접 검증할 수 있어요.</div>
+</div>
 
-대부분의 report는 5-15분 안에 완료됩니다. 더 복잡한 조사는 최대 45분까지 걸릴 수 있습니다. 사람이 수동으로 하면 몇 시간이 걸릴 수 있는 조사 작업을 더 짧은 시간에 수행합니다.
+숙련된 research assistant가 정보를 모으고, source를 교차 확인하고, 포괄적인 report를 엮는 동안 나는 내 일을 계속할 수 있어요. 사람이 수동으로 하면 몇 시간이 걸릴 조사예요.
 
-### Extended thinking 자동 활성화
+## 2. 언제 Research를 쓸까요?
 
-Research를 켜면 extended thinking이 자동으로 활성화됩니다. Claude는 먼저 문제를 작은 조각으로 나누고, 어떤 정보를 찾아야 하는지 계획한 뒤 조사를 진행합니다.
+<div class="oa-eli">
+  <span class="oa-eli__head">🧰 쉽게 말하면</span>
+  <p>못 하나 박는 데 공사팀을 부르진 않죠. <b>주소 하나 확인</b>은 web search, <b>머리로 풀 문제</b>는 Thinking, <b>회사 안 이야기</b>는 Enterprise Search, <b>여러 곳을 뒤져 보고서를 써야 할 때</b>가 Research예요.</p>
+</div>
 
-### Citation으로 검증 가능
+Research는 빠른 답보다 **깊이 있는 이해**가 필요할 때 맞아요.
 
-Research report에는 source citation이 포함됩니다. 따라서 Claude의 findings를 신뢰하되, 필요한 경우 원문으로 돌아가 직접 검증할 수 있습니다.
+| Research가 필요한 상황 | Research가 잘하는 작업 |
+|---|---|
+| 여러 source를 종합한 comprehensive report가 필요할 때 | Market analysis와 competitive research |
+| web과 Google Workspace 같은 connected integrations를 함께 분석해야 할 때 | team offsite나 product launch 같은 복잡한 project planning |
+| 수동으로 몇 시간 걸릴 thorough investigation이 필요할 때 | email, calendar, documents에 흩어진 정보 종합 |
+| competitor나 vendor option을 비교 분석해야 할 때 | 여러 source를 참고하는 technical documentation 작성 |
+| citation이 포함된 검증 가능한 report가 필요할 때 | 최신 정보와 검증된 source가 필요한 briefing 준비 |
 
-## Research를 언제 사용할까?
+### 다른 기능이 더 맞는 경우
 
-Research는 빠른 답보다 깊이 있는 이해가 필요할 때 적합합니다.
+<div class="oa-cards">
+  <div class="oa-card"><span class="oa-card__icon">⚡</span><span class="oa-card__title">Web search</span>빠르고 구체적인 사실 하나가 필요할 때 — 오늘의 주가, 회사 주소, 특정 사건의 날짜. 한두 source면 충분하고, <b>속도가 포괄성보다 중요</b>할 때.</div>
+  <div class="oa-card"><span class="oa-card__icon">🧠</span><span class="oa-card__title">Thinking</span>외부 정보 수집보다 <b>깊은 reasoning</b>이 필요할 때 — 수학 문제, code debugging, 논리 분석, 외부 자료가 필요 없는 복잡한 전략 문제.</div>
+  <div class="oa-card"><span class="oa-card__icon">🏢</span><span class="oa-card__title">Enterprise Search</span><b>조직 내부 지식</b>에서 답을 찾을 때 — 회사 정책과 프로세스, Slack thread·email·회의록·내부 문서, 과거 의사결정, onboarding 질문.</div>
+</div>
 
-사용하면 좋은 경우:
+> Research는 **public web과 connected integrations를 활용한 깊은 조사**에 강하고, Enterprise Search는 **조직 내부 지식 검색**에 특화되어 있어요. 질문이 public web이 아니라 우리 회사에만 해당한다면 Enterprise Search 쪽이에요.
 
-- 여러 source를 종합한 comprehensive report가 필요할 때
-- web과 Google Workspace 같은 connected integrations를 함께 분석해야 할 때
-- 수동으로 몇 시간 걸릴 thorough investigation이 필요할 때
-- competitor나 vendor option을 비교 분석해야 할 때
-- citation이 포함된 검증 가능한 report가 필요할 때
+## 3. Research가 작동하는 방식
 
-예시:
+<div class="oa-eli">
+  <span class="oa-eli__head">🗺️ 쉽게 말하면</span>
+  <p>여행 계획을 잘 짜는 친구를 떠올려 보세요. 먼저 <b>뭘 알아봐야 할지 목록</b>을 만들고, 숙소를 찾다가 교통편이 걸리면 그것도 알아보고, 마지막에 <b>링크가 달린 일정표</b>로 정리해 주죠. 내가 단계마다 시키지 않아도요.</p>
+</div>
 
-- Market analysis와 competitive research
-- Team offsite나 product launch 같은 복잡한 project planning
-- email, calendar, documents에 흩어진 정보 종합
-- 여러 source를 참고하는 technical documentation 작성
-- 최신 정보와 검증 가능한 source가 필요한 briefing 준비
+Research를 켜면 단순한 web search를 훨씬 넘어서는 **agentic, multi-step process**가 시작돼요. Claude는 이미 찾은 내용을 바탕으로 다음에 무엇을 검색할지 **스스로 결정**해요. 단계마다 내가 지시할 필요가 없어요.
 
-## 다른 Claude 기능과 구분하기
+<ol class="oa-flow">
+  <li><strong>1. 접근 방식 계획</strong>검색 전에 먼저 생각해요. 요청을 쪼개고, 어떤 정보가 필요한지, 어떤 각도를 조사할지 계획</li>
+  <li><strong>2. 여러 검색 수행</strong>단일 query가 아니에요. 첫 결과를 보고 다음 조사 내용을 정하고, 유망한 단서를 따라가며 빈틈을 채워요</li>
+  <li><strong>3. Findings 종합</strong>web과 connected integrations(Gmail, Google Calendar, Google Drive 등)의 정보를 잘 정리된 하나의 report로</li>
+  <li><strong>4. Citation 제공</strong>report의 claim마다 source가 연결돼서, 출처를 확인하고 더 깊이 들어갈 수 있어요</li>
+</ol>
 
-### Web search가 더 적합한 경우
+## 4. Research 사용 방법
 
-다음처럼 빠르고 구체적인 사실 하나가 필요하면 web search가 더 좋습니다.
+<div class="oa-eli">
+  <span class="oa-eli__head">🎛️ 쉽게 말하면</span>
+  <p>세탁기의 <b>"표준" 대신 "불림 + 강력" 코스</b>를 고르는 것과 같아요. 버튼 하나로 모드를 바꾸면, 시간은 더 걸리지만 훨씬 꼼꼼하게 돌아가요.</p>
+</div>
 
-- 오늘의 주가
-- 회사 주소
-- 특정 사건의 날짜
-- 한두 source면 충분한 질문
+<ol class="oa-flow">
+  <li><strong>+ 버튼</strong>chat interface 왼쪽 아래의 <code>+</code> 클릭</li>
+  <li><strong>Research 선택</strong>메뉴에서 <code>Research</code> 선택 — 활성화되면 강조 표시</li>
+  <li><strong>Prompt 제출</strong>prompt를 입력하고 제출</li>
+  <li><strong>기다리기</strong>Claude가 background에서 검색·분석하고 progress indicator를 보여 줘요</li>
+</ol>
 
-속도가 포괄성보다 중요하면 web search를 사용합니다.
+> **주의** — Research가 작동하려면 **web search가 켜져 있어야** 해요. 꺼져 있다면 같은 `+` 메뉴에서 켤 수 있어요.
 
-### Extended thinking이 더 적합한 경우
+## 5. 효과적인 Research prompt 작성법
 
-외부 정보 수집보다 깊은 reasoning이 필요한 문제라면 extended thinking이 더 적합합니다.
+<div class="oa-eli">
+  <span class="oa-eli__head">📝 쉽게 말하면</span>
+  <p>조사원에게 "전기차 좀 알아봐"라고만 하면 뭘 들고 올지 몰라요. <b>"투자 판단용으로, 이 세 가지를, 이 목차로"</b>라고 의뢰서를 써 주면 원하는 보고서가 와요. 한 번 돌리는 데 몇 분씩 걸리니까 의뢰서에 공을 들일 가치가 있어요.</p>
+</div>
 
-- 수학 문제
-- code debugging
-- 논리 분석
-- 복잡한 전략 문제지만 외부 자료가 필요 없는 경우
+Research 한 번은 초 단위가 아니라 분 단위로 걸려요. 그래서 prompt를 다듬는 데 쓴 시간이 그만큼 돌아와요.
 
-### Enterprise Search가 더 적합한 경우
+<div class="oa-cards">
+  <div class="oa-card oa-card--hl"><span class="oa-card__icon">🎯</span><span class="oa-card__title">① 목표를 구체적으로</span>무엇을, 왜 알고 싶은지 써요</div>
+  <div class="oa-card"><span class="oa-card__icon">🗂️</span><span class="oa-card__title">② 원하는 구조 지정</span>Claude는 내가 준 구조에 맞춰 findings를 정리해요</div>
+  <div class="oa-card"><span class="oa-card__icon">📏</span><span class="oa-card__title">③ 제약 조건 포함</span>budget, timeline, geography 등</div>
+  <div class="oa-card"><span class="oa-card__icon">🤝</span><span class="oa-card__title">④ Claude와 prompt 다듬기</span>Research를 켜기 전에 먼저 물어봐요</div>
+</div>
 
-조직 내부 지식에서 답을 찾아야 한다면 Enterprise Search가 더 좋습니다.
+### ① 목표를 구체적으로 쓰기
 
-- 회사 정책과 프로세스
-- Slack thread, email, 회의록, 내부 문서
-- 회사별 과거 의사결정
-- onboarding 관련 질문
-
-Research는 public web과 connected integrations를 활용한 깊은 조사에 강하고, Enterprise Search는 조직 내부 지식 검색에 특화되어 있습니다.
-
-## Research가 작동하는 방식
-
-Research는 네 단계로 이해할 수 있습니다.
-
-### 1. 접근 방식 계획
-
-Research가 켜지면 extended thinking이 활성화됩니다. Claude는 요청을 분석하고, 어떤 정보가 필요한지, 어떤 각도를 조사해야 하는지 계획합니다.
-
-### 2. 여러 검색 수행
-
-Claude는 단일 query만 실행하지 않습니다. 첫 검색 결과를 보고 다음에 조사할 내용을 결정합니다. 유망한 단서를 따라가고, 부족한 부분을 채우는 방식입니다.
-
-### 3. Findings 종합
-
-web과 connected integrations에서 가져온 정보를 하나의 report로 정리합니다. Gmail, Google Calendar, Google Drive 같은 연결된 도구가 있다면 내부 context도 함께 활용할 수 있습니다.
-
-### 4. Citation 제공
-
-Research report의 claim은 source에 연결됩니다. 이를 통해 사용자는 정보의 출처를 확인하고, 필요하면 더 깊이 들어갈 수 있습니다.
-
-## Research 사용 방법
-
-1. Chat interface 왼쪽 아래의 `+` 버튼을 클릭합니다.
-2. 메뉴에서 `Research`를 선택합니다.
-3. Research가 활성화되면 강조 표시됩니다.
-4. Prompt를 입력하고 제출합니다.
-5. Claude가 background에서 검색과 분석을 수행하며 progress indicator를 보여줍니다.
-
-주의할 점: Research가 작동하려면 web search가 켜져 있어야 합니다. web search가 꺼져 있다면 같은 `+` 메뉴에서 활성화할 수 있습니다.
-
-## 효과적인 Research prompt 작성법
-
-Research는 5-45분이 걸릴 수 있으므로, prompt를 잘 쓰는 것이 중요합니다.
-
-### 목표를 구체적으로 쓰기
-
-```text
-EV market에 대해 알려줘.
-```
-
-보다:
+<div class="oa-vs">
+  <div class="oa-vs__bad">
+    <span class="oa-vs__label">❌ 너무 넓은 prompt</span>
+    <ul>
+      <li>"EV market에 대해 알려줘."</li>
+    </ul>
+  </div>
+  <div class="oa-vs__good">
+    <span class="oa-vs__label">✅ 목표가 보이는 prompt</span>
+    <ul>
+      <li>"전기차 배터리 시장을 분석해줘. 주요 player, 기술 trend, 투자 의사결정에 영향을 줄 수 있는 supply chain challenge를 식별해줘."</li>
+    </ul>
+  </div>
+</div>
 
 ```text
 전기차 배터리 시장을 분석해줘.
 주요 player, 기술 trend, 투자 의사결정에 영향을 줄 수 있는 supply chain challenge를 식별해줘.
 ```
 
-가 더 좋습니다.
-
-### 원하는 구조 지정하기
-
-Claude가 findings를 어떤 구조로 정리할지 미리 알려줍니다.
+### ② 원하는 구조 지정하기
 
 ```text
 Team offsite 장소 후보를 비교해줘.
@@ -167,24 +158,27 @@ Team offsite 장소 후보를 비교해줘.
 4. 가격 고려사항
 ```
 
-### 제약 조건 포함하기
+### ③ 제약 조건 포함하기
 
-Budget, timeline, geography, audience, required format 같은 제약을 넣으면 Research가 더 관련성 높은 방향으로 좁혀집니다.
+budget, timeline, geography, audience, required format 같은 제약을 넣으면 Research가 더 관련성 높은 방향으로 좁혀져요.
 
-### Research prompt 자체를 Claude와 다듬기
+### ④ Research prompt 자체를 Claude와 다듬기
 
-조사 질문을 어떻게 잡아야 할지 모르겠다면 Research를 켜기 전에 Claude에게 prompt를 같이 다듬어달라고 요청할 수 있습니다.
+조사 질문을 어떻게 잡아야 할지 모르겠다면, Research를 켜기 **전에** Claude에게 prompt를 같이 다듬어 달라고 해요.
 
 ```text
 이 주제에 대해 Research mode로 조사하려고 해.
 좋은 Research prompt로 바꿔줘.
 ```
 
-## Connected integrations와 함께 쓰기
+## 6. Connected integrations와 함께 쓰기
 
-Google Workspace나 다른 integrations가 연결되어 있으면 Research가 더 강력해집니다. Claude는 web research와 함께 email, calendar, documents의 context를 가져올 수 있습니다.
+<div class="oa-eli">
+  <span class="oa-eli__head">🧳 쉽게 말하면</span>
+  <p>조사원이 <b>바깥 도서관만</b> 다니는 게 아니라 <b>내 서랍과 수첩도</b> 같이 볼 수 있게 되는 거예요. "우리 쪽 자료는 이렇고, 바깥 사례는 이래요"를 한 보고서에서 볼 수 있어요.</p>
+</div>
 
-예시:
+Google Workspace나 다른 integrations가 연결되어 있으면 Research가 더 강력해져요. Claude는 web research와 함께 email, calendar, documents의 context를 가져올 수 있어요.
 
 ```text
 Project X에 대해 email과 Slack에서 논의된 내용을 요약하고,
@@ -201,7 +195,7 @@ Project X에 대해 email과 Slack에서 논의된 내용을 요약하고,
 경쟁사 positioning과 비교해줘.
 ```
 
-원하는 source가 있다면 prompt에 명시할 수 있습니다.
+원하는 source가 있다면 prompt에 직접 말해서 방향을 잡아 줄 수 있어요.
 
 ```text
 내 Google Drive에서 관련 context를 가져와줘.
@@ -211,26 +205,44 @@ Project X에 대해 email과 Slack에서 논의된 내용을 요약하고,
 이 주제에 대한 최근 email의 insight도 포함해줘.
 ```
 
-Web search를 끄고 connected tools만 대상으로 internal-only research를 할 수도 있습니다. 예를 들어 "Q3 launch에 대해 우리 팀이 Slack과 Docs에서 논의한 내용"처럼 내부 자료만 필요한 경우에 유용합니다.
+### 스스로 물어볼 질문
 
-## 실습 질문
+- 내 업무에서 여러 source를 모아야 하는 research task는 무엇인가요?
+- Google Workspace 같은 connected integrations와 Research를 결합하면 workflow가 어떻게 달라질까요?
+- 조사 시간이 너무 오래 걸려 미뤄 둔 복잡한 질문은 무엇인가요?
+- 빠른 web search로 충분한 질문과 Research가 필요한 질문을 어떻게 구분할 수 있을까요?
 
-다음 질문을 생각해보면 Research 활용처를 찾기 쉽습니다.
+## 확인 문제
 
-- 내 업무에서 여러 source를 모아야 하는 research task는 무엇인가?
-- Google Workspace 같은 connected integrations와 Research를 결합하면 workflow가 어떻게 달라질까?
-- 조사 시간이 너무 오래 걸려 미뤄둔 복잡한 질문은 무엇인가?
-- 빠른 web search로 충분한 질문과 Research가 필요한 질문을 어떻게 구분할 수 있을까?
+<details class="oa-quiz">
+  <summary>Q1. Research가 단일 web search와 가장 다른 점은?</summary>
+  <p>① 검색 결과를 더 빨리 보여 줘요 ② 찾은 내용을 바탕으로 다음 검색을 스스로 정하며 여러 검색을 이어 가요 ③ citation 없이 요약만 줘요 ④ 내부 문서만 검색해요</p>
+  <p><b>정답: ②</b> — Research는 agentic하게 작동해요. 단서를 따라가고 빈틈을 채운 뒤 citation이 달린 report로 종합해요.</p>
+</details>
 
-## 핵심 정리
+<details class="oa-quiz">
+  <summary>Q2. 짝 맞추기 — 상황과 알맞은 기능</summary>
+  <p>"오늘 A사 주가가 얼마야?" → <b>Web search</b> (빠른 사실 하나)<br>"이 코드가 왜 무한 루프에 빠지는지 분석해줘" → <b>Thinking</b> (외부 정보 없이 깊은 추론)<br>"우리 회사 expense report 제출 절차가 뭐야?" → <b>Enterprise Search</b> (조직 내부 지식)<br>"vendor 세 곳을 비교한 출처 있는 report가 필요해" → <b>Research</b> (여러 source 종합)</p>
+</details>
 
-Research는 Claude가 여러 source를 탐색하고 종합해 깊이 있는 report를 만드는 기능입니다.
+<details class="oa-quiz">
+  <summary>Q3. Research를 켰는데 작동하지 않아요. 가장 먼저 확인할 것은?</summary>
+  <p><b>정답: web search가 켜져 있는지</b>예요. Research는 web search가 켜져 있어야 작동하고, 같은 <code>+</code> 메뉴에서 켤 수 있어요.</p>
+</details>
 
-- 단일 검색이 아니라 여러 검색을 이어가는 agentic investigation입니다.
-- Extended thinking이 자동 활성화되어 조사 계획을 세웁니다.
-- 대부분의 report는 5-15분, 복잡한 조사는 최대 45분 정도 걸릴 수 있습니다.
-- Citation이 포함되어 findings를 검증하기 쉽습니다.
-- Web과 connected integrations를 함께 활용할 수 있습니다.
-- 빠른 사실 확인은 web search, 외부 정보 없는 깊은 추론은 extended thinking, 조직 내부 지식 검색은 Enterprise Search가 더 적합합니다.
+<details class="oa-quiz">
+  <summary>Q4. 다음 중 가장 좋은 Research prompt는?</summary>
+  <p>① "AI 시장 알려줘." ② "offsite 장소 추천해줘." ③ "team offsite 장소 후보를 위치와 접근성, meeting space와 amenities, catering options, 가격 고려사항 섹션으로 비교해줘." ④ "최대한 길게 조사해줘."</p>
+  <p><b>정답: ③</b> — 목표가 구체적이고 원하는 구조가 지정되어 있어요. 여기에 budget이나 지역 같은 제약까지 넣으면 더 좋아요.</p>
+</details>
 
-다음 섹션에서는 지금까지 배운 기능이 실제 역할별 use case에서 어떻게 조합되는지 살펴봅니다.
+## 정리
+
+- **Research**는 단일 검색이 아니라 여러 검색을 이어 가는 **agentic investigation**이에요. Claude가 다음에 무엇을 조사할지 스스로 정해요.
+- **Thinking**과 함께 작동해서, 검색 전에 요청을 쪼개고 조사 계획을 세워요.
+- 평소 검색보다 오래 걸려요(몇 분 또는 그 이상). 많은 검색을 동시에 보내고 때로는 수백 개 source를 종합하기 때문이에요.
+- report에는 **citation**이 붙어서 findings를 검증하기 쉬워요.
+- web과 connected integrations를 함께 활용할 수 있어요. `+` 메뉴에서 켜고, web search가 켜져 있어야 해요.
+- 빠른 사실 확인은 web search, 외부 정보 없는 깊은 추론은 Thinking, 조직 내부 지식 검색은 Enterprise Search가 더 맞아요.
+
+다음 섹션에서는 지금까지 배운 기능이 실제 역할별 use case에서 어떻게 조합되는지 살펴봐요.
